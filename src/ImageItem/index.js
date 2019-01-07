@@ -28,7 +28,7 @@ const ImageItem = ({ item }) => (
       <ItemInput defaultValue={item.summaryText} />
     </Cell>
     <Cell size={15}>
-      <TextBlue>{item.id === 1 ? 'Change' : 'Add'}</TextBlue>
+      <TextBlue>{item.id === 1 ? 'Change' : 'Add_t'}</TextBlue>
     </Cell>
     <Cell size={6}>
       <IconWrapper>
