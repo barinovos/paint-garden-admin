@@ -1,13 +1,3 @@
 {
-  "apiUrl": "https://b2c.api.dev.gastfreund.net",
-  "pdf_prefix": "https://intranet.dev.gastfreund.net",
-  "prefix": "/api/v1",
-  "cdnUrl": "https://cdn.gastfreund.net",
-  "imagesPrefix": "/images",
-  "dimensions": {
-    "thumbs": "thumbs",
-    "small": "500",
-    "medium": "800",
-    "large": "2000"
-  }
+  "apiUrl": "https://anth-api.herokuapp.com"
 }

@@ -4,4 +4,5 @@ export default {
   API_SUCCESS: 'API_SUCCESS',
 
   IMAGES_LOADED: 'app.IMAGES_LOADED',
+  IMAGE_UPLOADED: 'app.IMAGE_UPLOADED',
 };

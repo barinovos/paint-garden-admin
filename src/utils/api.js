@@ -1,11 +1,12 @@
 import axios from 'axios';
 import actionTypes from '../constants/actionTypes';
-const config = require('../../config.json');
-const apiUrl = `${config.apiUrl}${config.prefix}`;
+// const config = process.env.LOCAL_ENV ? require('../../config.json') : require('../../config.json');
+const apiUrl = "http://localhost:9000";
+// to deploy: "https://anth-api.herokuapp.com"
 
 const api = {
-  get(url, params, noLang) {
-    let path = noLang ? `${apiUrl}${url}` : `${apiUrl}${url}?language=${api.language}`;
+  get(url, params) {
+    let path = `${apiUrl}${url}`;
     if (params) {
       Object.keys(params).forEach(key => {
         path += `&${key}=${encodeURIComponent(params[key])}`;
@@ -15,49 +16,31 @@ const api = {
   },
 
   post(url, data) {
-    return axios.post(`${apiUrl}${url}?lang=${api.language}`, data);
+    return axios.post(`${apiUrl}${url}`, data);
   },
 
   put(url, data) {
-    return axios.put(`${apiUrl}${url}?lang=${api.language}`, data);
+    return axios.put(`${apiUrl}${url}`, data);
   },
 
   delete(url) {
-    return axios.delete(`${apiUrl}${url}?lang=${api.language}`);
+    return axios.delete(`${apiUrl}${url}`);
   },
 
   patch(url, data) {
-    return axios.patch(`${apiUrl}${url}?lang=${api.language}`, data);
+    return axios.patch(`${apiUrl}${url}`, data);
   },
 
   all(values) {
     return axios.all(values);
   },
 
-  getLang() {
-    return api.language;
-  },
-
-  setLang(l) {
-    api.language = l;
-  },
-
-  // the catch handler to dispatch the error to the State
-  /*
-   Example:
-     dispatch => api.get("some_url").catch(api.catch(dispatch));
-   */
   catch(dispatch) {
     return error => dispatch({ type: actionTypes.API_ERROR, error });
   },
 
-  catchNotFound() {
-    // location.href = Constants.ROUTES.NOT_FOUND;
-  },
-
-  getImageUrl(path, size = 'medium') {
-    // console.log("Image Request: ",`${config.cdnUrl}${config.imagesPrefix}/${config.dimensions[size]}/${path}`);
-    return `${config.cdnUrl}${config.imagesPrefix}/${config.dimensions[size]}/${path}`;
+  getImageUrl(path) {
+    return `${apiUrl}/${path}`;
   },
 };
 

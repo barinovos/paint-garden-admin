@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Wrapper, LinksArea, HiddenInput } from './Styled';
-import { LinkText, Button } from '../Common/Styled';
+import { Wrapper, LinksArea } from './Styled';
+import { LinkText } from '../Common/Styled';
+import UploadButton from '../UploadButton';
 import Constants from '../constants';
 const { ROUTES } = Constants;
 
@@ -17,10 +18,7 @@ const Toolbar = ({ location }) => (
       <Link to={ROUTES.ROOT}>
         <LinkText active={ROUTES.ROOT === location.pathname}>All images</LinkText>
       </Link>
-      <Button>
-        Upload image
-        <HiddenInput />
-      </Button>
+      <UploadButton />
       <LinkText>Log out</LinkText>
     </LinksArea>
   </Wrapper>
