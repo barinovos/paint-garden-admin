@@ -4,9 +4,8 @@ import { Thumb, ItemInput, InputButton } from './Styled';
 import { Row, Cell, TextBlue, IconWrapper } from '../Common/Styled';
 import Trash from '../Icons/Trash';
 import api from '../utils/api';
-// import thumb from '../assets/thumb.png';
 
-const ImageItem = ({ item }) => (
+const ImageItem = ({ item, addToCanvas, removeFromCanvas, deleteImage, updateImage }) => (
   <Row>
     <Cell size={5}>
       <Thumb src={api.getImageUrl(item.filePath)} alt={'thumb'}/>
@@ -15,9 +14,12 @@ const ImageItem = ({ item }) => (
       <ItemInput defaultValue={item.title}/>
     </Cell>
     <Cell size={10}>
-      <InputButton>L</InputButton>
-      <InputButton>H</InputButton>
-      <InputButton>D</InputButton>
+      <InputButton selected={item.dimension === 0}
+                   onClick={updateImage.bind(null, item.id, { dimension: 0 })}>L</InputButton>
+      <InputButton selected={item.dimension === 1}
+                   onClick={updateImage.bind(null, item.id, { dimension: 1 })}>H</InputButton>
+      <InputButton selected={item.dimension === 2}
+                   onClick={updateImage.bind(null, item.id, { dimension: 2 })}>D</InputButton>
     </Cell>
     <Cell size={10}>
       <ItemInput defaultValue={item.medium}/>
@@ -29,10 +31,12 @@ const ImageItem = ({ item }) => (
       <ItemInput defaultValue={item.summaryText}/>
     </Cell>
     <Cell size={15}>
-      <TextBlue>Add</TextBlue>
+      <TextBlue onClick={() => item.onCanvas ? removeFromCanvas(item.id) : addToCanvas(item.id)}>
+        {item.onCanvas ? 'Remove' : 'Add'}
+      </TextBlue>
     </Cell>
     <Cell size={6}>
-      <IconWrapper>
+      <IconWrapper onClick={deleteImage.bind(null, item.id)}>
         <Trash/>
       </IconWrapper>
     </Cell>
@@ -47,7 +51,15 @@ ImageItem.propTypes = {
     year: PropTypes.string,
     summaryText: PropTypes.string,
     filePath: PropTypes.string,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    onCanvas: PropTypes.bool,
+    dimension: PropTypes.number
   }),
+  addToCanvas: PropTypes.func,
+  deleteImage: PropTypes.func,
+  removeFromCanvas: PropTypes.func,
+  updateImage: PropTypes.func,
 };
 
 export default ImageItem;

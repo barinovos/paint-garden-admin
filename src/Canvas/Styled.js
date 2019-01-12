@@ -1,9 +1,17 @@
 import styled from 'styled-components';
+import colors from '../constants/colors';
 
-export const Wrapper = styled.div`
+export const ActionsBar = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 25px;
-  justify-content: center;
+  padding: 0 15px 10px;
+`;
+
+export const ActionButton = styled.div`
+  margin-right: 30px;
+  cursor: pointer;
+  
+  &:hover {
+    text-decoration: underline;
+    color: ${colors.blue}
+  }
 `;

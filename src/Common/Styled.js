@@ -1,11 +1,8 @@
 import styled, { css } from 'styled-components';
-
-const grey = '#3A3A3A';
-const blue = '#00ABDD';
-const buttonBg = '#E0F4FD';
+import colors from '../constants/colors';
 
 const ButtonStyle = css`
-  background: ${buttonBg};
+  background: ${colors.buttonBg};
   border-radius: 6px;
   position: relative;
 `;
@@ -14,7 +11,7 @@ const BasicText = css`
   font-size: 18px;
   line-height: 22px;
   font-weight: 600;
-  color: ${grey};
+  color: ${colors.grey};
 `;
 
 export const Text = styled.div`
@@ -24,7 +21,7 @@ export const Text = styled.div`
 export const TextBlue = styled.div`
   ${BasicText};
   cursor: pointer;
-  color: ${blue};
+  color: ${colors.blue};
 
   &:hover {
     text-decoration: underline;
@@ -36,7 +33,7 @@ export const LinkText = styled.div`
   cursor: pointer;
   padding: 10px 20px;
   text-decoration: none;
-  ${props => props.active && `color: ${blue}`};
+  ${props => props.active && `color: ${colors.blue}`};
   &:hover {
     color: darkgrey;
   }

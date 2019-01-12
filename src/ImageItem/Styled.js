@@ -1,21 +1,15 @@
 import styled from 'styled-components';
-
-const grey = '#979797';
-
-export const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
+import colors from '../constants/colors';
 
 export const Thumb = styled.img`
   width: 38px;
-  border: 1px solid ${grey};
+  border: 1px solid ${colors.grey};
 `;
 
 export const ItemInput = styled.input`
   border-radius: 6px;
   background: white;
-  border: 1px solid ${grey};
+  border: 1px solid ${colors.grey};
   outline: none;
   width: 90%;
   height: 36px;
@@ -36,8 +30,8 @@ export const InputButton = styled.div`
   width: 36px;
   height: 38px;
   border-radius: 6px;
-  background: white;
-  border: 1px solid ${grey};
+  background: ${props => props.selected ? colors.blue : 'white'};
+  border: 1px solid ${colors.grey};
   font-size: 18px;
   line-height: 36px;
   text-align: center;

@@ -6,5 +6,9 @@ export default {
   },
   API: {
     IMAGES: '/images',
+    IMAGE: '/image',
+    ADD_TO_CANVAS: '/add-to-canvas',
+    REMOVE_FROM_CANVAS: '/remove-from-canvas',
+    CANVAS: '/canvas'
   },
 };

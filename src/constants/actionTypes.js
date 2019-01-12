@@ -5,4 +5,9 @@ export default {
 
   IMAGES_LOADED: 'app.IMAGES_LOADED',
   IMAGE_UPLOADED: 'app.IMAGE_UPLOADED',
+  DELETE_IMAGE: 'app.DELETE_IMAGE',
+  UPDATE_IMAGE: 'app.UPDATE_IMAGE',
+  ADD_TO_CANVAS: 'app.canvas.ADD',
+  REMOVE_FROM_CANVAS: 'app.canvas.REMOVE',
+  UPDATE_CANVAS: 'app.canvas.UPDATE'
 };
