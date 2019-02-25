@@ -12,9 +12,8 @@ html, body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: lightgrey;
   overflow: hidden;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 22px;
 }
 

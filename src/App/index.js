@@ -7,7 +7,7 @@ import store from '../utils/configureStore';
 import Constants from '../constants';
 import Toolbar from '../Toolbar';
 import Canvas from '../Canvas';
-import ImagesList from '../ImagesList';
+import Sections from '../Sections';
 import { MainArea } from '../Common/Styled';
 
 const { ROUTES } = Constants;
@@ -22,7 +22,7 @@ class App extends Component {
               <Toolbar/>
               <MainArea>
                 <Switch>
-                  <Route path={ROUTES.ROOT} exact component={ImagesList}/>
+                  <Route path={ROUTES.ROOT} exact component={Sections}/>
                   <Route path={ROUTES.CANVAS} component={Canvas}/>
                   <Route path={ROUTES.NOT_FOUND} render={() => <div>Not found</div>}/>
                 </Switch>

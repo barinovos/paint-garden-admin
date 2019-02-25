@@ -1,20 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { HiddenInput } from './Styled';
 import { Button } from '../Common/Styled';
-import { uploadImages } from './actions';
 
-const UploadButton = ({ uploadImages }) => (
+const UploadButton = ({ uploadImages, sectionId }) => (
   <Button>
     Upload image
-    <HiddenInput onChange={ev => uploadImages(ev.target.files)}/>
+    <HiddenInput onChange={ev => uploadImages(ev.target.files, sectionId)}/>
   </Button>
 );
 
 UploadButton.propTypes = {
-  uploadImages: PropTypes.func,
+  uploadImages: PropTypes.func.isRequired,
+  sectionId: PropTypes.string
 };
 
-export default connect(null, dispatch => bindActionCreators({ uploadImages }, dispatch))(UploadButton);
+export default UploadButton;

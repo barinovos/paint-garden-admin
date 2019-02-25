@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import colors from '../constants/colors';
 
-export const Thumb = styled.img`
-  width: 38px;
-  border: 1px solid ${colors.grey};
+export const Image = styled.img`
+  width: 108px;
+  height: 108px;
+  margin-right: 15px;
 `;
 
 export const ItemInput = styled.input`

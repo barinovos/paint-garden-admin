@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="16px" viewBox="0 0 12 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Icon Trash</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="04_Allimages-Copy" transform="translate(-185.000000, -147.000000)" stroke="#B6363F" stroke-width="1.5">
+            <g id="Icon-Trash" transform="translate(191.000000, 155.500000) rotate(-360.000000) translate(-191.000000, -155.500000) translate(186.000000, 148.000000)">
+                <polyline id="Line" points="0.5 13.4117647 5.0098587 13.4117647 9.5 13.4117647"></polyline>
+                <polyline id="Line" transform="translate(9.500000, 9.411765) rotate(-270.000000) translate(-9.500000, -9.411765) " points="5.5 9.41176471 9.50876329 9.41176471 13.5 9.41176471"></polyline>
+                <polyline id="Line" transform="translate(0.500000, 9.411765) rotate(-270.000000) translate(-0.500000, -9.411765) " points="-3.5 9.41176471 0.508763285 9.41176471 4.5 9.41176471"></polyline>
+                <polyline id="Line" points="0 3 4.71748082 3 10 3"></polyline>
+                <path d="M2,0.5 L8,0.5" id="Line"></path>
+            </g>
+        </g>
+    </g>
+</svg>
