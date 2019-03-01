@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -10,7 +10,7 @@ import SectionModal from '../SectionModal'
 import UploadButton from '../UploadButton'
 import ImagesList from '../ImagesList'
 import { TextBlue } from '../Common/Styled'
-import { Row, Icon, Column, SectionsInnerArea, EmptyImages } from './Styled'
+import { Row, Icon, Column, SectionsInnerArea, EmptyImages, SectionsWrapper } from './Styled'
 import { SectionType, ImageType } from '../types'
 
 class Sections extends React.PureComponent {
@@ -48,7 +48,7 @@ class Sections extends React.PureComponent {
     const { sections, images, uploadImages, addToCanvas, removeFromCanvas, deleteSection } = this.props
 
     return (
-      <Fragment>
+      <SectionsWrapper>
         <Row onClick={() => this.setState({ showModal: true, isCreate: true, section: null })}>
           <Icon src={add} />
           <TextBlue>Create section</TextBlue>
@@ -68,9 +68,17 @@ class Sections extends React.PureComponent {
               )}
               <Row>
                 <UploadButton uploadImages={uploadImages} sectionId={s.id} />
-                <TextBlue onClick={addToCanvas} style={{ marginLeft: 10 }}>
-                  Add to canvas
-                </TextBlue>
+                {s.imageIds.length ? (
+                  s.canvas ? (
+                    <TextBlue onClick={() => removeFromCanvas(s.id)} style={{ marginLeft: 10 }}>
+                      Remove from canvas
+                    </TextBlue>
+                  ) : (
+                    <TextBlue onClick={() => addToCanvas(s)} style={{ marginLeft: 10 }}>
+                      Add to canvas
+                    </TextBlue>
+                  )
+                ) : null}
               </Row>
             </Column>
           ))}
@@ -78,7 +86,7 @@ class Sections extends React.PureComponent {
         {this.state.showModal && (
           <SectionModal onSave={this.onFinishCreateEdit} section={this.state.section} onClose={this.onCloseModal} />
         )}
-      </Fragment>
+      </SectionsWrapper>
     )
   }
 }

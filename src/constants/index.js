@@ -9,4 +9,5 @@ export default {
     SECTION: '/section',
     UPLOAD: '/upload'
   },
+  ZOOM_MULTIPLIER: 0.2
 };

@@ -1,47 +1,53 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import api from '../utils/api';
-import { Image } from './Styled';
-import { DragSource } from 'react-dnd';
-
-const BASIC_WIDTH = 300;
+import React from 'react'
+import PropTypes from 'prop-types'
+import api from '../utils/api'
+import { Image } from './Styled'
+import { DragSource } from 'react-dnd'
+import { calcSizeWithZoom } from '../utils/calcZoom'
 
 const source = {
   beginDrag(props) {
-    return { id: props.itemId };
-  }
-};
+    return props.item
+  },
+}
 
 function collect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
+    isDragging: monitor.isDragging(),
   }
 }
 
 class DndArea extends React.PureComponent {
   static propTypes = {
     item: PropTypes.object.isRequired,
-    itemId: PropTypes.string.isRequired,
-    connectDragSource: PropTypes.func
-  };
+    onSelect: PropTypes.func,
+    selectedItemId: PropTypes.string,
+    zoomLevel: PropTypes.number,
+    connectDragSource: PropTypes.func,
+  }
 
   render() {
-    const { item, connectDragSource } = this.props;
-    const ratio = item.height / item.width;
-    const height = BASIC_WIDTH * ratio;
+    const { item, connectDragSource, onSelect, selectedItemId, zoomLevel } = this.props
+    const height = calcSizeWithZoom(item.height, zoomLevel)
+    const width = calcSizeWithZoom(item.width, zoomLevel)
+    const x = calcSizeWithZoom(item.x, zoomLevel)
+    const y = calcSizeWithZoom(item.y, zoomLevel)
 
     return (
       <Image
         src={api.getImageUrl(item.path)}
+        isSelected={selectedItemId === item.id}
         alt={''}
-        top={item.y}
-        left={item.x}
-        width={BASIC_WIDTH}
+        top={y}
+        left={x}
+        width={width}
         height={height}
-        ref={instance => connectDragSource(instance)}/>
+        onClick={() => onSelect(item.id)}
+        ref={instance => connectDragSource(instance)}
+      />
     )
   }
 }
 
-export default DragSource('any', source, collect)(DndArea);
+export default DragSource('any', source, collect)(DndArea)

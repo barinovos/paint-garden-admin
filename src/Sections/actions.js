@@ -21,17 +21,29 @@ export function createSection(data) {
       .catch(err => console.log(err))
 }
 
-export function addToCanvas(id) {
-  return dispatch =>
-    api
-      .put(`${SECTION}/${id}`, {
+export function addToCanvas(section) {
+  return (dispatch, getState) => {
+    const images = getState().images
+    const activeImage = images.find(im => im.id === section.imageIds[section.imageIds.length - 1])
+    return api
+      .put(`${SECTION}/${section.id}`, {
         canvas: {
           x: 0,
           y: 0,
-          width: 500,
-          height: 300,
+          width: section.width || activeImage.width,
+          height: activeImage.height,
+          depth: section.depth || 0,
         },
       })
+      .then(resp => dispatch(updateSections(resp.data)))
+      .catch(err => console.log(err))
+  }
+}
+
+export function updateCanvas(sectionId, canvas) {
+  return dispatch =>
+    api
+      .put(`${SECTION}/${sectionId}`, { canvas })
       .then(resp => dispatch(updateSections(resp.data)))
       .catch(err => console.log(err))
 }

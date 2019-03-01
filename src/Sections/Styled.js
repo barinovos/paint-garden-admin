@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export const SectionsWrapper = styled.div`
+  padding: 25px 50px;
+  height: 100%;
+  width: 100%;
+`
+
 export const Row = styled.div`
   display: flex;
   align-items: center;

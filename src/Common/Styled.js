@@ -60,7 +60,6 @@ export const Button = styled.div`
 export const MainArea = styled.div`
   height: calc(100% - 60px);
   overflow-y: auto;
-  padding: 25px 50px;
 `
 
 export const IconWrapper = styled.div`

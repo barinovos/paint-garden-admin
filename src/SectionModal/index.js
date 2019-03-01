@@ -44,6 +44,17 @@ export default class SectionModal extends React.PureComponent {
     }
   }
 
+  onSaveChanges = () => {
+    const { length, width, depth, year } = this.state
+    this.props.onSave({
+      ...this.state,
+      width: width ? +width : null,
+      length: length ? +length : null,
+      depth: depth ? +depth : null,
+      year: year ? +year : null,
+    })
+  }
+
   render() {
     const { onSave, onClose } = this.props
     const { name, synopisis, width, length, depth, medium, year } = this.state
