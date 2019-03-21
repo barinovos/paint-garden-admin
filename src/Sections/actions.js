@@ -2,7 +2,7 @@ import actionTypes from '../constants/actionTypes'
 import api from '../utils/api'
 import Constants from '../constants'
 const {
-  API: { DB, SECTION },
+  API: { DB, SECTION, IMAGE },
 } = Constants
 
 export function fetchData() {
@@ -60,6 +60,14 @@ export function deleteSection(id) {
   return dispatch =>
     api
       .delete(`${SECTION}/${id}`)
+      .then(resp => dispatch(updateDb(resp.data)))
+      .catch(err => console.log(err))
+}
+
+export function deleteImage(id) {
+  return dispatch =>
+    api
+      .delete(`${IMAGE}/${id}`)
       .then(resp => dispatch(updateDb(resp.data)))
       .catch(err => console.log(err))
 }

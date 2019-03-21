@@ -4,17 +4,17 @@ import ImageItem from '../ImageItem';
 import { Wrapper } from './Styled'
 import { ImageType } from '../types'
 
-const ImagesList = ({ images, deleteImage }) => (
+const ImagesList = ({ images, onDelete }) => (
   <Wrapper>
     {images && images.map(data => (
-      <ImageItem item={data} key={data.id} deleteImage={deleteImage}/>
+      <ImageItem item={data} key={data.id} onDelete={onDelete}/>
     ))}
   </Wrapper>
 )
 
 ImagesList.propTypes = {
   images: PropTypes.arrayOf(ImageType).isRequired,
-  deleteImage: PropTypes.func,
+  onDelete: PropTypes.func,
 }
 
 export default ImagesList

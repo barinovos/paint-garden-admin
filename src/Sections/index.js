@@ -7,6 +7,7 @@ import add from '../assets/add.svg'
 import edit from '../assets/edit.svg'
 import trash from '../assets/trash_.svg'
 import SectionModal from '../SectionModal'
+import DeleteModal from '../DeleteModal'
 import UploadButton from '../UploadButton'
 import ImagesList from '../ImagesList'
 import { TextBlue } from '../Common/Styled'
@@ -24,12 +25,15 @@ class Sections extends React.PureComponent {
     updateSection: PropTypes.func,
     createSection: PropTypes.func,
     uploadImages: PropTypes.func,
+    deleteImage: PropTypes.func,
   }
 
   state = {
     showModal: false,
+    showDeleteModal: false,
     isCreate: true,
     section: null,
+    imageIdDelete: null,
   }
 
   constructor(props) {
@@ -44,8 +48,16 @@ class Sections extends React.PureComponent {
 
   onCloseModal = () => this.setState({ showModal: false })
 
+  onCloseDeleteModal = () => this.setState({ showDeleteModal: false, imageIdDelete: null })
+
+  onDeleteImage = () => {
+    this.props.deleteImage(this.state.imageIdDelete)
+    this.onCloseDeleteModal()
+  }
+
   render() {
     const { sections, images, uploadImages, addToCanvas, removeFromCanvas, deleteSection } = this.props
+    const { showModal, showDeleteModal, section } = this.state
 
     return (
       <SectionsWrapper>
@@ -62,7 +74,10 @@ class Sections extends React.PureComponent {
                 <Icon src={trash} onClick={() => deleteSection(s.id)} />
               </Row>
               {s.imageIds.length ? (
-                <ImagesList images={images.filter(im => s.imageIds.includes(im.id))} />
+                <ImagesList
+                  images={images.filter(im => s.imageIds.includes(im.id))}
+                  onDelete={imageIdDelete => this.setState({ showDeleteModal: true, imageIdDelete })}
+                />
               ) : (
                 <EmptyImages>No images yet loaded for this section</EmptyImages>
               )}
@@ -83,9 +98,8 @@ class Sections extends React.PureComponent {
             </Column>
           ))}
         </SectionsInnerArea>
-        {this.state.showModal && (
-          <SectionModal onSave={this.onFinishCreateEdit} section={this.state.section} onClose={this.onCloseModal} />
-        )}
+        {showModal && <SectionModal onSave={this.onFinishCreateEdit} section={section} onClose={this.onCloseModal} />}
+        {showDeleteModal && <DeleteModal onConfirm={this.onDeleteImage} onClose={this.onCloseDeleteModal} />}
       </SectionsWrapper>
     )
   }

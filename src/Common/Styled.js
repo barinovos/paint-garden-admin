@@ -8,9 +8,16 @@ const ButtonMainStyle = css`
   text-align: center;
 `
 
+const ButtonAlarmStyle = css`
+  background: ${colors.pink};
+  color: ${colors.red};
+  min-width: 120px;
+  text-align: center;
+`
+
 const ButtonSecondaryStyle = css`
   background: transparent;
-  color: ${colors.dark}
+  color: ${colors.dark};
 `
 
 const BasicText = css`
@@ -40,9 +47,7 @@ export const LinkText = styled.div`
   padding: 10px 20px;
   text-decoration: none;
   ${props => props.active && `color: ${colors.mainGrey}`};
-  ${props => props.bold && 'font-weight: 600'}
-  
-  &:hover {
+  ${props => props.bold && 'font-weight: 600'} &:hover {
     color: darkgrey;
   }
 `
@@ -54,7 +59,7 @@ export const Button = styled.div`
   cursor: pointer;
   padding: 10px 20px;
   text-decoration: none;
-  ${props => props.secondary ? ButtonSecondaryStyle : ButtonMainStyle}
+  ${props => (props.secondary ? ButtonSecondaryStyle : props.alarm ? ButtonAlarmStyle : ButtonMainStyle)};
 `
 
 export const MainArea = styled.div`

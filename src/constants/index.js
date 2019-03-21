@@ -7,7 +7,8 @@ export default {
   API: {
     DB: '/db',
     SECTION: '/section',
-    UPLOAD: '/upload'
+    UPLOAD: '/upload',
+    IMAGE: '/image'
   },
   ZOOM_MULTIPLIER: 0.2
 };
