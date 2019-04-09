@@ -40,18 +40,10 @@ export function addToCanvas(section) {
   }
 }
 
-export function updateCanvas(sectionId, canvas) {
+export function removeFromCanvas(sectionId) {
   return dispatch =>
     api
-      .put(`${SECTION}/${sectionId}`, { canvas })
-      .then(resp => dispatch(updateSections(resp.data)))
-      .catch(err => console.log(err))
-}
-
-export function removeFromCanvas(id) {
-  return dispatch =>
-    api
-      .delete(`${SECTION}/${id}`, { canvas: null })
+      .put(`${SECTION}/${sectionId}`, { canvas: null })
       .then(resp => dispatch(updateSections(resp.data)))
       .catch(err => console.log(err))
 }

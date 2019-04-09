@@ -10,5 +10,12 @@ export default {
     UPLOAD: '/upload',
     IMAGE: '/image'
   },
-  ZOOM_MULTIPLIER: 0.2
+  EDIT_MODES: {
+    dnd: 'dnd',
+    resize: 'resize',
+    webview: 'webview',
+    annotation: 'annotation'
+  },
+  ZOOM_MULTIPLIER: 0.2,
+  MAX_ZOOM_LEVEL: 8
 };

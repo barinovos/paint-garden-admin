@@ -70,3 +70,17 @@ export const MainArea = styled.div`
 export const IconWrapper = styled.div`
   cursor: pointer;
 `
+
+const ActiveImage = css`
+  border: 2px dashed ${colors.darkGrey};
+`
+
+export const Image = styled.img`
+  position: absolute;
+  width: ${props => props.width || 200}px;
+  height: ${props => props.height || 100}px;
+  top: ${props => props.top || 0}px;
+  left: ${props => props.left || 0}px;
+  user-select: none;
+  ${props => props.isSelected && ActiveImage};
+`

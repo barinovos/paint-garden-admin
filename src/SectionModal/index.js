@@ -56,7 +56,7 @@ export default class SectionModal extends React.PureComponent {
   }
 
   render() {
-    const { onSave, onClose } = this.props
+    const { onClose } = this.props
     const { name, synopisis, width, length, depth, medium, year } = this.state
 
     return (
@@ -78,7 +78,7 @@ export default class SectionModal extends React.PureComponent {
             <Button onClick={onClose} secondary>
               Cancel
             </Button>
-            <Button onClick={() => onSave(this.state)}>Save</Button>
+            <Button onClick={this.onSaveChanges}>Save</Button>
           </RightAlignedRow>
         </ContentWrapper>
       </Wrapper>
