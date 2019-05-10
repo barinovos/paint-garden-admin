@@ -18,4 +18,28 @@ export function updateCanvas(sectionId, canvas) {
       .catch(err => console.log(err))
 }
 
+export function updateWebview(webview) {
+  return dispatch =>
+    api
+      .put(Constants.API.WEBVIEW, webview)
+      .then(resp => dispatch({ type: actionTypes.UPDATE_WEBVIEW, webview: resp.data }))
+      .catch(err => console.log(err))
+}
+
+export function addPin(pin) {
+  return dispatch =>
+    api
+      .post(Constants.API.PIN, pin)
+      .then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data }))
+      .catch(err => console.log(err))
+}
+
+export function deletePin(pinId) {
+  return dispatch =>
+    api
+      .delete(`${Constants.API.PIN}/${pinId}`)
+      .then(resp => dispatch({ type: actionTypes.REMOVE_PIN, pins: resp.data }))
+      .catch(err => console.log(err))
+}
+
 const updateSections = ({ sections }) => ({ type: actionTypes.UPDATE_SECTIONS, sections })

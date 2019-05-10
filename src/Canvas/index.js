@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchData } from '../Sections/actions'
-import { changeCanvasMode, changeCanvasGridMode, updateCanvas } from './actions'
+import { changeCanvasMode, changeCanvasGridMode, updateCanvas, addPin, deletePin, updateWebview } from './actions'
 import { Wrapper } from './Styled'
 import DndArea from '../DndArea'
 import ActionsBar from '../ActionsBar'
@@ -18,6 +18,8 @@ class Canvas extends React.PureComponent {
     isCanvasGridView: PropTypes.bool,
     changeCanvasMode: PropTypes.func,
     editMode: PropTypes.string,
+    webview: PropTypes.object,
+    pins: PropTypes.array,
   }
 
   constructor(props) {
@@ -40,14 +42,18 @@ class Canvas extends React.PureComponent {
       changeCanvasMode,
       editMode,
       changeCanvasGridMode,
+      webview,
+      pins,
     } = this.props
     const { selectedSection, zoomLevel } = this.state
     const sectionName = selectedSection ? selectedSection.name : 'No section selected'
-    const items = sections.filter(s => s.canvas && s.imageIds.length).map(s => ({
-      id: s.id,
-      path: images.find(im => im.id === s.imageIds[s.imageIds.length - 1]).filePath,
-      ...s.canvas,
-    }))
+    const items = sections
+      .filter(s => s.canvas && s.imageIds.length)
+      .map(s => ({
+        id: s.id,
+        path: images.find(im => im.id === s.imageIds[s.imageIds.length - 1]).filePath,
+        ...s.canvas,
+      }))
 
     return (
       <Wrapper>
@@ -68,6 +74,11 @@ class Canvas extends React.PureComponent {
           onSelect={this.onSectionSelect}
           isCanvasGridView={isCanvasGridView}
           selectedItemId={selectedSection ? selectedSection.id : null}
+          webview={webview}
+          onUpdateWebView={updateWebview}
+          pins={pins}
+          onAddPin={addPin}
+          onDeletePin={deletePin}
         />
       </Wrapper>
     )
@@ -75,6 +86,13 @@ class Canvas extends React.PureComponent {
 }
 
 export default connect(
-  ({ images, sections, isCanvasGridView, editMode }) => ({ images, sections, isCanvasGridView, editMode }),
+  ({ images, sections, isCanvasGridView, editMode, webview, pins }) => ({
+    images,
+    sections,
+    isCanvasGridView,
+    editMode,
+    webview,
+    pins,
+  }),
   dispatch => bindActionCreators({ updateCanvas, fetchData, changeCanvasMode, changeCanvasGridMode }, dispatch),
 )(Canvas)

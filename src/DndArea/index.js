@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Area, InnerArea } from './Styled'
 import { DropTarget } from 'react-dnd'
 import DragImage from '../DragImage'
 import ResizableImage from '../ResizableImage'
 import CanvasImage from '../CanvasImage'
+import WebView from '../WebView'
 import { reCalcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
 import Constants from '../constants'
 const { EDIT_MODES } = Constants
@@ -44,6 +45,11 @@ class DndArea extends React.PureComponent {
     isCanvasGridView: PropTypes.bool,
     editMode: PropTypes.string,
     onResize: PropTypes.func,
+    webview: PropTypes.object,
+    pins: PropTypes.array,
+    onUpdateWebView: PropTypes.func,
+    onAddPin: PropTypes.func,
+    onDeletePin: PropTypes.func,
   }
 
   render() {
@@ -56,6 +62,8 @@ class DndArea extends React.PureComponent {
       isCanvasGridView,
       editMode,
       onUpdate,
+      webview,
+      onUpdateWebView,
     } = this.props
 
     return (
@@ -82,7 +90,21 @@ class DndArea extends React.PureComponent {
                 onResize={onUpdate}
               />
             ))}
-          {(editMode === EDIT_MODES.webview || editMode === EDIT_MODES.annotation) &&
+          {editMode === EDIT_MODES.webview && (
+            <Fragment>
+              <WebView onChange={onUpdateWebView} data={webview} zoomLevel={zoomLevel} />
+              {items.map((item, i) => (
+                <CanvasImage
+                  key={i}
+                  item={item}
+                  onSelect={onSelect}
+                  selectedItemId={selectedItemId}
+                  zoomLevel={zoomLevel}
+                />
+              ))}
+            </Fragment>
+          )}
+          {editMode === EDIT_MODES.annotation &&
             items.map((item, i) => (
               <CanvasImage
                 key={i}

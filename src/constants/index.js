@@ -8,7 +8,9 @@ export default {
     DB: '/db',
     SECTION: '/section',
     UPLOAD: '/upload',
-    IMAGE: '/image'
+    IMAGE: '/image',
+    WEBVIEW: '/webview',
+    PIN: '/pin'
   },
   EDIT_MODES: {
     dnd: 'dnd',
@@ -16,6 +18,6 @@ export default {
     webview: 'webview',
     annotation: 'annotation'
   },
-  ZOOM_MULTIPLIER: 0.2,
-  MAX_ZOOM_LEVEL: 8
+  ZOOM_MULTIPLIER: 0.8,
+  MAX_ZOOM_LEVEL: 10
 };

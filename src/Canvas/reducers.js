@@ -18,3 +18,23 @@ export function editModeReducer(state = Constants.EDIT_MODES.dnd, action) {
       return state
   }
 }
+
+export function webviewReducer(state = {}, action) {
+  switch (action.type) {
+    case actionTypes.UPDATE_DB:
+    case actionTypes.UPDATE_WEBVIEW:
+      return action.webview
+    default:
+      return state
+  }
+}
+export function pinsReducer(state = [], action) {
+  switch (action.type) {
+    case actionTypes.UPDATE_DB:
+    case actionTypes.ADD_PIN:
+    case actionTypes.REMOVE_PIN:
+      return action.pins
+    default:
+      return state
+  }
+}

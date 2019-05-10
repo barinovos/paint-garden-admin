@@ -92,6 +92,12 @@ export function uploadImages(files, sectionId) {
   }
 }
 
-const updateDb = ({ images, sections }) => ({ type: actionTypes.UPDATE_DB, images, sections })
+const updateDb = ({ images, sections, webview, pins }) => ({
+  type: actionTypes.UPDATE_DB,
+  images,
+  sections,
+  webview,
+  pins,
+})
 
 const updateSections = ({ sections }) => ({ type: actionTypes.UPDATE_SECTIONS, sections })

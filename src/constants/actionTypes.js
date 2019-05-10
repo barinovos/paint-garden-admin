@@ -5,6 +5,9 @@ export default {
 
   UPDATE_DB: 'app.db.UPDATE',
   UPDATE_SECTIONS: 'app.sections.UPDATE',
+  UPDATE_WEBVIEW: 'app.canvas.UPDATE_WEBVIEW',
+  ADD_PIN: 'app.canvas.ADD_PIN',
+  REMOVE_PIN: 'app.canvas.REMOVE_PIN',
   ADD_TO_CANVAS: 'app.canvas.ADD',
   REMOVE_FROM_CANVAS: 'app.canvas.REMOVE',
   UPDATE_CANVAS: 'app.canvas.UPDATE',
