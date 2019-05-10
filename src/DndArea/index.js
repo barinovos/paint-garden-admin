@@ -14,9 +14,11 @@ const squareTarget = {
     const sourceOffset = monitor.getSourceClientOffset()
     const item = monitor.getItem()
     const zoomLevel = props.zoomLevel
+    const x = reCalcSizeWithZoom(sourceOffset.x - canvasLeftOffset, zoomLevel)
+    const y = reCalcSizeWithZoom(sourceOffset.y - canvasTopOffset, zoomLevel)
     props.onUpdate(item.id, {
-      x: reCalcSizeWithZoom(sourceOffset.x - canvasLeftOffset, zoomLevel),
-      y: reCalcSizeWithZoom(sourceOffset.y - canvasTopOffset, zoomLevel),
+      x,
+      y,
       width: item.width,
       height: item.height,
       depth: item.depth,

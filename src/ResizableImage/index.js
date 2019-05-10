@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Resizable from 're-resizable'
 import api from '../utils/api'
-import { calcSizeWithZoom } from '../utils/calcZoom'
+import { calcSizeWithZoom, reCalcSizeWithZoom } from '../utils/calcZoom'
 import colors from '../constants/colors'
 
 const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize }) => {
@@ -10,6 +10,12 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize })
   const width = calcSizeWithZoom(item.width, zoomLevel)
   const x = calcSizeWithZoom(item.x, zoomLevel)
   const y = calcSizeWithZoom(item.y, zoomLevel)
+  const onResizeStop = (e, direction, ref, d) =>
+    onResize(item.id, {
+      ...item,
+      width: reCalcSizeWithZoom(width + d.width),
+      height: reCalcSizeWithZoom(height + d.height),
+    })
 
   return (
     <Resizable
@@ -28,7 +34,7 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize })
       minWidth={width / 3}
       lockAspectRatio={true}
       onClick={() => onSelect(item.id)}
-      onResizeStop={(e, direction, ref, d) => onResize(item.id, { ...item, width: width + d.width, height: height + d.height })}
+      onResizeStop={onResizeStop}
     />
   )
 }
