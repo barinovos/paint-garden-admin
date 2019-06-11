@@ -14,7 +14,10 @@ export function updateCanvas(sectionId, canvas) {
   return dispatch =>
     api
       .put(`${Constants.API.SECTION}/${sectionId}`, { canvas })
-      .then(resp => dispatch(updateSections(resp.data)))
+      .then(resp => {
+        dispatch(updateSections(resp.data))
+        dispatch({ type: actionTypes.UPDATE_CANVAS })
+      })
       .catch(err => console.log(err))
 }
 
