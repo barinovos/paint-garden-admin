@@ -1,6 +1,6 @@
 import axios from 'axios'
 import actionTypes from '../constants/actionTypes'
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_URL || 'https://anth-api.herokuapp.com';
 
 const api = {
   get(url, params) {
