@@ -17,6 +17,7 @@ class Canvas extends React.PureComponent {
     fetchData: PropTypes.func,
     isCanvasGridView: PropTypes.bool,
     changeCanvasMode: PropTypes.func,
+    updateWebview: PropTypes.func,
     editMode: PropTypes.string,
     webview: PropTypes.object,
     pins: PropTypes.array,
@@ -44,6 +45,7 @@ class Canvas extends React.PureComponent {
       changeCanvasGridMode,
       webview,
       pins,
+      updateWebview,
     } = this.props
     const { selectedSection, zoomLevel } = this.state
     const sectionName = selectedSection ? selectedSection.name : 'No section selected'
@@ -94,5 +96,6 @@ export default connect(
     webview,
     pins,
   }),
-  dispatch => bindActionCreators({ updateCanvas, fetchData, changeCanvasMode, changeCanvasGridMode }, dispatch),
+  dispatch =>
+    bindActionCreators({ updateCanvas, fetchData, changeCanvasMode, changeCanvasGridMode, updateWebview }, dispatch),
 )(Canvas)

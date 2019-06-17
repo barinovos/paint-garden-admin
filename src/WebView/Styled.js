@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 import colors from '../constants/colors'
 
 export const WebViewWrapper = styled.div`
@@ -11,7 +11,8 @@ export const WebViewWrapper = styled.div`
 `
 
 export const Area = styled.div`
-  background-color: rgba(0, 0, 0, .2);
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.2);
   top: ${props => props.top}px;
   left: ${props => props.left}px;
   width: ${props => props.width}px;
