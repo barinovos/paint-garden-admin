@@ -1,8 +1,6 @@
 import axios from 'axios'
 import actionTypes from '../constants/actionTypes'
-// const config = process.env.LOCAL_ENV ? require('../../config.json') : require('../../config.json');
-// const apiUrl = 'http://localhost:9000'
-const apiUrl = "https://anth-api.herokuapp.com";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const api = {
   get(url, params) {
