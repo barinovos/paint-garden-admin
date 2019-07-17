@@ -14,8 +14,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `
 export const ContentWrapper = styled.div`
-  width: 350px;
-  height: 400px;
+  width: 450px;
   background: white;
   box-shadow: 2px 3px 22px rgba(0, 0, 0, 0.5);
   border-radius: 2px;
@@ -33,10 +32,10 @@ const CommonInput = css`
   color: ${colors.dark};
   border: none;
   outline: none;
-  font-size: 10px;
+  font-size: 14px;
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 
   &:active,
   &:focus {
@@ -46,8 +45,8 @@ const CommonInput = css`
 
 export const ItemInput = styled.input`
   ${CommonInput};
-  height: 27px;
-  line-height: 27px;
+  height: 32px;
+  line-height: 32px;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0 16px;
@@ -62,6 +61,6 @@ export const ItemTextArea = styled.textarea`
   padding: 10px 16px;
 `;
 
-export const JustifiedRow = styled.div`display: flex; justify-content: space-between`;
+export const JustifiedRow = styled.div`display: flex; justify-content: space-between; align-items: baseline`;
 
 export const RightAlignedRow = styled.div`display: flex; justify-content: flex-end; margin-top: 15px`

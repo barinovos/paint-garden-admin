@@ -8,6 +8,7 @@ export default {
   UPDATE_WEBVIEW: 'app.canvas.UPDATE_WEBVIEW',
   ADD_PIN: 'app.canvas.ADD_PIN',
   REMOVE_PIN: 'app.canvas.REMOVE_PIN',
+  EDIT_PIN: 'app.canvas.EDIT_PIN',
   ADD_TO_CANVAS: 'app.canvas.ADD',
   REMOVE_FROM_CANVAS: 'app.canvas.REMOVE',
   UPDATE_CANVAS: 'app.canvas.UPDATE',

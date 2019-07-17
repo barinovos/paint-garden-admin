@@ -16,7 +16,7 @@ const ActionsBar = ({
   editMode,
 }) => (
   <Wrapper>
-    <span>{sectionName}</span>
+    <span>{editMode === EDIT_MODES.dnd ? sectionName : ''}</span>
     <SubActionsBar>
       <ActionButton onClick={() => onChangeCanvasMode(EDIT_MODES.dnd)} active={editMode === EDIT_MODES.dnd}>
         Move sections
@@ -31,7 +31,7 @@ const ActionsBar = ({
         onClick={() => onChangeCanvasMode(EDIT_MODES.annotation)}
         active={editMode === EDIT_MODES.annotation}
       >
-        Add pin
+        Pins
       </ActionButton>
       <ZoomButtons>
         <ViewImage src={grid} active={isCanvasGridView} onClick={() => onChangeCanvasView(true)} />

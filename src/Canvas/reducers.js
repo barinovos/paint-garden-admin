@@ -33,6 +33,7 @@ export function pinsReducer(state = [], action) {
     case actionTypes.UPDATE_DB:
     case actionTypes.ADD_PIN:
     case actionTypes.REMOVE_PIN:
+    case actionTypes.EDIT_PIN:
       return action.pins
     default:
       return state

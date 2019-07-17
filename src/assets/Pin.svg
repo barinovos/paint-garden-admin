@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="22px" viewBox="0 0 23 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Annotation Copy</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Front-End" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="04_Carousel_Desktop" transform="translate(-419.000000, -302.000000)" fill-rule="nonzero">
+            <g id="Annotation-Copy" transform="translate(420.000000, 303.000000)">
+                <path d="M18.2118644,0 L2.7881356,0 C1.25169492,0 0,1.32194813 0,2.9601518 L0,12.915876 C0,14.5540797 1.25169492,15.8760278 2.7881356,15.8760278 L7.59915253,15.8760278 L9.81779662,19.601518 C9.96610169,19.8481974 10.2152542,20 10.4881356,20 C10.7610169,20 11.0101695,19.8481974 11.1584746,19.601518 L13.3771186,15.8760278 L18.2118644,15.8760278 C19.7483051,15.8760278 21,14.5540797 21,12.915876 L21,2.9601518 C21,1.32194813 19.7483051,0 18.2118644,0 Z" id="Shape" stroke="#000000" stroke-width="0.6" fill="#FFFFFF"></path>
+                <rect id="Rectangle" fill="#000000" x="5" y="5" width="12" height="1"></rect>
+                <rect id="Rectangle" fill="#000000" x="5" y="8" width="12" height="1"></rect>
+                <rect id="Rectangle" fill="#000000" x="5" y="11" width="5" height="1"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

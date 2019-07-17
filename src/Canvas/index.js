@@ -3,7 +3,15 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchData } from '../Sections/actions'
-import { changeCanvasMode, changeCanvasGridMode, updateCanvas, addPin, deletePin, updateWebview } from './actions'
+import {
+  changeCanvasMode,
+  changeCanvasGridMode,
+  updateCanvas,
+  addPin,
+  deletePin,
+  editPin,
+  updateWebview,
+} from './actions'
 import { Wrapper } from './Styled'
 import DndArea from '../DndArea'
 import ActionsBar from '../ActionsBar'
@@ -34,18 +42,25 @@ class Canvas extends React.PureComponent {
 
   onSectionSelect = sId => this.setState({ selectedSection: this.props.sections.find(s => s.id === sId) })
 
+  onChangeCanvasMode = mode => {
+    this.setState({ selectedSection: null })
+    this.props.changeCanvasMode(mode)
+  }
+
   render() {
     const {
       images,
       sections,
       updateCanvas,
       isCanvasGridView,
-      changeCanvasMode,
       editMode,
       changeCanvasGridMode,
       webview,
       pins,
       updateWebview,
+      editPin,
+      addPin,
+      deletePin,
     } = this.props
     const { selectedSection, zoomLevel } = this.state
     const sectionName = selectedSection ? selectedSection.name : 'No section selected'
@@ -65,7 +80,7 @@ class Canvas extends React.PureComponent {
           isCanvasGridView={isCanvasGridView}
           editMode={editMode}
           onChangeCanvasView={changeCanvasGridMode}
-          onChangeCanvasMode={changeCanvasMode}
+          onChangeCanvasMode={this.onChangeCanvasMode}
           onZoomChange={zoomLevel => this.setState({ zoomLevel })}
         />
         <DndArea
@@ -81,6 +96,7 @@ class Canvas extends React.PureComponent {
           pins={pins}
           onAddPin={addPin}
           onDeletePin={deletePin}
+          onEditPin={editPin}
         />
       </Wrapper>
     )
@@ -97,5 +113,8 @@ export default connect(
     pins,
   }),
   dispatch =>
-    bindActionCreators({ updateCanvas, fetchData, changeCanvasMode, changeCanvasGridMode, updateWebview }, dispatch),
+    bindActionCreators(
+      { updateCanvas, fetchData, changeCanvasMode, changeCanvasGridMode, updateWebview, addPin, deletePin, editPin },
+      dispatch,
+    ),
 )(Canvas)

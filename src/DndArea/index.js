@@ -6,6 +6,7 @@ import DragImage from '../DragImage'
 import ResizableImage from '../ResizableImage'
 import CanvasImage from '../CanvasImage'
 import WebView from '../WebView'
+import Pins from '../Pins'
 import { reCalcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
 import Constants from '../constants'
 const { EDIT_MODES } = Constants
@@ -50,6 +51,7 @@ class DndArea extends React.PureComponent {
     onUpdateWebView: PropTypes.func,
     onAddPin: PropTypes.func,
     onDeletePin: PropTypes.func,
+    onEditPin: PropTypes.func,
   }
 
   render() {
@@ -64,6 +66,10 @@ class DndArea extends React.PureComponent {
       onUpdate,
       webview,
       onUpdateWebView,
+      pins,
+      onAddPin,
+      onDeletePin,
+      onEditPin,
     } = this.props
 
     return (
@@ -104,16 +110,20 @@ class DndArea extends React.PureComponent {
               ))}
             </Fragment>
           )}
-          {editMode === EDIT_MODES.annotation &&
-            items.map((item, i) => (
-              <CanvasImage
-                key={i}
-                item={item}
-                onSelect={onSelect}
-                selectedItemId={selectedItemId}
-                zoomLevel={zoomLevel}
-              />
-            ))}
+          {editMode === EDIT_MODES.annotation && (
+            <Fragment>
+              <Pins pins={pins} addPin={onAddPin} editPin={onEditPin} deletePin={onDeletePin} zoomLevel={zoomLevel} />
+              {items.map((item, i) => (
+                <CanvasImage
+                  key={i}
+                  item={item}
+                  onSelect={onSelect}
+                  selectedItemId={selectedItemId}
+                  zoomLevel={zoomLevel}
+                />
+              ))}
+            </Fragment>
+          )}
         </InnerArea>
       </Area>
     )

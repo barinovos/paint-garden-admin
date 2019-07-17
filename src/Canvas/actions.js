@@ -33,7 +33,15 @@ export function addPin(pin) {
   return dispatch =>
     api
       .post(Constants.API.PIN, pin)
-      .then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data }))
+      .then(resp => dispatch({ type: actionTypes.ADD_PIN, pins: resp.data }))
+      .catch(err => console.log(err))
+}
+
+export function editPin(pin) {
+  return dispatch =>
+    api
+      .put(`${Constants.API.PIN}/${pin.id}`, pin)
+      .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pins: resp.data }))
       .catch(err => console.log(err))
 }
 
