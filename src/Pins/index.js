@@ -5,7 +5,7 @@ import PinModal from './PinModal'
 import { PinViewWrapper } from './Styled'
 import { canvasTopOffset, canvasLeftOffset, reCalcSizeWithZoom } from '../utils/calcZoom'
 
-const Pins = ({ pins, addPin, deletePin, editPin, zoomLevel }) => {
+const Pins = ({ pins, addPin, deletePin, editPin, uploadImage, zoomLevel }) => {
   const [modal, triggerModal] = useState({})
 
   const onAddPin = ev => {
@@ -35,6 +35,7 @@ const Pins = ({ pins, addPin, deletePin, editPin, zoomLevel }) => {
           onSave={modal.onSave}
           onDelete={modal.onDelete}
           onClose={() => triggerModal({ open: false })}
+          onImageUpload={uploadImage}
           pin={modal.pin}
         />
       )}
@@ -47,6 +48,7 @@ Pins.propTypes = {
   addPin: PropTypes.func,
   deletePin: PropTypes.func,
   editPin: PropTypes.func,
+  uploadImage: PropTypes.func,
   zoomLevel: PropTypes.number,
 }
 

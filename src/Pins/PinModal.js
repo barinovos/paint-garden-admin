@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Wrapper, ContentWrapper } from './Styled'
-import { Title, ItemInput, ItemTextArea, JustifiedRow, RightAlignedRow } from '../SectionModal/Styled'
-import { Button } from '../Common/Styled'
+import { Wrapper, ContentWrapper, AddImage, Image, HiddenInput } from './Styled'
+import { Title, Button, ItemInput, ItemTextArea, JustifiedRow, RightAlignedRow, Icon } from '../Common/Styled'
+import api from '../utils/api'
 import trash from '../assets/trash_.svg'
-import { Icon } from '../Sections/Styled'
+import add from '../assets/add.svg'
 
 export default class PinModal extends React.PureComponent {
   static propTypes = {
     onSave: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    onImageUpload: PropTypes.func,
     onDelete: PropTypes.func,
     pin: PropTypes.object,
   }
@@ -20,7 +21,8 @@ export default class PinModal extends React.PureComponent {
       headline: '',
       medium: '',
       description: '',
-      image: '',
+      imageUrl: '',
+      link: '',
     }
   }
 
@@ -31,9 +33,14 @@ export default class PinModal extends React.PureComponent {
     this.props.onClose()
   }
 
+  onUpload = ev => {
+    this.props.onImageUpload(ev.target.files[0], this.state.id)
+    this.props.onClose()
+  }
+
   render() {
     const { onClose, onDelete } = this.props
-    const { headline, medium, description, id } = this.state
+    const { headline, medium, description, id, link, imageUrl } = this.state
 
     return (
       <Wrapper onClick={onClose}>
@@ -50,9 +57,19 @@ export default class PinModal extends React.PureComponent {
               />
             )}
           </JustifiedRow>
+          {id &&
+            (imageUrl ? (
+              <Image src={api.getImageUrl(imageUrl)} />
+            ) : (
+              <AddImage>
+                <img src={add} alt="upload" />
+                <HiddenInput onChange={this.onUpload} />
+              </AddImage>
+            ))}
           <ItemInput value={headline} onChange={this.onChangeState('headline')} placeholder="Headline" />
           <ItemInput value={medium} onChange={this.onChangeState('medium')} placeholder="Medium" />
           <ItemTextArea value={description} onChange={this.onChangeState('description')} placeholder="Description" />
+          <ItemInput value={link} onChange={this.onChangeState('link')} placeholder="Hyperlink to Store (buy here)" />
           <RightAlignedRow>
             <Button onClick={onClose} secondary>
               Cancel

@@ -53,4 +53,20 @@ export function deletePin(pinId) {
       .catch(err => console.log(err))
 }
 
+export function uploadImageToPin(file, pinId) {
+  return dispatch => {
+    const formData = new FormData()
+    if (!file.type.match('image.*')) {
+      return
+    }
+    // Add the file to the request.
+    formData.append('image', file, file.name)
+    formData.append('pinId', pinId)
+    return api
+      .post('/pin-upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pins: resp.data }))
+      .catch(err => console.log(err))
+  }
+}
+
 const updateSections = ({ sections }) => ({ type: actionTypes.UPDATE_SECTIONS, sections })

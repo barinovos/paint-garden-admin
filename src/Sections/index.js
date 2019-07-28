@@ -10,8 +10,8 @@ import SectionModal from '../SectionModal'
 import DeleteModal from '../DeleteModal'
 import UploadButton from '../UploadButton'
 import ImagesList from '../ImagesList'
-import { TextBlue } from '../Common/Styled'
-import { Row, Icon, Column, SectionsInnerArea, EmptyImages, SectionsWrapper } from './Styled'
+import { TextBlue, Icon } from '../Common/Styled'
+import { Row, Column, SectionsInnerArea, EmptyImages, SectionsWrapper } from './Styled'
 import { SectionType, ImageType } from '../types'
 
 class Sections extends React.PureComponent {

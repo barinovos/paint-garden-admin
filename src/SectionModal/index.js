@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Wrapper, ContentWrapper, Title, ItemInput, ItemTextArea, JustifiedRow, RightAlignedRow } from './Styled'
-import { Button } from '../Common/Styled'
+import { Wrapper, ContentWrapper } from './Styled'
+import { Button, Title, ItemInput, ItemTextArea, JustifiedRow, RightAlignedRow } from '../Common/Styled'
 
 const defaultState = {
   name: '',

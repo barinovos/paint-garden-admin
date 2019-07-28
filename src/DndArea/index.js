@@ -52,6 +52,7 @@ class DndArea extends React.PureComponent {
     onAddPin: PropTypes.func,
     onDeletePin: PropTypes.func,
     onEditPin: PropTypes.func,
+    onUploadImageToPin: PropTypes.func,
   }
 
   render() {
@@ -70,6 +71,7 @@ class DndArea extends React.PureComponent {
       onAddPin,
       onDeletePin,
       onEditPin,
+      onUploadImageToPin,
     } = this.props
 
     return (
@@ -112,7 +114,14 @@ class DndArea extends React.PureComponent {
           )}
           {editMode === EDIT_MODES.annotation && (
             <Fragment>
-              <Pins pins={pins} addPin={onAddPin} editPin={onEditPin} deletePin={onDeletePin} zoomLevel={zoomLevel} />
+              <Pins
+                pins={pins}
+                addPin={onAddPin}
+                editPin={onEditPin}
+                deletePin={onDeletePin}
+                uploadImage={onUploadImageToPin}
+                zoomLevel={zoomLevel}
+              />
               {items.map((item, i) => (
                 <CanvasImage
                   key={i}

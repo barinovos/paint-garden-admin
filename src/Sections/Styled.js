@@ -12,11 +12,6 @@ export const Row = styled.div`
   margin-bottom: 10px;
 `;
 
-export const Icon = styled.img.attrs({ alt: ''})`
-  cursor: pointer;
-  margin-right: 7px;
-`
-
 export const Column = styled.div`
   margin-bottom: 25px;
 `

@@ -3,15 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchData } from '../Sections/actions'
-import {
-  changeCanvasMode,
-  changeCanvasGridMode,
-  updateCanvas,
-  addPin,
-  deletePin,
-  editPin,
-  updateWebview,
-} from './actions'
+import * as actions from './actions'
 import { Wrapper } from './Styled'
 import DndArea from '../DndArea'
 import ActionsBar from '../ActionsBar'
@@ -61,6 +53,7 @@ class Canvas extends React.PureComponent {
       editPin,
       addPin,
       deletePin,
+      uploadImageToPin,
     } = this.props
     const { selectedSection, zoomLevel } = this.state
     const sectionName = selectedSection ? selectedSection.name : 'No section selected'
@@ -97,6 +90,7 @@ class Canvas extends React.PureComponent {
           onAddPin={addPin}
           onDeletePin={deletePin}
           onEditPin={editPin}
+          onUploadImageToPin={uploadImageToPin}
         />
       </Wrapper>
     )
@@ -112,9 +106,5 @@ export default connect(
     webview,
     pins,
   }),
-  dispatch =>
-    bindActionCreators(
-      { updateCanvas, fetchData, changeCanvasMode, changeCanvasGridMode, updateWebview, addPin, deletePin, editPin },
-      dispatch,
-    ),
+  dispatch => bindActionCreators({ ...actions, fetchData }, dispatch),
 )(Canvas)

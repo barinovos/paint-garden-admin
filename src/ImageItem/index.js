@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Wrapper, Image, Icons } from './Styled'
 import api from '../utils/api'
 import { ImageType } from '../types'
-import { Icon } from '../Sections/Styled'
+import { Icon } from '../Common/Styled'
 import edit from '../assets/edit.svg'
 import trash from '../assets/trash_.svg'
 
