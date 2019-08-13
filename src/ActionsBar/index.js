@@ -24,9 +24,9 @@ const ActionsBar = ({
       <ActionButton onClick={() => onChangeCanvasMode(EDIT_MODES.resize)} active={editMode === EDIT_MODES.resize}>
         Resize sections
       </ActionButton>
-      <ActionButton onClick={() => onChangeCanvasMode(EDIT_MODES.webview)} active={editMode === EDIT_MODES.webview}>
+      {/*<ActionButton onClick={() => onChangeCanvasMode(EDIT_MODES.webview)} active={editMode === EDIT_MODES.webview}>
         Define web view
-      </ActionButton>
+      </ActionButton>*/}
       <ActionButton
         onClick={() => onChangeCanvasMode(EDIT_MODES.annotation)}
         active={editMode === EDIT_MODES.annotation}
