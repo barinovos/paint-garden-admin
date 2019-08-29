@@ -6,19 +6,11 @@ const {
 } = Constants
 
 export function fetchData() {
-  return dispatch =>
-    api
-      .get(DB)
-      .then(resp => dispatch(updateDb(resp.data)))
-      .catch(err => console.log(err))
+  return dispatch => api.get(DB).then(resp => dispatch(updateDb(resp.data)))
 }
 
 export function createSection(data) {
-  return dispatch =>
-    api
-      .post(SECTION, data)
-      .then(resp => dispatch(updateSections(resp.data)))
-      .catch(err => console.log(err))
+  return dispatch => api.post(SECTION, data).then(resp => dispatch(updateSections(resp.data)))
 }
 
 export function addToCanvas(section) {
@@ -36,40 +28,24 @@ export function addToCanvas(section) {
         },
       })
       .then(resp => dispatch(updateSections(resp.data)))
-      .catch(err => console.log(err))
   }
 }
 
 export function removeFromCanvas(sectionId) {
   return dispatch =>
-    api
-      .put(`${SECTION}/${sectionId}`, { canvas: null })
-      .then(resp => dispatch(updateSections(resp.data)))
-      .catch(err => console.log(err))
+    api.put(`${SECTION}/${sectionId}`, { canvas: null }).then(resp => dispatch(updateSections(resp.data)))
 }
 
 export function deleteSection(id) {
-  return dispatch =>
-    api
-      .delete(`${SECTION}/${id}`)
-      .then(resp => dispatch(updateDb(resp.data)))
-      .catch(err => console.log(err))
+  return dispatch => api.delete(`${SECTION}/${id}`).then(resp => dispatch(updateDb(resp.data)))
 }
 
 export function deleteImage(id) {
-  return dispatch =>
-    api
-      .delete(`${IMAGE}/${id}`)
-      .then(resp => dispatch(updateDb(resp.data)))
-      .catch(err => console.log(err))
+  return dispatch => api.delete(`${IMAGE}/${id}`).then(resp => dispatch(updateDb(resp.data)))
 }
 
 export function updateSection(data) {
-  return dispatch =>
-    api
-      .put(`${SECTION}/${data.id}`, data)
-      .then(resp => dispatch(updateSections(resp.data)))
-      .catch(err => console.log(err))
+  return dispatch => api.put(`${SECTION}/${data.id}`, data).then(resp => dispatch(updateSections(resp.data)))
 }
 
 export function uploadImages(files, sectionId) {
@@ -88,7 +64,6 @@ export function uploadImages(files, sectionId) {
     return api
       .post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       .then(resp => dispatch(updateDb(resp.data)))
-      .catch(err => console.log(err))
   }
 }
 

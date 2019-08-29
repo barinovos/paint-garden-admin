@@ -3,6 +3,7 @@ export default {
     ROOT: '/',
     CANVAS: '/canvas',
     NOT_FOUND: '/not-found',
+    LOGIN: '/login'
   },
   API: {
     DB: '/db',
@@ -10,7 +11,9 @@ export default {
     UPLOAD: '/upload',
     IMAGE: '/image',
     WEBVIEW: '/webview',
-    PIN: '/pin'
+    PIN: '/pin',
+    LOGIN: '/login',
+    AUTH_CHECK: '/authcheck'
   },
   EDIT_MODES: {
     dnd: 'dnd',

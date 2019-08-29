@@ -12,13 +12,10 @@ export function changeCanvasMode(mode) {
 
 export function updateCanvas(sectionId, canvas) {
   return dispatch =>
-    api
-      .put(`${Constants.API.SECTION}/${sectionId}`, { canvas })
-      .then(resp => {
-        dispatch(updateSections(resp.data))
-        dispatch({ type: actionTypes.UPDATE_CANVAS })
-      })
-      .catch(err => console.log(err))
+    api.put(`${Constants.API.SECTION}/${sectionId}`, { canvas }).then(resp => {
+      dispatch(updateSections(resp.data))
+      dispatch({ type: actionTypes.UPDATE_CANVAS })
+    })
 }
 
 export function updateWebview(webview) {
@@ -26,15 +23,11 @@ export function updateWebview(webview) {
     api
       .put(Constants.API.WEBVIEW, webview)
       .then(resp => dispatch({ type: actionTypes.UPDATE_WEBVIEW, webview: resp.data }))
-      .catch(err => console.log(err))
 }
 
 export function addPin(pin) {
   return dispatch =>
-    api
-      .post(Constants.API.PIN, pin)
-      .then(resp => dispatch({ type: actionTypes.ADD_PIN, pins: resp.data }))
-      .catch(err => console.log(err))
+    api.post(Constants.API.PIN, pin).then(resp => dispatch({ type: actionTypes.ADD_PIN, pins: resp.data }))
 }
 
 export function editPin(pin) {
@@ -42,7 +35,6 @@ export function editPin(pin) {
     api
       .put(`${Constants.API.PIN}/${pin.id}`, pin)
       .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pins: resp.data }))
-      .catch(err => console.log(err))
 }
 
 export function deletePin(pinId) {
@@ -50,7 +42,6 @@ export function deletePin(pinId) {
     api
       .delete(`${Constants.API.PIN}/${pinId}`)
       .then(resp => dispatch({ type: actionTypes.REMOVE_PIN, pins: resp.data }))
-      .catch(err => console.log(err))
 }
 
 export function uploadImageToPin(file, pinId) {
@@ -65,7 +56,6 @@ export function uploadImageToPin(file, pinId) {
     return api
       .post('/pin-upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pins: resp.data }))
-      .catch(err => console.log(err))
   }
 }
 
