@@ -5,7 +5,6 @@ import { DropTarget } from 'react-dnd'
 import DragImage from '../DragImage'
 import ResizableImage from '../ResizableImage'
 import CanvasImage from '../CanvasImage'
-import WebView from '../WebView'
 import Pins from '../Pins'
 import { reCalcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
 import Constants from '../constants'
@@ -19,8 +18,8 @@ const squareTarget = {
     const x = reCalcSizeWithZoom(sourceOffset.x - canvasLeftOffset, zoomLevel)
     const y = reCalcSizeWithZoom(sourceOffset.y - canvasTopOffset, zoomLevel)
     props.onUpdate(item.id, {
-      x,
-      y,
+      posx: x,
+      posy: y,
       width: item.width,
       height: item.height,
       depth: item.depth,
@@ -65,8 +64,6 @@ class DndArea extends React.PureComponent {
       isCanvasGridView,
       editMode,
       onUpdate,
-      webview,
-      onUpdateWebView,
       pins,
       onAddPin,
       onDeletePin,
@@ -98,20 +95,6 @@ class DndArea extends React.PureComponent {
                 onResize={onUpdate}
               />
             ))}
-          {editMode === EDIT_MODES.webview && (
-            <Fragment>
-              <WebView onChange={onUpdateWebView} data={webview} zoomLevel={zoomLevel} />
-              {items.map((item, i) => (
-                <CanvasImage
-                  key={i}
-                  item={item}
-                  onSelect={onSelect}
-                  selectedItemId={selectedItemId}
-                  zoomLevel={zoomLevel}
-                />
-              ))}
-            </Fragment>
-          )}
           {editMode === EDIT_MODES.annotation && (
             <Fragment>
               <Pins

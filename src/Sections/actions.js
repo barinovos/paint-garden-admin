@@ -10,7 +10,15 @@ export function fetchData() {
 }
 
 export function createSection(data) {
-  return dispatch => api.post(SECTION, data).then(resp => dispatch(updateSections(resp.data)))
+  return (dispatch, getState) =>
+    api
+      .post(SECTION, {
+        ...data,
+        projectId: getState().project.id,
+        posx: 0,
+        posy: 0,
+      })
+      .then(resp => dispatch({ type: actionTypes.CREATE_SECTION, section: { ...resp.data, imageIds: [] } }))
 }
 
 export function addToCanvas(section) {
@@ -19,33 +27,43 @@ export function addToCanvas(section) {
     const activeImage = images.find(im => im.id === section.imageIds[section.imageIds.length - 1])
     return api
       .put(`${SECTION}/${section.id}`, {
-        canvas: {
-          x: 0,
-          y: 0,
-          width: section.width || activeImage.width,
-          height: activeImage.height,
-          depth: section.depth || 0,
-        },
+        posx: 0,
+        posy: 0,
+        width: section.width || activeImage.width,
+        height: activeImage.height,
+        canvas: true,
       })
-      .then(resp => dispatch(updateSections(resp.data)))
+      .then(resp => dispatch(updateSectionsAction(resp.data)))
   }
 }
 
 export function removeFromCanvas(sectionId) {
   return dispatch =>
-    api.put(`${SECTION}/${sectionId}`, { canvas: null }).then(resp => dispatch(updateSections(resp.data)))
+    api.put(`${SECTION}/${sectionId}`, { canvas: false }).then(resp => dispatch(updateSectionsAction(resp.data)))
 }
 
 export function deleteSection(id) {
-  return dispatch => api.delete(`${SECTION}/${id}`).then(resp => dispatch(updateDb(resp.data)))
+  return dispatch =>
+    api.delete(`${SECTION}/${id}`).then(resp =>
+      dispatch({
+        type: actionTypes.DELETE_SECTION,
+        id,
+      }),
+    )
 }
 
 export function deleteImage(id) {
-  return dispatch => api.delete(`${IMAGE}/${id}`).then(resp => dispatch(updateDb(resp.data)))
+  return dispatch =>
+    api.delete(`${IMAGE}/${id}`).then(resp =>
+      dispatch({
+        type: actionTypes.DELETE_IMAGE,
+        id,
+      }),
+    )
 }
 
 export function updateSection(data) {
-  return dispatch => api.put(`${SECTION}/${data.id}`, data).then(resp => dispatch(updateSections(resp.data)))
+  return dispatch => api.put(`${SECTION}/${data.id}`, data).then(resp => dispatch(updateSectionsAction(resp.data)))
 }
 
 export function uploadImages(files, sectionId) {
@@ -61,18 +79,25 @@ export function uploadImages(files, sectionId) {
       formData.append('images[]', file, file.name)
     }
     formData.append('sectionId', sectionId)
-    return api
-      .post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(resp => dispatch(updateDb(resp.data)))
+    return api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(resp =>
+      dispatch({
+        type: actionTypes.CREATE_IMAGE,
+        image: resp.data,
+      }),
+    )
   }
 }
 
-const updateDb = ({ images, sections, webview, pins }) => ({
+const updateDb = ({ images, sections, project, annotations, user }) => ({
   type: actionTypes.UPDATE_DB,
   images,
   sections,
-  webview,
-  pins,
+  project,
+  user,
+  pins: annotations,
 })
 
-const updateSections = ({ sections }) => ({ type: actionTypes.UPDATE_SECTIONS, sections })
+const updateSectionsAction = section => ({
+  type: actionTypes.UPDATE_SECTION,
+  section: { ...section, imageIds: section.imageIds || [] },
+})

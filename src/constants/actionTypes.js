@@ -5,7 +5,11 @@ export default {
   API_SUCCESS: 'API_SUCCESS',
 
   UPDATE_DB: 'app.db.UPDATE',
-  UPDATE_SECTIONS: 'app.sections.UPDATE',
+  UPDATE_SECTION: 'app.sections.UPDATE',
+  CREATE_SECTION: 'app.sections.CREATE',
+  DELETE_SECTION: 'app.sections.DELETE',
+  CREATE_IMAGE: 'app.images.CREATE',
+  DELETE_IMAGE: 'app.images.DELETE',
   UPDATE_WEBVIEW: 'app.canvas.UPDATE_WEBVIEW',
   ADD_PIN: 'app.canvas.ADD_PIN',
   REMOVE_PIN: 'app.canvas.REMOVE_PIN',
@@ -15,6 +19,8 @@ export default {
   UPDATE_CANVAS: 'app.canvas.UPDATE',
   CHANGE_CANVAS_GRID_MODE: 'app.canvas.GRID_MODE',
   CHANGE_CANVAS_MODE: 'app.canvas.EDIT_MODE',
+
+  CHANGE_PROJECT: 'app.CHANGE_PROJECT',
 
   CHECK_AUTH: 'app.auth.CHECK_AUTH',
   AUTHORISE: 'app.auth.AUTHORISE',

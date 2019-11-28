@@ -69,7 +69,7 @@ class Sections extends React.PureComponent {
           {sections.map(s => (
             <Column key={s.id}>
               <Row>
-                <span style={{ marginRight: 10 }}>{s.name || 'Some section name'}</span>
+                <span style={{ marginRight: 10 }}>{s.title || s.name || 'Some section name'}</span>
                 <Icon src={edit} onClick={() => this.setState({ showModal: true, isCreate: false, section: s })} />
                 <Icon src={trash} onClick={() => deleteSection(s.id)} />
               </Row>

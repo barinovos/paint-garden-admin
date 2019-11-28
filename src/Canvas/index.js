@@ -56,13 +56,16 @@ class Canvas extends React.PureComponent {
       uploadImageToPin,
     } = this.props
     const { selectedSection, zoomLevel } = this.state
-    const sectionName = selectedSection ? selectedSection.name : 'No section selected'
+    const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
     const items = sections
       .filter(s => s.canvas && s.imageIds.length)
-      .map(s => ({
-        id: s.id,
-        path: images.find(im => im.id === s.imageIds[s.imageIds.length - 1]).filePath,
-        ...s.canvas,
+      .map(({ id, imageIds, posx, posy, width, height }) => ({
+        id,
+        path: images.find(im => im.id === imageIds[imageIds.length - 1]).url,
+        posx,
+        posy,
+        width,
+        height
       }))
 
     return (

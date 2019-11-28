@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import colors from '../constants/colors'
 import { ItemInput } from '../Common/Styled'
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.form`
   width: 100%;
   height: 100%;
   display: flex;

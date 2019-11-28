@@ -15,13 +15,16 @@ export const CanvasType = PropTypes.shape({
 
 export const SectionType = PropTypes.shape({
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  width: PropTypes.number,
+  title: PropTypes.string,
   length: PropTypes.number,
   depth: PropTypes.number,
   medium: PropTypes.string,
   synopisis: PropTypes.string,
   year: PropTypes.number,
   imageIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  canvas: CanvasType
+  x: PropTypes.number,
+  y: PropTypes.number,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  dimension: PropTypes.number
 })

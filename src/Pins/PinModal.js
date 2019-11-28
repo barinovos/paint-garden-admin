@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Wrapper, ContentWrapper, AddImage, Image, HiddenInput } from './Styled'
 import { Title, Button, ItemInput, ItemTextArea, JustifiedRow, RightAlignedRow, Icon } from '../Common/Styled'
-import api from '../utils/api'
 import trash from '../assets/trash_.svg'
 import add from '../assets/add.svg'
 
@@ -21,7 +20,7 @@ export default class PinModal extends React.PureComponent {
       headline: '',
       medium: '',
       description: '',
-      imageUrl: '',
+      url: '',
       link: '',
     }
   }
@@ -40,7 +39,7 @@ export default class PinModal extends React.PureComponent {
 
   render() {
     const { onClose, onDelete } = this.props
-    const { headline, medium, description, id, link, imageUrl } = this.state
+    const { headline, medium, description, id, link, url } = this.state
 
     return (
       <Wrapper onClick={onClose}>
@@ -58,8 +57,8 @@ export default class PinModal extends React.PureComponent {
             )}
           </JustifiedRow>
           {id &&
-            (imageUrl ? (
-              <Image src={api.getImageUrl(imageUrl)} />
+            (url ? (
+              <Image src={url} />
             ) : (
               <AddImage>
                 <img src={add} alt="upload" />

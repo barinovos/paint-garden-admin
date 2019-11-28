@@ -4,14 +4,16 @@ import { Wrapper, ContentWrapper } from './Styled'
 import { Button, Title, ItemInput, ItemTextArea, JustifiedRow, RightAlignedRow } from '../Common/Styled'
 
 const defaultState = {
-  name: '',
-  width: '',
-  length: '',
-  depth: '',
+  title: '',
+  height: 1000,
+  width: 1000,
+  depth: 0,
   medium: '',
-  year: '',
+  year: new Date().getFullYear(),
   synopisis: '',
 }
+
+const minTitleLength = 6;
 
 export default class SectionModal extends React.PureComponent {
   static propTypes = {
@@ -23,7 +25,13 @@ export default class SectionModal extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    this.state = props.section ? { ...defaultState, ...props.section } : defaultState
+    this.state = props.section
+      ? {
+          ...defaultState,
+          ...props.section,
+          title: props.section.title || props.section.name,
+        }
+      : defaultState
   }
 
   onChangeState = prop => ev => {
@@ -34,7 +42,7 @@ export default class SectionModal extends React.PureComponent {
 
   validate(prop, val) {
     switch (prop) {
-      case 'length':
+      case 'height':
       case 'width':
       case 'depth':
       case 'year':
@@ -45,28 +53,31 @@ export default class SectionModal extends React.PureComponent {
   }
 
   onSaveChanges = () => {
-    const { length, width, depth, year } = this.state
-    this.props.onSave({
-      ...this.state,
-      width: width ? +width : null,
-      length: length ? +length : null,
-      depth: depth ? +depth : null,
-      year: year ? +year : null,
-    })
+    const { height, width, depth, year, title } = this.state
+    // Title length validation
+    if (title.length >= minTitleLength) {
+      this.props.onSave({
+        ...this.state,
+        width: width ? +width : null,
+        height: height ? +height : null,
+        depth: depth ? +depth : null,
+        year: year ? +year : null,
+      })
+    }
   }
 
   render() {
     const { onClose } = this.props
-    const { name, synopisis, width, length, depth, medium, year } = this.state
+    const { title, synopisis, width, height, depth, medium, year } = this.state
 
     return (
       <Wrapper onClick={onClose}>
         <ContentWrapper onClick={ev => ev.stopPropagation()}>
           <Title>Section detail</Title>
-          <ItemInput value={name} onChange={this.onChangeState('name')} placeholder="Name" />
+          <ItemInput value={title} onChange={this.onChangeState('title')} placeholder="Title" />
           <ItemTextArea value={synopisis} onChange={this.onChangeState('synopisis')} placeholder="Synopisis" />
           <JustifiedRow>
-            <ItemInput value={length} onChange={this.onChangeState('length')} placeholder="Length" width={30} />
+            <ItemInput value={height} onChange={this.onChangeState('height')} placeholder="Height" width={30} />
             <ItemInput value={width} onChange={this.onChangeState('width')} placeholder="Width" width={30} />
             <ItemInput value={depth} onChange={this.onChangeState('depth')} placeholder="Depth" width={30} />
           </JustifiedRow>

@@ -11,7 +11,7 @@ export default {
     UPLOAD: '/upload',
     IMAGE: '/image',
     WEBVIEW: '/webview',
-    PIN: '/pin',
+    PIN: '/annotation',
     LOGIN: '/login',
     AUTH_CHECK: '/authcheck'
   },

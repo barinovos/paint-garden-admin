@@ -21,20 +21,23 @@ export function editModeReducer(state = Constants.EDIT_MODES.dnd, action) {
 
 export function webviewReducer(state = {}, action) {
   switch (action.type) {
-    case actionTypes.UPDATE_DB:
     case actionTypes.UPDATE_WEBVIEW:
-      return action.webview
+      return action.webview || state
     default:
       return state
   }
 }
+
 export function pinsReducer(state = [], action) {
   switch (action.type) {
     case actionTypes.UPDATE_DB:
+      return action.pins || state
     case actionTypes.ADD_PIN:
+      return state.concat(action.pin)
     case actionTypes.REMOVE_PIN:
+      return state.filter(pin => pin.id !== action.pinId)
     case actionTypes.EDIT_PIN:
-      return action.pins
+      return state.map(pin => (pin.id === action.pin.id ? action.pin : pin))
     default:
       return state
   }

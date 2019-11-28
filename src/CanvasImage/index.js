@@ -1,18 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import api from '../utils/api'
 import { Image } from '../Common/Styled'
 import { calcSizeWithZoom } from '../utils/calcZoom'
 
 const CanvasImage = ({ item, onSelect, selectedItemId, zoomLevel }) => {
   const height = calcSizeWithZoom(item.height, zoomLevel)
   const width = calcSizeWithZoom(item.width, zoomLevel)
-  const x = calcSizeWithZoom(item.x, zoomLevel)
-  const y = calcSizeWithZoom(item.y, zoomLevel)
+  const x = calcSizeWithZoom(item.posx, zoomLevel)
+  const y = calcSizeWithZoom(item.posy, zoomLevel)
 
   return (
     <Image
-      src={api.getImageUrl(item.path)}
+      src={item.path}
       isSelected={selectedItemId === item.id}
       alt={''}
       top={y}

@@ -12,8 +12,8 @@ export function changeCanvasMode(mode) {
 
 export function updateCanvas(sectionId, canvas) {
   return dispatch =>
-    api.put(`${Constants.API.SECTION}/${sectionId}`, { canvas }).then(resp => {
-      dispatch(updateSections(resp.data))
+    api.put(`${Constants.API.SECTION}/${sectionId}`, { ...canvas }).then(resp => {
+      dispatch(updateSection(resp.data))
       dispatch({ type: actionTypes.UPDATE_CANVAS })
     })
 }
@@ -27,21 +27,21 @@ export function updateWebview(webview) {
 
 export function addPin(pin) {
   return dispatch =>
-    api.post(Constants.API.PIN, pin).then(resp => dispatch({ type: actionTypes.ADD_PIN, pins: resp.data }))
+    api.post(Constants.API.PIN, pin).then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data }))
 }
 
 export function editPin(pin) {
   return dispatch =>
     api
       .put(`${Constants.API.PIN}/${pin.id}`, pin)
-      .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pins: resp.data }))
+      .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pin: resp.data }))
 }
 
 export function deletePin(pinId) {
   return dispatch =>
     api
       .delete(`${Constants.API.PIN}/${pinId}`)
-      .then(resp => dispatch({ type: actionTypes.REMOVE_PIN, pins: resp.data }))
+      .then(resp => dispatch({ type: actionTypes.REMOVE_PIN, pinId }))
 }
 
 export function uploadImageToPin(file, pinId) {
@@ -55,8 +55,11 @@ export function uploadImageToPin(file, pinId) {
     formData.append('pinId', pinId)
     return api
       .post('/pin-upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pins: resp.data }))
+      .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pin: resp.data }))
   }
 }
 
-const updateSections = ({ sections }) => ({ type: actionTypes.UPDATE_SECTIONS, sections })
+const updateSection = section => ({
+  type: actionTypes.UPDATE_SECTION,
+  section: { ...section, imageIds: section.imageIds || [] },
+})
