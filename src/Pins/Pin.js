@@ -5,7 +5,7 @@ import { calcSizeWithZoom } from '../utils/calcZoom'
 import PinIcon from '../assets/Pin.svg'
 
 const Pin = ({ data, onPinClick, zoomLevel }) => (
-  <PinWrapper x={calcSizeWithZoom(data.x, zoomLevel)} y={calcSizeWithZoom(data.y, zoomLevel)}>
+  <PinWrapper x={calcSizeWithZoom(data.posx, zoomLevel)} y={calcSizeWithZoom(data.posy, zoomLevel)}>
     <img
       src={PinIcon}
       alt={data.headline}
