@@ -26,8 +26,8 @@ export function updateWebview(webview) {
 }
 
 export function addPin(pin) {
-  return dispatch =>
-    api.post(Constants.API.PIN, pin).then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data }))
+  return (dispatch, getState) =>
+    api.post(Constants.API.PIN, { ...pin, projectId: getState().project.id }).then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data }))
 }
 
 export function editPin(pin) {

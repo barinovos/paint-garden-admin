@@ -93,6 +93,7 @@ class DndArea extends React.PureComponent {
                 selectedItemId={selectedItemId}
                 zoomLevel={zoomLevel}
                 onResize={onUpdate}
+                onDrop={onUpdate}
               />
             ))}
           {editMode === EDIT_MODES.annotation && (

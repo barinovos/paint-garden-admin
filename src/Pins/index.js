@@ -13,7 +13,7 @@ const Pins = ({ pins, addPin, deletePin, editPin, uploadImage, zoomLevel }) => {
     const y = reCalcSizeWithZoom(ev.clientY - canvasTopOffset, zoomLevel)
     triggerModal({
       open: true,
-      onSave: data => addPin({ ...data, x, y }),
+      onSave: data => addPin({ ...data, posx: x, posy: y }),
     })
   }
 
