@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { calcSizeWithZoom, reCalcSizeWithZoom } from '../utils/calcZoom'
 import colors from '../constants/colors'
 import { Rnd } from 'react-rnd'
 
 const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, onDrop }) => {
-  const height = calcSizeWithZoom(item.height, zoomLevel)
-  const width = calcSizeWithZoom(item.width, zoomLevel)
-  let x = calcSizeWithZoom(item.posx, zoomLevel)
-  let y = calcSizeWithZoom(item.posy, zoomLevel)
+
+  const [x, setX] = useState(calcSizeWithZoom(item.posx, zoomLevel));
+  const [y, setY] = useState(calcSizeWithZoom(item.posy, zoomLevel));
+  const [height, setHeight] = useState(calcSizeWithZoom(item.height, zoomLevel));
+  const [width, setWidth] = useState(calcSizeWithZoom(item.width, zoomLevel));
 
   const onDragStop = (e, d) => {
     onDrop(item.id, {
@@ -19,18 +20,26 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
     })
   }
 
-  const onResizeStop = (e, direction, ref, d) =>
+  const onResizeStop = (e, direction, ref, d) => {
+    setHeight(reCalcSizeWithZoom(height + d.height, zoomLevel));
+    setWidth(reCalcSizeWithZoom(width + d.width, zoomLevel));
     onResize(item.id, {
-      width: reCalcSizeWithZoom(width + d.width, zoomLevel),
-      height: reCalcSizeWithZoom(height + d.height, zoomLevel),
+      width: width,//reCalcSizeWithZoom(width + d.width, zoomLevel),
+      height: height,//reCalcSizeWithZoom(height + d.height, zoomLevel),
       posx: item.posx,
       posy: item.posy,
     })
+  }
 
     const onDrag = (e, d) => {
-      x = d.x;
-      y = d.y;
+      setX(d.x);
+      setY(d.y);
     }
+
+    // const onResizing = (e, d) => {
+    //   setHeight(reCalcSizeWithZoom(height + d.height, zoomLevel));
+    //   setWidth(reCalcSizeWithZoom(width + d.width, zoomLevel));
+    // }
 
   return (
     <Rnd
@@ -56,6 +65,7 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
       onResizeStop={onResizeStop}
       onDragStop={onDragStop}
       onDrag={onDrag}
+      //onResize= {onResizing}
     />
   )
 }
