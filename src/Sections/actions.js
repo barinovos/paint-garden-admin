@@ -10,11 +10,10 @@ export function fetchData() {
 }
 
 export function createSection(data) {
-  return (dispatch, getState) =>
+  return dispatch =>
     api
       .post(SECTION, {
         ...data,
-        projectId: getState().project.id,
         posx: 0,
         posy: 0,
       })
