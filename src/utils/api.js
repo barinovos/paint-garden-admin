@@ -7,6 +7,9 @@ import { getAuthToken, navigateToLogin } from './auth'
 const API_VERSION = '/api/v1'
 const apiUrl = `${process.env.REACT_APP_API_URL || 'https://api.paint.garden'}${API_VERSION}`
 
+// TODO: replace later with fetch of projects
+const defaultProjectId = 'ad48b0f8-ac28-4197-878c-bd0ae12afbed';
+
 const getHeader = () => ({
   headers: { Authorization: `Bearer ${getAuthToken()}` },
 })
@@ -14,8 +17,10 @@ const getHeader = () => ({
 const api = {
   apiUrl,
 
+  projectId: defaultProjectId,
+
   get(url, params) {
-    let path = `${apiUrl}${url}`
+    let path = `${apiUrl}${url}${api.getQueryParam()}`
     if (params) {
       Object.keys(params).forEach(key => {
         path += `&${key}=${encodeURIComponent(params[key])}`
@@ -25,19 +30,19 @@ const api = {
   },
 
   post(url, data) {
-    return axios.post(`${apiUrl}${url}`, data, getHeader())
+    return axios.post(`${apiUrl}${url}${api.getQueryParam()}`, data, getHeader())
   },
 
   put(url, data) {
-    return axios.put(`${apiUrl}${url}`, data, getHeader())
+    return axios.put(`${apiUrl}${url}${api.getQueryParam()}`, data, getHeader())
   },
 
   delete(url) {
-    return axios.delete(`${apiUrl}${url}`, getHeader())
+    return axios.delete(`${apiUrl}${url}${api.getQueryParam()}`, getHeader())
   },
 
   patch(url, data) {
-    return axios.patch(`${apiUrl}${url}`, data, getHeader())
+    return axios.patch(`${apiUrl}${url}${api.getQueryParam()}`, data, getHeader())
   },
 
   all(values) {
@@ -46,6 +51,14 @@ const api = {
 
   getImageUrl(path) {
     return `${apiUrl}/${path}`
+  },
+
+  setProjectId(id) {
+    api.projectId = id;
+  },
+
+  getQueryParam() {
+    return `?projectId=${api.projectId}`
   },
 
   setupInterceptors: store => {

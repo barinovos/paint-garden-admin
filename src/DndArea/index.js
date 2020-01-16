@@ -18,10 +18,10 @@ const squareTarget = {
     const x = reCalcSizeWithZoom(sourceOffset.x - canvasLeftOffset, zoomLevel)
     const y = reCalcSizeWithZoom(sourceOffset.y - canvasTopOffset, zoomLevel)
     props.onUpdate(item.id, {
-      posx: x,
-      posy: y,
-      width: item.width,
-      height: item.height,
+      posx: Math.floor(x),
+      posy: Math.floor(y),
+      width: Math.floor(item.width),
+      height: Math.floor(item.height),
       depth: item.depth,
     })
   },

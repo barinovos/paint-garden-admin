@@ -33,6 +33,11 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
     })
   }
 
+    // const onResizing = (e, d) => {
+    //   setHeight(reCalcSizeWithZoom(height + d.height, zoomLevel));
+    //   setWidth(reCalcSizeWithZoom(width + d.width, zoomLevel));
+    // }
+
   return (
     <Rnd
       style={{
@@ -62,8 +67,6 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
       bounds="window"
       onResizeStop={onResizeStop}
       onDragStop={onDragStop}
-      //onDrag={onDrag}
-      //onResize= {onResizing}
     >
       <figure
         style = {{
