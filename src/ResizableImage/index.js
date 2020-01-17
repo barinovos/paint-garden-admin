@@ -12,6 +12,8 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
   const [width, setWidth] = useState(calcSizeWithZoom(item.width, zoomLevel));
 
   const onDragStop = (e, d) => {
+    // setX(reCalcSizeWithZoom(d.x, zoomLevel));
+    // setY(reCalcSizeWithZoom(d.y, zoomLevel));
     onDrop(item.id, {
       width: item.width,
       height: item.height,
@@ -31,11 +33,6 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
     })
   }
 
-    const onDrag = (e, d) => {
-      setX(d.x);
-      setY(d.y);
-    }
-
     // const onResizing = (e, d) => {
     //   setHeight(reCalcSizeWithZoom(height + d.height, zoomLevel));
     //   setWidth(reCalcSizeWithZoom(width + d.width, zoomLevel));
@@ -44,29 +41,42 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
   return (
     <Rnd
       style={{
-        background: `url(${item.path}) no-repeat`,
-        backgroundSize: width + 'px ' + height + 'px',
+        // background: `url(${item.path}) no-repeat`,
+        // backgroundSize: width + 'px ' + height + 'px',
         margin: 0,
         height: '100%',
         resize: 'both',
         border: selectedItemId === item.id ? `2px dashed ${colors.darkGrey}` : 'none',
         position: 'absolute',
       }}
-      size={{ width, height }}
-      position={{ x: x , y: y }}
-      maxWidth={width * 3}
-      maxHeight={height * 3}
-      minHeight={height / 3}
-      minWidth={width / 3}
-      lockAspectRatio={true}
+      // size={{ width, height }}
+      // position={{ x: x , y: y }}
+      default = {{
+        x: x,
+        y: y,
+        width: width,
+        height: height
+      }}
+      // maxWidth={width * 3}
+      // maxHeight={height * 3}
+      // minHeight={height / 3}
+      // minWidth={width / 3}
+      //lockAspectRatio={true}
       onClick={() => onSelect(item.id)}
-      dragAxis={'both'}
+      //dragAxis={'both'}
       bounds="window"
       onResizeStop={onResizeStop}
       onDragStop={onDragStop}
-      onDrag={onDrag}
-      //onResize= {onResizing}
-    />
+    >
+      <figure
+        style = {{
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        <img alt = "{item.path}" src = {item.path} width = "100%" height = "100%" />
+      </figure>
+    </Rnd>
   )
 }
 
