@@ -26,6 +26,12 @@ export function updateWebview(webview) {
 }
 
 export function addPin(pin) {
+  if (pin.medium === "")  delete pin.medium;
+  if (pin.description === "") delete pin.description;
+  if (pin.description === "") delete pin.description;
+  if (pin.url === "") delete pin.url;
+  if (pin.link === "") delete pin.link;
+  console.log(pin);
   return (dispatch, getState) =>
     api.post(Constants.API.PIN, { ...pin, projectId: getState().project.id }).then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data }))
 }
