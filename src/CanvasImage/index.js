@@ -6,8 +6,8 @@ import { calcSizeWithZoom } from '../utils/calcZoom'
 const CanvasImage = ({ item, onSelect, selectedItemId, zoomLevel }) => {
   const height = calcSizeWithZoom(item.height, zoomLevel)
   const width = calcSizeWithZoom(item.width, zoomLevel)
-  const x = calcSizeWithZoom(item.posx, zoomLevel)
-  const y = calcSizeWithZoom(item.posy, zoomLevel)
+  const x = item.posx
+  const y = item.posy
 
   return (
     <Image

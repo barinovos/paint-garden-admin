@@ -9,6 +9,7 @@ const apiUrl = `${process.env.REACT_APP_API_URL || 'https://api.paint.garden'}${
 
 // TODO: replace later with fetch of projects
 const defaultProjectId = 'ad48b0f8-ac28-4197-878c-bd0ae12afbed';
+//const defaultProjectId = 'ad48b0f8-ac28-4197-878c-bd0ae12afbed';
 
 const getHeader = () => ({
   headers: { Authorization: `Bearer ${getAuthToken()}` },
@@ -68,6 +69,7 @@ const api = {
         return response
       },
       error => {
+        console.log(error);
         // in this case we only care about unauthorized errors
         // ignore errors on Login page (targeted to /login)
         if (error.request.responseURL.indexOf(Constants.API.LOGIN) === -1) {

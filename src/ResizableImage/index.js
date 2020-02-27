@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { calcSizeWithZoom, reCalcSizeWithZoom } from '../utils/calcZoom'
 import colors from '../constants/colors'
@@ -6,14 +6,19 @@ import { Rnd } from 'react-rnd'
 
 const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, onDrop }) => {
 
-  const [x, setX] = useState(calcSizeWithZoom(item.posx, zoomLevel));
-  const [y, setY] = useState(calcSizeWithZoom(item.posy, zoomLevel));
+  const [x, setX] = useState(item.posx);
+  const [y, setY] = useState(item.posy);
   const [height, setHeight] = useState(calcSizeWithZoom(item.height, zoomLevel));
   const [width, setWidth] = useState(calcSizeWithZoom(item.width, zoomLevel));
 
+  useEffect(() => {
+    setHeight(calcSizeWithZoom(item.height, zoomLevel));
+    setWidth(calcSizeWithZoom(item.width, zoomLevel));
+  }, [zoomLevel]);
+
   const onDragStop = (e, d) => {
-    // setX(reCalcSizeWithZoom(d.x, zoomLevel));
-    // setY(reCalcSizeWithZoom(d.y, zoomLevel));
+    setX(calcSizeWithZoom(d.x, zoomLevel));
+    setY(calcSizeWithZoom(d.y, zoomLevel));
     onDrop(item.id, {
       width: item.width,
       height: item.height,
@@ -26,8 +31,8 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
     setHeight(reCalcSizeWithZoom(height + d.height, zoomLevel));
     setWidth(reCalcSizeWithZoom(width + d.width, zoomLevel));
     onResize(item.id, {
-      width: width,//reCalcSizeWithZoom(width + d.width, zoomLevel),
-      height: height,//reCalcSizeWithZoom(height + d.height, zoomLevel),
+      width: reCalcSizeWithZoom(width + d.width, zoomLevel),
+      height: reCalcSizeWithZoom(height + d.height, zoomLevel),
       posx: item.posx,
       posy: item.posy,
     })
@@ -49,7 +54,7 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
         border: selectedItemId === item.id ? `2px dashed ${colors.darkGrey}` : 'none',
         position: 'absolute',
       }}
-      // size={{ width, height }}
+      size={{ width, height}}
       // position={{ x: x , y: y }}
       default = {{
         x: x,
@@ -57,6 +62,7 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
         width: width,
         height: height
       }}
+
       // maxWidth={width * 3}
       // maxHeight={height * 3}
       // minHeight={height / 3}

@@ -16,7 +16,7 @@ const ActionsBar = ({
   editMode,
 }) => (
   <Wrapper>
-    <span>{editMode === EDIT_MODES.dnd ? sectionName : ''}</span>
+    <span>{editMode === EDIT_MODES.resize ? sectionName : ''}</span>
     <SubActionsBar>
       {/* <ActionButton onClick={() => onChangeCanvasMode(EDIT_MODES.dnd)} active={editMode === EDIT_MODES.dnd}>
         Move sections
