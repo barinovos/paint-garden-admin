@@ -17,6 +17,9 @@ export default class PinModal extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = props.pin || {
+      temp_path: '',
+      image: '',
+      image_url: '',
       headline: '',
       medium: '',
       description: '',
@@ -25,21 +28,30 @@ export default class PinModal extends React.PureComponent {
     }
   }
 
-  onChangeState = prop => ev => this.setState({ [prop]: ev.target.value })
+  onChangeState = prop => ev => {
+    if (prop !== 'image') {
+      this.setState({ [prop]: ev.target.value })
+    } else {
+      this.setState({ [prop]: ev.target.files[0] })
+      this.setState({ temp_path: URL.createObjectURL(ev.target.files[0]) })
+    }
+  }
 
   onSaveChanges = () => {
+    delete this.state.temp_path
     this.props.onSave(this.state)
     this.props.onClose()
   }
 
   onUpload = ev => {
     this.props.onImageUpload(ev.target.files[0], this.state.id)
-    this.props.onClose()
+    this.setState({ temp_path: URL.createObjectURL(ev.target.files[0]) })
+    //this.props.onClose()
   }
 
   render() {
     const { onClose, onDelete } = this.props
-    const { headline, medium, description, id, link, url } = this.state
+    const { temp_path, image, image_url, headline, medium, description, id, link, url } = this.state
 
     return (
       <Wrapper onClick={onClose}>
@@ -56,15 +68,20 @@ export default class PinModal extends React.PureComponent {
               />
             )}
           </JustifiedRow>
-          {id &&
+          {id ?
             (url ? (
               <Image src={url} />
             ) : (
               <AddImage>
-                <img src={add} alt="upload" />
+                <img style = {{maxWidth: "100%", maxHeight: "100%" }} src={temp_path ? temp_path : (image_url ? image_url : add)} alt="upload" />
                 <HiddenInput onChange={this.onUpload} />
               </AddImage>
-            ))}
+            )) : (
+              <AddImage >
+                <img src={temp_path ? temp_path : add} alt="upload" />
+                <HiddenInput onChange={this.onChangeState('image')} />
+              </AddImage>
+            )}
           <ItemInput value={headline} onChange={this.onChangeState('headline')} placeholder="Headline" />
           <ItemInput value={medium} onChange={this.onChangeState('medium')} placeholder="Medium" />
           <ItemTextArea value={description} onChange={this.onChangeState('description')} placeholder="Description" />
