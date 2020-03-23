@@ -12,7 +12,7 @@ const CanvasImage = ({ item, onSelect, selectedItemId, zoomLevel }) => {
   return (
     <Image
       src={item.path}
-      isSelected={selectedItemId === item.id}
+      selected={selectedItemId === item.id}
       alt={''}
       top={y}
       left={x}

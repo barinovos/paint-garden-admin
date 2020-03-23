@@ -11,7 +11,9 @@ const defaultState = {
   medium: '',
   year: new Date().getFullYear(),
   synopisis: '',
+  errors: {},
 }
+
 
 const minTitleLength = 6;
 
@@ -40,6 +42,20 @@ export default class SectionModal extends React.PureComponent {
     }
   }
 
+  onChangeTitle = prop => ev => {
+    let errors = {};
+    if (ev.target.value.length < minTitleLength) {
+      errors["title"] = `Tittle has to be longer than ${minTitleLength}`;
+      this.setState({errors: errors});
+    } else {
+      errors["title"] = '';
+      this.setState({errors: errors});
+    }
+
+    this.setState({ [prop]: ev.target.value })
+    return true;
+  }
+
   validate(prop, val) {
     switch (prop) {
       case 'height':
@@ -63,6 +79,8 @@ export default class SectionModal extends React.PureComponent {
         depth: depth ? +depth : null,
         year: year ? +year : null,
       })
+    } else {
+
     }
   }
 
@@ -74,7 +92,13 @@ export default class SectionModal extends React.PureComponent {
       <Wrapper onClick={onClose}>
         <ContentWrapper onClick={ev => ev.stopPropagation()}>
           <Title>Section detail</Title>
-          <ItemInput value={title} onChange={this.onChangeState('title')} placeholder="Title" />
+          <ItemInput
+            value={title}
+            onChange={this.onChangeTitle('title')}
+            name= "title"
+          placeholder="Title"
+         />
+         <span style={{color: "red"}}>{this.state.errors["title"]}</span>
           <ItemTextArea value={synopisis} onChange={this.onChangeState('synopisis')} placeholder="Synopisis" />
           <JustifiedRow>
             <ItemInput value={height} onChange={this.onChangeState('height')} placeholder="Height" width={30} />

@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
 `
-export const ContentWrapper = styled.div`
+export const ContentWrapper = styled.form`
   width: 450px;
   background: white;
   box-shadow: 2px 3px 22px rgba(0, 0, 0, 0.5);
