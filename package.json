@@ -21,8 +21,8 @@
     "styled-components": "^4.3.1"
   },
   "scripts": {
+    "start:production": "export REACT_APP_API_URL=https://api.paint.garden; react-scripts start",
     "start": "export REACT_APP_API_URL=https://api.paint.garden; react-scripts start",
-    "start:local": "export REACT_APP_API_URL=http://localhost:9000; react-scripts start",
     "build": "export REACT_APP_API_URL=https://api.paint.garden; react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

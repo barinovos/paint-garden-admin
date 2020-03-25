@@ -6,15 +6,15 @@ const {
 } = Constants
 
 export function fetchData() {
-  return dispatch => api.get(DB).then(resp => dispatch(updateDb(resp.data)))
+  return dispatch => api.get(`${DB}/${api.projectId}`)
+    .then(resp => dispatch(updateDb(resp.data)))
 }
 
 export function createSection(data) {
-  return (dispatch, getState) =>
+  return dispatch =>
     api
       .post(SECTION, {
         ...data,
-        projectId: getState().project.id,
         posx: 0,
         posy: 0,
       })
@@ -79,10 +79,12 @@ export function uploadImages(files, sectionId) {
       formData.append('images[]', file, file.name)
     }
     formData.append('sectionId', sectionId)
-    return api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(resp =>
+    formData.append('projectId', api.projectId)
+    return api.post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(resp =>
       dispatch({
         type: actionTypes.CREATE_IMAGE,
-        image: resp.data,
+        images: resp.data,
+        sectionId
       }),
     )
   }

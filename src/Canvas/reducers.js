@@ -10,7 +10,7 @@ export function isCanvasGridViewReducer(state = true, action) {
   }
 }
 
-export function editModeReducer(state = Constants.EDIT_MODES.dnd, action) {
+export function editModeReducer(state = Constants.EDIT_MODES.resize, action) {
   switch (action.type) {
     case actionTypes.CHANGE_CANVAS_MODE:
       return action.mode

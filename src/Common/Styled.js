@@ -82,7 +82,7 @@ export const Image = styled.img`
   top: ${props => props.top || 0}px;
   left: ${props => props.left || 0}px;
   user-select: none;
-  ${props => props.isSelected && ActiveImage};
+  ${props => props.selected && ActiveImage};
 `
 
 const CommonInput = css`

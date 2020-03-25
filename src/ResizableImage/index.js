@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { calcSizeWithZoom, reCalcSizeWithZoom } from '../utils/calcZoom'
 import colors from '../constants/colors'
 import { Rnd } from 'react-rnd'
 
 const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, onDrop }) => {
-  const height = calcSizeWithZoom(item.height, zoomLevel)
-  const width = calcSizeWithZoom(item.width, zoomLevel)
-  let x = calcSizeWithZoom(item.posx, zoomLevel)
-  let y = calcSizeWithZoom(item.posy, zoomLevel)
+
+  const [x, setX] = useState(item.posx);
+  const [y, setY] = useState(item.posy);
+  const [height, setHeight] = useState(calcSizeWithZoom(item.height, zoomLevel));
+  const [width, setWidth] = useState(calcSizeWithZoom(item.width, zoomLevel));
+
+  useEffect(() => {
+    setHeight(calcSizeWithZoom(item.height, zoomLevel));
+    setWidth(calcSizeWithZoom(item.width, zoomLevel));
+  }, [zoomLevel]);
 
   const onDragStop = (e, d) => {
+    setX(calcSizeWithZoom(d.x, zoomLevel));
+    setY(calcSizeWithZoom(d.y, zoomLevel));
     onDrop(item.id, {
       width: item.width,
       height: item.height,
@@ -19,44 +27,62 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
     })
   }
 
-  const onResizeStop = (e, direction, ref, d) =>
+  const onResizeStop = (e, direction, ref, d) => {
+    setHeight(reCalcSizeWithZoom(height + d.height, zoomLevel));
+    setWidth(reCalcSizeWithZoom(width + d.width, zoomLevel));
     onResize(item.id, {
       width: reCalcSizeWithZoom(width + d.width, zoomLevel),
       height: reCalcSizeWithZoom(height + d.height, zoomLevel),
       posx: item.posx,
       posy: item.posy,
     })
+  }
 
-    const onDrag = (e, d) => {
-      x = d.x;
-      y = d.y;
-    }
+    // const onResizing = (e, d) => {
+    //   setHeight(reCalcSizeWithZoom(height + d.height, zoomLevel));
+    //   setWidth(reCalcSizeWithZoom(width + d.width, zoomLevel));
+    // }
 
   return (
     <Rnd
       style={{
-        background: `url(${item.path}) no-repeat`,
-        backgroundSize: width + 'px ' + height + 'px',
+        // background: `url(${item.path}) no-repeat`,
+        // backgroundSize: width + 'px ' + height + 'px',
         margin: 0,
         height: '100%',
         resize: 'both',
         border: selectedItemId === item.id ? `2px dashed ${colors.darkGrey}` : 'none',
         position: 'absolute',
       }}
-      size={{ width, height }}
-      position={{ x: x , y: y }}
-      maxWidth={width * 3}
-      maxHeight={height * 3}
-      minHeight={height / 3}
-      minWidth={width / 3}
-      lockAspectRatio={true}
+      size={{ width, height}}
+      // position={{ x: x , y: y }}
+      default = {{
+        x: x,
+        y: y,
+        width: width,
+        height: height
+      }}
+
+      // maxWidth={width * 3}
+      // maxHeight={height * 3}
+      // minHeight={height / 3}
+      // minWidth={width / 3}
+      //lockAspectRatio={true}
       onClick={() => onSelect(item.id)}
-      dragAxis={'both'}
+      //dragAxis={'both'}
       bounds="window"
       onResizeStop={onResizeStop}
       onDragStop={onDragStop}
-      onDrag={onDrag}
-    />
+    >
+      <figure
+        style = {{
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        <img alt = "{item.path}" src = {item.path} width = "100%" height = "100%" />
+      </figure>
+    </Rnd>
   )
 }
 

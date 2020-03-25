@@ -66,7 +66,7 @@ const LoginPage = ({ history }) => {
         onChange={ev => onChange(ev.target.value, 'password')}
         onKeyUp={onKeyUp}
       />
-      <Button type="submit">Log In</Button>
+      <Button type="submit" onClick={onLogin}>Log In</Button>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
     </Wrapper>
   )
