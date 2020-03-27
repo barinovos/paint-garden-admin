@@ -1,5 +1,9 @@
 import PropTypes from 'prop-types'
 
+export const ProjectType = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+})
+
 export const ImageType = PropTypes.shape({
   id: PropTypes.string.isRequired,
   filePath: PropTypes.string.isRequired

@@ -7,6 +7,7 @@ import Constants from '../constants'
 import Toolbar from '../Toolbar'
 import Canvas from '../Canvas'
 import Sections from '../Sections'
+import Projects from '../Projects'
 import LoginPage from '../LoginPage'
 import { authCheck } from './actions'
 import { MainArea } from '../Common/Styled'
@@ -33,7 +34,9 @@ const Main = ({ auth, authCheck }) => {
       <Toolbar />
       <MainArea>
         <Switch>
-          <Route path={ROUTES.ROOT} exact component={Sections} />
+          <Route path={ROUTES.ROOT} exact component={Projects} />
+          <Route path={ROUTES.SECTIONS} exact component={Sections} />
+          <Route path={ROUTES.PROJECTS} exact component={Projects} />
           <Route path={ROUTES.CANVAS} component={Canvas} />
           <Route path={ROUTES.LOGIN} component={LoginPage} />
           <Route path={ROUTES.NOT_FOUND} render={() => <div>Not found</div>} />
