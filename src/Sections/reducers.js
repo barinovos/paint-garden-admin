@@ -29,6 +29,8 @@ export function sectionsReducer(state = [], action) {
           ...s,
           imageIds: [...s.imageIds, ...action.images.map(im => im.id)]
         } : s)
+      case "CLEAR":
+       return []
     default:
       return state
   }

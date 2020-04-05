@@ -6,11 +6,9 @@ import { getAuthToken, navigateToLogin } from './auth'
 // const apiUrl = process.env.REACT_APP_API_URL || 'https://anth-api.herokuapp.com';
 const API_VERSION = '/api/v1'
 const apiUrl = `${process.env.REACT_APP_API_URL || 'https://api.paint.garden'}${API_VERSION}`
-console.log(apiUrl);
 // TODO: replace later with fetch of projects
 //const defaultProjectId = 'ad48b0f8-ac28-4197-878c-bd0ae12afbed';
 const defaultProjectId = 'ad48b0f8-ac28-4197-878c-bd0ae12afbed';
-
 const getHeader = () => ({
   headers: { Authorization: `Bearer ${getAuthToken()}` },
 })
@@ -21,7 +19,7 @@ const api = {
   projectId: defaultProjectId,
 
   get(url, params) {
-    let path = `${apiUrl}${url}${api.getQueryParam()}`
+    let path = `${apiUrl}${url}`
     if (params) {
       Object.keys(params).forEach(key => {
         path += `&${key}=${encodeURIComponent(params[key])}`
@@ -31,19 +29,19 @@ const api = {
   },
 
   post(url, data) {
-    return axios.post(`${apiUrl}${url}${api.getQueryParam()}`, data, getHeader())
+    return axios.post(`${apiUrl}${url}`, data, getHeader())
   },
 
   put(url, data) {
-    return axios.put(`${apiUrl}${url}${api.getQueryParam()}`, data, getHeader())
+    return axios.put(`${apiUrl}${url}`, data, getHeader())
   },
 
   delete(url) {
-    return axios.delete(`${apiUrl}${url}${api.getQueryParam()}`, getHeader())
+    return axios.delete(`${apiUrl}${url}`, getHeader())
   },
 
   patch(url, data) {
-    return axios.patch(`${apiUrl}${url}${api.getQueryParam()}`, data, getHeader())
+    return axios.patch(`${apiUrl}${url}`, data, getHeader())
   },
 
   all(values) {
@@ -69,7 +67,6 @@ const api = {
         return response
       },
       error => {
-        console.log(error);
         // in this case we only care about unauthorized errors
         // ignore errors on Login page (targeted to /login)
         if (error.request.responseURL.indexOf(Constants.API.LOGIN) === -1) {

@@ -35,11 +35,11 @@ const Main = ({ auth, authCheck }) => {
       <MainArea>
         <Switch>
           <Route path={ROUTES.ROOT} exact component={Projects} />
-          <Route path={ROUTES.SECTIONS} exact component={Sections} />
+          <Route path={ROUTES.SECTIONS + '/:project_id'} exact component={Sections} />
           <Route path={ROUTES.PROJECTS} exact component={Projects} />
-          <Route path={ROUTES.CANVAS} component={Canvas} />
+          <Route path={ROUTES.CANVAS+ '/:project_id'} component={Canvas} />
           <Route path={ROUTES.LOGIN} component={LoginPage} />
-          <Route path={ROUTES.NOT_FOUND} render={() => <div>Not found</div>} />
+          <Route render={() => <div>Not found</div>} />
         </Switch>
       </MainArea>
     </Fragment>

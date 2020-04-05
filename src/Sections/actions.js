@@ -5,18 +5,19 @@ const {
   API: { DB, SECTION, IMAGE },
 } = Constants
 
-export function fetchData() {
-  return dispatch => api.get(`${DB}/${api.projectId}`)
+export function fetchData(project_id) {
+  return dispatch => api.get(`${DB}/${project_id}`)
     .then(resp => dispatch(updateDb(resp.data)))
 }
 
-export function createSection(data) {
+export function createSection(data, project_id) {
   return dispatch =>
     api
       .post(SECTION, {
         ...data,
         posx: 0,
         posy: 0,
+        projectId: project_id
       })
       .then(resp => dispatch({ type: actionTypes.CREATE_SECTION, section: { ...resp.data, imageIds: [] } }))
 }
@@ -62,11 +63,13 @@ export function deleteImage(id) {
     )
 }
 
+
+
 export function updateSection(data) {
   return dispatch => api.put(`${SECTION}/${data.id}`, data).then(resp => dispatch(updateSectionsAction(resp.data)))
 }
 
-export function uploadImages(files, sectionId) {
+export function uploadImages(files, sectionId, projectId) {
   return dispatch => {
     const formData = new FormData()
     for (var i = 0; i < files.length; i++) {
@@ -79,7 +82,7 @@ export function uploadImages(files, sectionId) {
       formData.append('images[]', file, file.name)
     }
     formData.append('sectionId', sectionId)
-    formData.append('projectId', api.projectId)
+    formData.append('projectId', projectId)
     return api.post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(resp =>
       dispatch({
         type: actionTypes.CREATE_IMAGE,
@@ -98,6 +101,13 @@ const updateDb = ({ images, sections, project, annotations, user }) => ({
   user,
   pins: annotations,
 })
+
+
+export const  clearData = () => {
+  return{
+    type: "CLEAR"
+  };
+};
 
 const updateSectionsAction = section => ({
   type: actionTypes.UPDATE_SECTION,

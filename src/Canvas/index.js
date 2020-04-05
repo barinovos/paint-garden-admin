@@ -25,10 +25,12 @@ class Canvas extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    props.fetchData()
+    const project_id = props.match.params.project_id;
+    props.fetchData(project_id)
     this.state = {
       selectedSection: null,
       zoomLevel: 0,
+      project_id: project_id
     }
   }
 
@@ -37,6 +39,11 @@ class Canvas extends React.PureComponent {
   onChangeCanvasMode = mode => {
     this.setState({ selectedSection: null })
     this.props.changeCanvasMode(mode)
+  }
+
+  onAddPin = pin => {
+    console.log(this.state);
+    this.props.addPin(pin, this.state.project_id);
   }
 
   render() {
@@ -51,7 +58,6 @@ class Canvas extends React.PureComponent {
       pins,
       updateWebview,
       editPin,
-      addPin,
       deletePin,
       uploadImageToPin,
     } = this.props
@@ -69,6 +75,7 @@ class Canvas extends React.PureComponent {
       }))
 
     return (
+      console.log(items),
       <Wrapper>
         <ActionsBar
           zoomLevel={zoomLevel}
@@ -90,7 +97,7 @@ class Canvas extends React.PureComponent {
           webview={webview}
           onUpdateWebView={updateWebview}
           pins={pins}
-          onAddPin={addPin}
+          onAddPin={this.onAddPin}
           onDeletePin={deletePin}
           onEditPin={editPin}
           onUploadImageToPin={uploadImageToPin}

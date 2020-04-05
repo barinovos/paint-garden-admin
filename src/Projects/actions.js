@@ -21,7 +21,6 @@ export function createProject(project) {
 
 
 export function updateProject(project) {
-  console.log(project);
   const formData = new FormData();
   formData.append('title', project.title);
   formData.append('image', project.image, project.image.name);
@@ -36,7 +35,7 @@ export function deleteProject(project_id) {
 }
 
 
-const updateProjects = projects => (console.log(projects),{
+const updateProjects = projects => ({
   type: actionTypes.UPDATE_PROJECTS,
   projects,
 })

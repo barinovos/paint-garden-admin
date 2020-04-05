@@ -25,7 +25,7 @@ export function updateWebview(webview) {
       .then(resp => dispatch({ type: actionTypes.UPDATE_WEBVIEW, webview: resp.data }))
 }
 
-export function addPin(pin) {
+export function addPin(pin, project_id) {
   if (pin.medium === "")  delete pin.medium;
   if (pin.description === "") delete pin.description;
   if (pin.url === "") delete pin.url;
@@ -39,10 +39,12 @@ export function addPin(pin) {
   if (pin.description) formData.append('description', pin.description);
   if (pin.url) formData.append('url', pin.url);
   if (pin.link) formData.append('link', pin.link);
-  return (dispatch, getState) => {
-    formData.append('projectId', getState().project.id);
-    api.post(Constants.API.PIN, formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data }));
-  }
+  formData.append('projectId', project_id);
+  return dispatch =>
+    api.post(Constants.API.PIN,
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } })
+    .then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data }));
 }
 
 export function editPin(pin) {
