@@ -23,13 +23,21 @@ const Projects = (props) => {
         setUpdateProject(null)
     }
 
+    const editButtonClicked = project => {
+        setShowModal(true)
+        setIsCreate(false)
+        setUpdateProject(project)
+    }
+
    const onCloseModal = () => {
         setShowModal(false)
    }
 
+   const onProjectDelete = project_id => {
+       props.deleteProject(project_id)
+   }
+
   const onFinishCreateEdit = project => {
-    console.log('onFinishCreateEdit')
-      console.log(project)
     setShowModal(false)
     isCreate ? props.createProject(project) : props.updateProject(project)
   }
@@ -41,7 +49,7 @@ const Projects = (props) => {
             <CreateButton onClick={createButtonClicked}>Create project</CreateButton>
             <ProjectsList>
                 {props.project.map(p => (
-                    <ProjectSingle key ={p.id} project={p} />
+                    <ProjectSingle key ={p.id} project={p} onEdit={editButtonClicked} onDelete={onProjectDelete}/>
                 ))}
             </ProjectsList>
 

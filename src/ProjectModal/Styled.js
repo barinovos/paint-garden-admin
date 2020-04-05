@@ -19,3 +19,35 @@ export const ContentWrapper = styled.form`
   border-radius: 2px;
   padding: 18px 21px;
 `
+
+export const Image = styled.img`
+  max-width: 100%;
+  margin-bottom: 1.2em;
+`
+
+export const AddImage = styled.div`
+  height: 85px;
+  background: lightgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 1.2em;
+`
+
+
+export const HiddenInput = styled.input.attrs({
+  type: 'file',
+  multiple: false,
+  accept: 'image/*',
+})`
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 85px;
+  opacity: 0;
+  width: 100%;
+  cursor: pointer;
+`
+

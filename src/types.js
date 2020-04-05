@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 
 export const ProjectType = PropTypes.shape({
   id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  image: PropTypes.string,
 })
 
 export const ImageType = PropTypes.shape({

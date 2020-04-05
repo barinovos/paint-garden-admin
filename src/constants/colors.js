@@ -4,6 +4,7 @@ export default {
   darkBlue: '#6D878F',
   buttonBg: '#E0F4FD',
   darkGrey: '#979797',
+  rgbaGray: '0, 0, 0, 0.415565',
   mainGrey: '#446982',
   dark: '#6A6A6A',
   inputBg: '#F3F4F7',

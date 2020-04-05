@@ -11,20 +11,32 @@ export function fetchData() {
 }
 
 export function createProject(project) {
-  console.log('create project');
-  console.log(project);
-  console.log(project.title);
-  return dispatch => api.post(`${PROJECT}`, {
-    title: project.title
-  }).then(resp => dispatch(createdProject(resp.data)));
+  const formData = new FormData();
+  formData.append('title', project.title);
+  formData.append('image', project.image, project.image.name);
+  return dispatch => api.post(`${PROJECT}`,formData,
+  { headers: { 'Content-Type': 'multipart/form-data' } }
+  ).then(resp => dispatch(createdProject(resp.data)));
 }
 
 
 export function updateProject(project) {
-  console.log('update project');
+  console.log(project);
+  const formData = new FormData();
+  formData.append('title', project.title);
+  formData.append('image', project.image, project.image.name);
+  return dispatch => api.post(`${PROJECT}/${project.id}`,formData,
+  { headers: { 'Content-Type': 'multipart/form-data' } }
+  ).then(resp => dispatch(refreshData(resp.data)));
 }
 
-const updateProjects = projects => ({
+export function deleteProject(project_id) {
+  return dispatch => api.delete(`${PROJECT}/${project_id}`)
+    .then(resp => dispatch(refreshData(resp.data)));
+}
+
+
+const updateProjects = projects => (console.log(projects),{
   type: actionTypes.UPDATE_PROJECTS,
   projects,
 })
@@ -33,3 +45,7 @@ const createdProject = project => ({
   type: actionTypes.CREATED_PROJECT,
   project
 })
+
+const refreshData = data => (
+  fetchData()
+)

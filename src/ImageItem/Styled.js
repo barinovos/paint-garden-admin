@@ -20,7 +20,7 @@ export const Icons = styled.div`
   padding-left: 7px;
   transform: translateY(-26px);
   transition: transform ease-in .3s;
-  
+
   ${Wrapper}:hover & {
     transform: translateY(0px);
   }
