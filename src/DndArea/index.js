@@ -6,7 +6,7 @@ import DragImage from '../DragImage'
 import ResizableImage from '../ResizableImage'
 import CanvasImage from '../CanvasImage'
 import Pins from '../Pins'
-import { reCalcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
+import { calcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
 import Constants from '../constants'
 const { EDIT_MODES } = Constants
 
@@ -15,8 +15,8 @@ const squareTarget = {
     const sourceOffset = monitor.getSourceClientOffset()
     const item = monitor.getItem()
     const zoomLevel = props.zoomLevel
-    const x = reCalcSizeWithZoom(sourceOffset.x - canvasLeftOffset, zoomLevel)
-    const y = reCalcSizeWithZoom(sourceOffset.y - canvasTopOffset, zoomLevel)
+    const x = calcSizeWithZoom(sourceOffset.x - canvasLeftOffset, zoomLevel)
+    const y = calcSizeWithZoom(sourceOffset.y - canvasTopOffset, zoomLevel)
     props.onUpdate(item.id, {
       posx: Math.floor(x),
       posy: Math.floor(y),
