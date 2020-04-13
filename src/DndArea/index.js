@@ -72,8 +72,8 @@ class DndArea extends React.PureComponent {
     } = this.props
 
     return (
-      <Area ref={instance => connectDropTarget(instance)}>
-        <InnerArea isGrid={isCanvasGridView}>
+      <Area isGrid={isCanvasGridView} ref={instance => connectDropTarget(instance)}>
+        <InnerArea >
           {editMode === EDIT_MODES.resize &&
             items.map((item, i) => (
               <ResizableImage
