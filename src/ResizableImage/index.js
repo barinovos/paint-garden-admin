@@ -47,6 +47,7 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
     //   setWidth(reCalcSizeWithZoom(width + d.width, zoomLevel));
     // }
 
+  console.log(item.mime);
   return (
     <Rnd
       style={{
@@ -84,7 +85,14 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
           height: '100%',
         }}
       >
-        <img alt = "{item.path}" draggable = "false" src = {item.path} style={{userDrag: 'none', userSelect: 'none'}} width = "100%" height = "100%" />
+        {item.mime === 'video'
+            ? <video controls style={{userDrag: 'none', userSelect: 'none'}}>
+                <source src={item.path} type={item.mimeType}/>
+              </video>
+            :
+            <img alt = "{item.path}" draggable = "false" src = {item.path} style={{userDrag: 'none', userSelect: 'none'}} width = "100%" height = "100%" />
+        }
+
       </figure>
     </Rnd>
   )

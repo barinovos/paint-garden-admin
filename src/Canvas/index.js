@@ -65,13 +65,16 @@ class Canvas extends React.PureComponent {
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
     const items = sections
       .filter(s => s.canvas && s.imageIds.length)
-      .map(({ id, imageIds, posx, posy, width, height }) => ({
+      .map(({ id, imageIds, posx, posy, width, height, thumb, type, mime }) => ({
         id,
         path: images.find(im => im.id === imageIds[imageIds.length - 1]).url,
         posx,
         posy,
         width,
-        height
+        height,
+        thumb: images.find(im => im.id === imageIds[imageIds.length - 1]).url_thumb,
+        mime: images.find(im => im.id === imageIds[imageIds.length - 1]).mime,
+        mimeType: images.find(im => im.id === imageIds[imageIds.length - 1]).mime_type,
       }))
 
     return (
