@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const HiddenInput = styled.input.attrs({
   type: 'file',
   multiple: true,
-  accept: 'image/*'
+  accept: 'image/*,video/*'
 })`
   position: absolute;
   left: 0;
