@@ -16,13 +16,13 @@ const ActionsBar = ({
   editMode,
 }) => (
   <Wrapper>
-    <span>{editMode === EDIT_MODES.dnd ? sectionName : ''}</span>
+    <span>{editMode === EDIT_MODES.resize ? sectionName : ''}</span>
     <SubActionsBar>
-      <ActionButton onClick={() => onChangeCanvasMode(EDIT_MODES.dnd)} active={editMode === EDIT_MODES.dnd}>
+      {/* <ActionButton onClick={() => onChangeCanvasMode(EDIT_MODES.dnd)} active={editMode === EDIT_MODES.dnd}>
         Move sections
-      </ActionButton>
+      </ActionButton> */}
       <ActionButton onClick={() => onChangeCanvasMode(EDIT_MODES.resize)} active={editMode === EDIT_MODES.resize}>
-        Resize sections
+        Move & resize
       </ActionButton>
       {/*<ActionButton onClick={() => onChangeCanvasMode(EDIT_MODES.webview)} active={editMode === EDIT_MODES.webview}>
         Define web view

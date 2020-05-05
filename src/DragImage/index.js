@@ -36,7 +36,7 @@ class DndArea extends React.PureComponent {
     return (
       <Image
         src={item.path}
-        isSelected={selectedItemId === item.id}
+        selected={selectedItemId === item.id ? 1 : 0}
         alt={''}
         top={y}
         left={x}

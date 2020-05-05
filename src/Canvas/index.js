@@ -25,10 +25,12 @@ class Canvas extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    props.fetchData()
+    const project_id = props.match.params.project_id;
+    props.fetchData(project_id)
     this.state = {
       selectedSection: null,
       zoomLevel: 0,
+      project_id: project_id
     }
   }
 
@@ -37,6 +39,11 @@ class Canvas extends React.PureComponent {
   onChangeCanvasMode = mode => {
     this.setState({ selectedSection: null })
     this.props.changeCanvasMode(mode)
+  }
+
+  onAddPin = pin => {
+    console.log(this.state);
+    this.props.addPin(pin, this.state.project_id);
   }
 
   render() {
@@ -51,7 +58,6 @@ class Canvas extends React.PureComponent {
       pins,
       updateWebview,
       editPin,
-      addPin,
       deletePin,
       uploadImageToPin,
     } = this.props
@@ -59,16 +65,20 @@ class Canvas extends React.PureComponent {
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
     const items = sections
       .filter(s => s.canvas && s.imageIds.length)
-      .map(({ id, imageIds, posx, posy, width, height }) => ({
+      .map(({ id, imageIds, posx, posy, width, height, thumb, type, mime }) => ({
         id,
         path: images.find(im => im.id === imageIds[imageIds.length - 1]).url,
         posx,
         posy,
         width,
-        height
+        height,
+        thumb: images.find(im => im.id === imageIds[imageIds.length - 1]).url_thumb,
+        mime: images.find(im => im.id === imageIds[imageIds.length - 1]).mime,
+        mimeType: images.find(im => im.id === imageIds[imageIds.length - 1]).mime_type,
       }))
 
     return (
+      console.log(items),
       <Wrapper>
         <ActionsBar
           zoomLevel={zoomLevel}
@@ -90,7 +100,7 @@ class Canvas extends React.PureComponent {
           webview={webview}
           onUpdateWebView={updateWebview}
           pins={pins}
-          onAddPin={addPin}
+          onAddPin={this.onAddPin}
           onDeletePin={deletePin}
           onEditPin={editPin}
           onUploadImageToPin={uploadImageToPin}

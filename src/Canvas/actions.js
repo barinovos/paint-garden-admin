@@ -25,9 +25,26 @@ export function updateWebview(webview) {
       .then(resp => dispatch({ type: actionTypes.UPDATE_WEBVIEW, webview: resp.data }))
 }
 
-export function addPin(pin) {
-  return (dispatch, getState) =>
-    api.post(Constants.API.PIN, { ...pin, projectId: getState().project.id }).then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data }))
+export function addPin(pin, project_id) {
+  if (pin.medium === "")  delete pin.medium;
+  if (pin.description === "") delete pin.description;
+  if (pin.url === "") delete pin.url;
+  if (pin.link === "") delete pin.link;
+  const formData = new FormData();
+  formData.append('headline', pin.headline);
+  formData.append('posx', pin.posx);
+  formData.append('posy', pin.posy);
+  formData.append('image', pin.image, pin.image.name);
+  if (pin.medium)  formData.append('medium', pin.medium);
+  if (pin.description) formData.append('description', pin.description);
+  if (pin.url) formData.append('url', pin.url);
+  if (pin.link) formData.append('link', pin.link);
+  formData.append('projectId', project_id);
+  return dispatch =>
+    api.post(Constants.API.PIN,
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } })
+    .then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data }));
 }
 
 export function editPin(pin) {
@@ -47,14 +64,12 @@ export function deletePin(pinId) {
 export function uploadImageToPin(file, pinId) {
   return dispatch => {
     const formData = new FormData()
-    if (!file.type.match('image.*')) {
-      return
-    }
+
     // Add the file to the request.
-    formData.append('image', file, file.name)
-    formData.append('pinId', pinId)
+    formData.append('image', file, file.name);
+    formData.append('pinId', pinId);
     return api
-      .post('/pin-upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .post(`${Constants.API.PIN}/${pinId}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pin: resp.data }))
   }
 }

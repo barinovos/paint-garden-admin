@@ -6,7 +6,7 @@ import DragImage from '../DragImage'
 import ResizableImage from '../ResizableImage'
 import CanvasImage from '../CanvasImage'
 import Pins from '../Pins'
-import { reCalcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
+import { calcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
 import Constants from '../constants'
 const { EDIT_MODES } = Constants
 
@@ -15,13 +15,13 @@ const squareTarget = {
     const sourceOffset = monitor.getSourceClientOffset()
     const item = monitor.getItem()
     const zoomLevel = props.zoomLevel
-    const x = reCalcSizeWithZoom(sourceOffset.x - canvasLeftOffset, zoomLevel)
-    const y = reCalcSizeWithZoom(sourceOffset.y - canvasTopOffset, zoomLevel)
+    const x = calcSizeWithZoom(sourceOffset.x - canvasLeftOffset, zoomLevel)
+    const y = calcSizeWithZoom(sourceOffset.y - canvasTopOffset, zoomLevel)
     props.onUpdate(item.id, {
-      posx: x,
-      posy: y,
-      width: item.width,
-      height: item.height,
+      posx: Math.floor(x),
+      posy: Math.floor(y),
+      width: Math.floor(item.width),
+      height: Math.floor(item.height),
       depth: item.depth,
     })
   },
@@ -72,18 +72,8 @@ class DndArea extends React.PureComponent {
     } = this.props
 
     return (
-      <Area ref={instance => connectDropTarget(instance)}>
-        <InnerArea isGrid={isCanvasGridView}>
-          {editMode === EDIT_MODES.dnd &&
-            items.map((item, i) => (
-              <DragImage
-                key={i}
-                item={item}
-                onSelect={onSelect}
-                selectedItemId={selectedItemId}
-                zoomLevel={zoomLevel}
-              />
-            ))}
+      <Area isGrid={isCanvasGridView} ref={instance => connectDropTarget(instance)}>
+        <InnerArea >
           {editMode === EDIT_MODES.resize &&
             items.map((item, i) => (
               <ResizableImage

@@ -31,7 +31,7 @@ const LoginPage = ({ history }) => {
       return authenticate(api.apiUrl, credentials)
         .then(() => history.push(Constants.ROUTES.ROOT))
         .catch(er => {
-          console.log(er)
+          //console.log(er)
           setError({
             message: 'Sorry, unknown username/password combination',
           })
@@ -66,7 +66,7 @@ const LoginPage = ({ history }) => {
         onChange={ev => onChange(ev.target.value, 'password')}
         onKeyUp={onKeyUp}
       />
-      <Button type="submit">Log In</Button>
+      <Button type="submit" onClick={onLogin}>Log In</Button>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
     </Wrapper>
   )

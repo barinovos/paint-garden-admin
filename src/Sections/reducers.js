@@ -5,7 +5,7 @@ export function imagesReducer(state = [], action) {
     case actionTypes.UPDATE_DB:
       return action.images || []
     case actionTypes.CREATE_IMAGE:
-      return state.concat(action.image)
+      return [...state, ...action.images]
     case actionTypes.DELETE_IMAGE:
       return state.filter(im => im.id !== action.id)
     default:
@@ -23,6 +23,14 @@ export function sectionsReducer(state = [], action) {
       return state.concat(action.section)
     case actionTypes.DELETE_SECTION:
       return state.filter(s => s.id !== action.id)
+    case actionTypes.CREATE_IMAGE:
+      return state.map(s =>
+        s.id === action.sectionId ? {
+          ...s,
+          imageIds: [...s.imageIds, ...action.images.map(im => im.id)]
+        } : s)
+      case "CLEAR":
+       return []
     default:
       return state
   }

@@ -12,15 +12,14 @@ const Toolbar = ({ location }) =>
   ROUTES.LOGIN !== location.pathname ? (
     <Wrapper>
       <LinksArea>
-        <LinkText bold>Paint.garden</LinkText>
         <Link to={ROUTES.ROOT}>
-          <LinkText active={ROUTES.ROOT === location.pathname}>All images</LinkText>
+          <LinkText bold>Paint.garden</LinkText>
+        </Link>
+        <Link to={ROUTES.ROOT}>
+          <LinkText active={ROUTES.ROOT === location.pathname}>Projects</LinkText>
         </Link>
       </LinksArea>
       <LinksArea>
-        <Link to={ROUTES.CANVAS}>
-          <LinkText active={ROUTES.CANVAS === location.pathname}>Canvas</LinkText>
-        </Link>
         <LinkText>Log out</LinkText>
       </LinksArea>
     </Wrapper>

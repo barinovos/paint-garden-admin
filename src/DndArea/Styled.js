@@ -14,10 +14,10 @@ export const Area = styled.div`
   background: white;
   position: relative;
   overflow: auto;
+  ${props => props.isGrid && Grid}
 `
 
 export const InnerArea = styled.div`
   min-width: 100%;
   min-height: 100%;
-  ${props => props.isGrid && Grid}
 `

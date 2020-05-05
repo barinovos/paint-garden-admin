@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
 import { imagesReducer, sectionsReducer } from '../Sections/reducers'
+import { projectReducer } from '../Projects/reducers'
 import { isCanvasGridViewReducer, editModeReducer, webviewReducer, pinsReducer } from '../Canvas/reducers'
-import { authReducer, projectReducer, userReducer } from '../Main/reducer'
+import { authReducer, userReducer } from '../Main/reducer'
 
 const reducers = combineReducers({
   images: imagesReducer,

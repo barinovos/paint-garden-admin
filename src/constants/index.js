@@ -3,7 +3,9 @@ export default {
     ROOT: '/',
     CANVAS: '/canvas',
     NOT_FOUND: '/not-found',
-    LOGIN: '/login'
+    LOGIN: '/login',
+    SECTIONS: '/sections',
+    PROJECTS: '/projects'
   },
   API: {
     DB: '/db',
@@ -13,7 +15,8 @@ export default {
     WEBVIEW: '/webview',
     PIN: '/annotation',
     LOGIN: '/login',
-    AUTH_CHECK: '/authcheck'
+    AUTH_CHECK: '/authcheck',
+    PROJECT: '/project'
   },
   EDIT_MODES: {
     dnd: 'dnd',

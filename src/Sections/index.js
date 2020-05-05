@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Link } from 'react-router-dom'
 import * as actions from './actions'
 import add from '../assets/add.svg'
 import edit from '../assets/edit.svg'
@@ -34,16 +35,24 @@ class Sections extends React.PureComponent {
     isCreate: true,
     section: null,
     imageIdDelete: null,
+    project_id: null,
   }
 
   constructor(props) {
     super(props)
-    props.fetchData()
+    const project_id = props.match.params.project_id
+    this.state.project_id = project_id;
+    props.fetchData(project_id)
   }
+
+  componentWillUnmount() {
+    this.props.clearData();
+   }
+
 
   onFinishCreateEdit = section => {
     this.setState({ showModal: false })
-    this.state.isCreate ? this.props.createSection(section) : this.props.updateSection(section)
+    this.state.isCreate ? this.props.createSection(section, this.state.project_id) : this.props.updateSection(section)
   }
 
   onCloseModal = () => this.setState({ showModal: false })
@@ -61,6 +70,11 @@ class Sections extends React.PureComponent {
 
     return (
       <SectionsWrapper>
+        <Link to={`/canvas/${this.state.project_id}`}>
+          <TextBlue>
+            Canvas
+          </TextBlue>
+        </Link>
         <Row onClick={() => this.setState({ showModal: true, isCreate: true, section: null })}>
           <Icon src={add} />
           <TextBlue>Create section</TextBlue>
@@ -82,7 +96,7 @@ class Sections extends React.PureComponent {
                 <EmptyImages>No images yet loaded for this section</EmptyImages>
               )}
               <Row>
-                <UploadButton uploadImages={uploadImages} sectionId={s.id} />
+                <UploadButton uploadImages={uploadImages} sectionId={s.id} projectId={this.state.project_id} />
                 {s.imageIds.length ? (
                   s.canvas ? (
                     <TextBlue onClick={() => removeFromCanvas(s.id)} style={{ marginLeft: 10 }}>

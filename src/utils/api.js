@@ -6,13 +6,17 @@ import { getAuthToken, navigateToLogin } from './auth'
 // const apiUrl = process.env.REACT_APP_API_URL || 'https://anth-api.herokuapp.com';
 const API_VERSION = '/api/v1'
 const apiUrl = `${process.env.REACT_APP_API_URL || 'https://api.paint.garden'}${API_VERSION}`
-
+// TODO: replace later with fetch of projects
+//const defaultProjectId = 'ad48b0f8-ac28-4197-878c-bd0ae12afbed';
+const defaultProjectId = 'ad48b0f8-ac28-4197-878c-bd0ae12afbed';
 const getHeader = () => ({
   headers: { Authorization: `Bearer ${getAuthToken()}` },
 })
 
 const api = {
   apiUrl,
+
+  projectId: defaultProjectId,
 
   get(url, params) {
     let path = `${apiUrl}${url}`
@@ -46,6 +50,14 @@ const api = {
 
   getImageUrl(path) {
     return `${apiUrl}/${path}`
+  },
+
+  setProjectId(id) {
+    api.projectId = id;
+  },
+
+  getQueryParam() {
+    return `?projectId=${api.projectId}`
   },
 
   setupInterceptors: store => {

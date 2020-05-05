@@ -5,6 +5,8 @@ export default {
   API_SUCCESS: 'API_SUCCESS',
 
   UPDATE_DB: 'app.db.UPDATE',
+  UPDATE_PROJECTS: 'app.projects.UPDATE',
+  CREATED_PROJECT: 'app.project.CREATED',
   UPDATE_SECTION: 'app.sections.UPDATE',
   CREATE_SECTION: 'app.sections.CREATE',
   DELETE_SECTION: 'app.sections.DELETE',
