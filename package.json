@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start:production": "export REACT_APP_API_URL=https://api.paint.garden; react-scripts start",
-    "start": "export REACT_APP_API_URL=https://api.paint.garden; react-scripts start",
+    "start": "export REACT_APP_API_URL=https://paint.garden.local; react-scripts start",
     "build": "export REACT_APP_API_URL=https://api.paint.garden; react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
