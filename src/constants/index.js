@@ -16,7 +16,8 @@ export default {
     PIN: '/annotation',
     LOGIN: '/login',
     AUTH_CHECK: '/authcheck',
-    PROJECT: '/project'
+    PROJECT: '/project',
+    LOGOUT: '/logout'
   },
   EDIT_MODES: {
     dnd: 'dnd',
