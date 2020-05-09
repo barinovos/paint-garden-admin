@@ -59,7 +59,7 @@ const ProjectModal = ({onSave, updateProject, onClose}) => {
                     </AddImage>
                     )) : (
                     <AddImage >
-                        <img src={temp_path ? temp_path : add} alt="upload" />
+                        <img style = {{maxWidth: "100%", maxHeight: "100%" }} src={temp_path ? temp_path : add} alt="upload" />
                         <HiddenInput onChange={onUploadChangeImage} />
                     </AddImage>
                 )}
