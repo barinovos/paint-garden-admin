@@ -51,6 +51,24 @@ export const LinkText = styled.div`
     color: darkgrey;
   }
 `
+export const LoginButton = styled.div`
+  background: #4DA1FF;
+  border-radius: 6px;
+  width: 90%;
+  text-align: center;
+  font-family: Proxima Nova;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 20px;
+  min-height: 32px;
+  /* identical to box height, or 133% */
+  padding: 0 16px;
+  color: #FFFFFF;
+  @media (min-width: 768px) {
+    width: 350px;
+  }
+`
 
 export const Button = styled.div`
   border-radius: 3px;

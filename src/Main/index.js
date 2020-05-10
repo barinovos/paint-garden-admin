@@ -8,6 +8,7 @@ import Toolbar from '../Toolbar'
 import Canvas from '../Canvas'
 import Sections from '../Sections'
 import Projects from '../Projects'
+import RegisterPage from '../RegisterPage'
 import LoginPage from '../LoginPage'
 import { authCheck } from './actions'
 import { MainArea } from '../Common/Styled'
@@ -39,6 +40,7 @@ const Main = ({ auth, authCheck }) => {
           <Route path={ROUTES.PROJECTS} exact component={Projects} />
           <Route path={ROUTES.CANVAS+ '/:project_id'} component={Canvas} />
           <Route path={ROUTES.LOGIN} component={LoginPage} />
+          <Route path={ROUTES.REGISTER} component={RegisterPage} />
           <Route render={() => <div>Not found</div>} />
         </Switch>
       </MainArea>

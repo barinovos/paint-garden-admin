@@ -12,7 +12,7 @@ export const Wrapper = styled.form`
   padding: 1em 2em;
 `
 
-export const LoginInput = styled(ItemInput)`
+export const RegisterInput = styled(ItemInput)`
   width: 90%;
   border: 1px solid transparent;
   box-sizing: border-box;

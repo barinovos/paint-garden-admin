@@ -4,8 +4,10 @@ export default {
     CANVAS: '/canvas',
     NOT_FOUND: '/not-found',
     LOGIN: '/login',
+    REGISTER: '/register',
     SECTIONS: '/sections',
-    PROJECTS: '/projects'
+    PROJECTS: '/projects',
+    POLICY: '/privacyPolicy.pdf'
   },
   API: {
     DB: '/db',
@@ -15,6 +17,7 @@ export default {
     WEBVIEW: '/webview',
     PIN: '/annotation',
     LOGIN: '/login',
+    REGISTER: '/register',
     AUTH_CHECK: '/authcheck',
     PROJECT: '/project',
     LOGOUT: '/logout'

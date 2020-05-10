@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 
-import { Wrapper, LoginInput, Logo, Title, ErrorMessage } from './Styled'
-import { Button } from '../Common/Styled'
+import { Wrapper, LoginInput, Logo, Title, ErrorMessage, ButtonText, PrivacyPolicyText, LinkText, RegisterText } from './Styled'
+import { LoginButton} from '../Common/Styled'
 
+import { Link } from 'react-router-dom'
 import { authenticate } from '../utils/auth'
 import api from '../utils/api'
 import logo from '../assets/logo.svg'
 import Constants from '../constants'
 
+const { ROUTES } = Constants
 const LoginPage = ({ history }) => {
   const [credentials, setCredentials] = useState({
     email: '',
@@ -50,7 +52,7 @@ const LoginPage = ({ history }) => {
   return (
     <Wrapper onSubmit={onLogin}>
       <Logo src={logo} alt={'Logo'} />
-      <Title>Welcome to Paint.Garden</Title>
+      <Title>Login</Title>
       <LoginInput
         error={error && error.email}
         value={credentials.email}
@@ -66,8 +68,12 @@ const LoginPage = ({ history }) => {
         onChange={ev => onChange(ev.target.value, 'password')}
         onKeyUp={onKeyUp}
       />
-      <Button type="submit" onClick={onLogin}>Log In</Button>
+      <LoginButton type="submit" onClick={onLogin}>
+        <ButtonText>Log In</ButtonText>
+      </LoginButton>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
+      <PrivacyPolicyText>By clicking here you agree to thee terms of our <Link to={ROUTES.POLICY}><LinkText>Privacy policy</LinkText></Link></PrivacyPolicyText>
+      <RegisterText>Don't have an account? <Link to={ROUTES.REGISTER}><LinkText>Register</LinkText></Link></RegisterText>
     </Wrapper>
   )
 }

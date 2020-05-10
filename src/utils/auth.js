@@ -30,6 +30,9 @@ export const getAuthToken = () => getCookieByName(cookieName)
 export const authenticate = (apiUrl, credentials) =>
   axios.post(`${apiUrl}${Constants.API.LOGIN}`, credentials).then(({ data }) => setCookie(data.token))
 
+export const register = (apiUrl, credentials) =>
+  axios.post(`${apiUrl}${Constants.API.REGISTER}`, credentials).then(({ data }) => setCookie(data.token))
+
 export const navigateToLogin = () => {
   deleteCookie()
   window.location.href = `${window.location.origin}${Constants.ROUTES.LOGIN}`
