@@ -13,5 +13,6 @@ export default {
   formTitleGray: '#374F67',
   inputTextGray: '#787878',
   pink: '#d69498',
-  red: '#b6373f'
+  red: '#b6373f',
+  black: '#000',
 }

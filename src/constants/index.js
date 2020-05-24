@@ -24,6 +24,7 @@ export default {
   },
   EDIT_MODES: {
     dnd: 'dnd',
+    upload: 'upload',
     resize: 'resize',
     webview: 'webview',
     annotation: 'annotation'

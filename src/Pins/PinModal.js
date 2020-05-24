@@ -78,7 +78,7 @@ export default class PinModal extends React.PureComponent {
               </AddImage>
             )) : (
               <AddImage >
-                <img src={temp_path ? temp_path : add} alt="upload" />
+                <img  style = {{maxWidth: "100%", maxHeight: "100%" }} src={temp_path ? temp_path : add} alt="upload" />
                 <HiddenInput onChange={this.onChangeState('image')} />
               </AddImage>
             )}

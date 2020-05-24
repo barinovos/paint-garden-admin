@@ -47,6 +47,57 @@ export function addPin(pin, project_id) {
     .then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data }));
 }
 
+export function addSection(data) {
+  console.log(data);
+  return dispatch =>
+    api
+      .post(Constants.API.SECTION, {
+        title: data.title,
+        posx: data.x,
+        posy: data.y,
+        canvas: true,
+        width: 500,
+        height: 500,
+        projectId: data.project_id
+      })
+      .then(
+       resp => {
+          dispatch({ type: actionTypes.CREATE_SECTION, section: { ...resp.data, imageIds: [] } })
+          dispatch(uploadImages(data, resp.data.id));
+       }
+      )
+}
+
+export function uploadImages(data, sectionId) {
+  console.log('ovde');
+  return dispatch => {
+    console.log('ovde2');
+    const formData = new FormData()
+    var images = [data.image];
+    for (var i = 0; i < images.length; i++) {
+      const file = images[i]
+      // Check the file type.
+      if (!file.type.match('image.*')) {
+        continue
+      }
+      // Add the file to the request.
+      formData.append('images[]', file, file.name)
+    }
+    console.log('ovd4');
+    formData.append('sectionId', sectionId)
+    formData.append('projectId', data.project_id)
+    console.log(data);
+    console.log(sectionId);
+    return api.post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(resp =>
+      dispatch({
+        type: actionTypes.CREATE_IMAGE,
+        images: resp.data,
+        sectionId
+      }),
+    )
+  }
+}
+
 export function editPin(pin) {
   return dispatch =>
     api
@@ -78,3 +129,4 @@ const updateSection = section => ({
   type: actionTypes.UPDATE_SECTION,
   section: { ...section, imageIds: section.imageIds || [] },
 })
+

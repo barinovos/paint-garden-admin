@@ -10,13 +10,13 @@ const Grid = css`
 export const Area = styled.div`
   width: 100%;
   min-height: 600px;
-  height: calc(100% - 38px);
-  background: white;
+  height: 100%;
+  background: #eee;
   position: relative;
   overflow: auto;
-  ${props => props.isGrid && Grid}
-`
 
+`
+//  ${props => props.isGrid && Grid} add griid if need to
 export const InnerArea = styled.div`
   min-width: 100%;
   min-height: 100%;

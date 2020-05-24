@@ -1,13 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import PropTypes, { func } from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchData } from '../Sections/actions'
 import * as actions from './actions'
-import { Wrapper } from './Styled'
+import { Wrapper, ZoomButton, ZoomButtons } from './Styled'
 import DndArea from '../DndArea'
 import ActionsBar from '../ActionsBar'
 import { ImageType, SectionType } from '../types'
+import Constants from '../constants'
+const { MAX_ZOOM_LEVEL } = Constants
 
 class Canvas extends React.PureComponent {
   static propTypes = {
@@ -29,7 +31,7 @@ class Canvas extends React.PureComponent {
     props.fetchData(project_id)
     this.state = {
       selectedSection: null,
-      zoomLevel: 0,
+      zoomLevel: -10,
       project_id: project_id
     }
   }
@@ -38,12 +40,17 @@ class Canvas extends React.PureComponent {
 
   onChangeCanvasMode = mode => {
     this.setState({ selectedSection: null })
+    console.log(mode);
     this.props.changeCanvasMode(mode)
   }
 
   onAddPin = pin => {
     console.log(this.state);
     this.props.addPin(pin, this.state.project_id);
+  }
+
+  onZoomChange = zoomLevel => {
+    this.setState({ zoomLevel })
   }
 
   render() {
@@ -60,8 +67,9 @@ class Canvas extends React.PureComponent {
       editPin,
       deletePin,
       uploadImageToPin,
+      addSection
     } = this.props
-    const { selectedSection, zoomLevel } = this.state
+    const { selectedSection, zoomLevel, project_id } = this.state
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
     const items = sections
       .filter(s => s.canvas && s.imageIds.length)
@@ -78,7 +86,6 @@ class Canvas extends React.PureComponent {
       }))
 
     return (
-      console.log(items),
       <Wrapper>
         <ActionsBar
           zoomLevel={zoomLevel}
@@ -89,6 +96,12 @@ class Canvas extends React.PureComponent {
           onChangeCanvasMode={this.onChangeCanvasMode}
           onZoomChange={zoomLevel => this.setState({ zoomLevel })}
         />
+
+        <ZoomButtons>
+          <ZoomButton onClick={() => zoomLevel > -MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel - 1)}>-</ZoomButton>
+          <ZoomButton onClick={() => zoomLevel < MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel + 1)}>+</ZoomButton>
+          <ZoomButton>{zoomLevel}</ZoomButton>
+      </ZoomButtons>
         <DndArea
           zoomLevel={zoomLevel}
           items={items}
@@ -104,6 +117,8 @@ class Canvas extends React.PureComponent {
           onDeletePin={deletePin}
           onEditPin={editPin}
           onUploadImageToPin={uploadImageToPin}
+          project_id={project_id}
+          addSection={addSection}
         />
       </Wrapper>
     )

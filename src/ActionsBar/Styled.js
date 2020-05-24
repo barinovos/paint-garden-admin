@@ -2,26 +2,25 @@ import styled from 'styled-components'
 import colors from '../constants/colors'
 
 export const Wrapper = styled.div`
-  display: flex;
-  padding: 0 15px 10px;
-  justify-content: space-between;
-  align-items: center;
+  display: block;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 0 20px;
+  position: fixed;
+  text-align:center;
+  top: 20vh;
+  left: 2vw;
+  z-index: 20000;
 `
 
 export const SubActionsBar = styled.div`
-  display: flex;
-  align-items: center;
+
 `
 
 export const ActionButton = styled.div`
-  padding: 0 15px;
   cursor: pointer;
-  border-left: 1px solid ${colors.darkBlue};
-  ${props => props.active && `background: ${colors.lightGrey}`}
 
   &:hover {
-    color: white;
-    background: ${colors.darkGrey};
   }
 `
 
@@ -52,8 +51,9 @@ export const ZoomButton = styled.div`
   cursor: pointer;
   text-align: center;
   user-select: none;
-  
-  &:first-child {
-    border-right: 1px solid ${colors.lightGrey}
+  border-right: 1px solid ${colors.lightGrey};
+
+  &:last-child {
+    border-right: none;
   }
 `

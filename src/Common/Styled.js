@@ -160,3 +160,16 @@ export const Title = styled.div`
   font-size: 20px;
   margin-bottom: 20px;
 `
+
+
+
+export const AddImage = styled.div`
+  height: 85px;
+  background: lightgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 1.2em;
+`

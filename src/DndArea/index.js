@@ -8,6 +8,7 @@ import CanvasImage from '../CanvasImage'
 import Pins from '../Pins'
 import { calcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
 import Constants from '../constants'
+import UploadArea from '../UploadArea'
 const { EDIT_MODES } = Constants
 
 const squareTarget = {
@@ -34,6 +35,7 @@ function collect(connect, monitor) {
   }
 }
 
+
 class DndArea extends React.PureComponent {
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -52,6 +54,8 @@ class DndArea extends React.PureComponent {
     onDeletePin: PropTypes.func,
     onEditPin: PropTypes.func,
     onUploadImageToPin: PropTypes.func,
+    project_id: PropTypes.string,
+    c: PropTypes.func
   }
 
   render() {
@@ -69,6 +73,8 @@ class DndArea extends React.PureComponent {
       onDeletePin,
       onEditPin,
       onUploadImageToPin,
+      project_id,
+      addSection
     } = this.props
 
     return (
@@ -106,6 +112,25 @@ class DndArea extends React.PureComponent {
                 />
               ))}
             </Fragment>
+          )}
+
+          {editMode === EDIT_MODES.upload && (
+              <Fragment>
+                <UploadArea
+                  addUpload={addSection}
+                  zoomLevel={zoomLevel}
+                  project_id={project_id}
+                />
+                {items.map((item, i) => (
+                  <CanvasImage
+                    key={i}
+                    item={item}
+                    onSelect={onSelect}
+                    selectedItemId={selectedItemId}
+                    zoomLevel={zoomLevel}
+                  />
+                ))}
+              </Fragment>
           )}
         </InnerArea>
       </Area>
