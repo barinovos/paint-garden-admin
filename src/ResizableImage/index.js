@@ -34,11 +34,12 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
     const new_width  = reCalcSizeWithZoom(ref.offsetWidth, zoomLevel);
     setHeight(calcSizeWithZoom(new_height, zoomLevel));
     setWidth(calcSizeWithZoom(new_width, zoomLevel));
+
     onResize(item.id, {
       width:  new_width,//calcSizeWithZoom(new_width, zoomLevel),
       height: new_height,// RalcSizeWithZoom(new_height, zoomLevel),
-      posx: item.posx,
-      posy: item.posy,
+      posx: reCalcSizeWithZoom(x, zoomLevel),
+      posy: reCalcSizeWithZoom(y, zoomLevel),
     })
   }
 

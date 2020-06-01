@@ -1,6 +1,9 @@
 import actionTypes from '../constants/actionTypes'
 import api from '../utils/api'
 import Constants from '../constants'
+import { fetchData } from '../Sections/actions'
+
+
 
 export function changeCanvasGridMode(isCanvasGridView) {
   return { type: actionTypes.CHANGE_CANVAS_GRID_MODE, isCanvasGridView }
@@ -89,11 +92,7 @@ export function uploadImages(data, sectionId) {
     console.log(data);
     console.log(sectionId);
     return api.post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(resp =>
-      dispatch({
-        type: actionTypes.CREATE_IMAGE,
-        images: resp.data,
-        sectionId
-      }),
+      dispatch(fetchData(data.project_id))
     )
   }
 }

@@ -83,6 +83,7 @@ export const Button = styled.div`
 export const MainArea = styled.div`
   height: calc(100% - 60px);
   overflow-y: auto;
+  height: 100%;
 `
 
 export const IconWrapper = styled.div`

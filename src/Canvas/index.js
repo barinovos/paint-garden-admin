@@ -3,10 +3,12 @@ import PropTypes, { func } from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchData } from '../Sections/actions'
+import { fetchData as fetchProjects } from '../Projects/actions'
 import * as actions from './actions'
 import { Wrapper, ZoomButton, ZoomButtons } from './Styled'
 import DndArea from '../DndArea'
 import ActionsBar from '../ActionsBar'
+import ProjectPicker from '../ProjectPicker'
 import { ImageType, SectionType } from '../types'
 import Constants from '../constants'
 const { MAX_ZOOM_LEVEL } = Constants
@@ -29,12 +31,25 @@ class Canvas extends React.PureComponent {
     super(props)
     const project_id = props.match.params.project_id;
     props.fetchData(project_id)
+    props.fetchProjects()
     this.state = {
       selectedSection: null,
       zoomLevel: -10,
       project_id: project_id
     }
   }
+  componentDidUpdate = (prevProps) => {
+    if(this.props.match.params.project_id !== prevProps.match.params.project_id ) {
+      const project_id = this.props.match.params.project_id;
+      this.props.fetchData(project_id)
+      this.props.fetchProjects()
+      this.setState({
+        selectedSection: null,
+        zoomLevel: -10,
+        project_id: project_id
+      })
+   };
+  };
 
   onSectionSelect = sId => this.setState({ selectedSection: this.props.sections.find(s => s.id === sId) })
 
@@ -63,11 +78,12 @@ class Canvas extends React.PureComponent {
       changeCanvasGridMode,
       webview,
       pins,
+      project,
       updateWebview,
       editPin,
       deletePin,
       uploadImageToPin,
-      addSection
+      addSection,
     } = this.props
     const { selectedSection, zoomLevel, project_id } = this.state
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
@@ -87,6 +103,10 @@ class Canvas extends React.PureComponent {
 
     return (
       <Wrapper>
+        <ProjectPicker
+          project_id={project_id}
+          projects={project}
+        />
         <ActionsBar
           zoomLevel={zoomLevel}
           sectionName={sectionName}
@@ -126,13 +146,14 @@ class Canvas extends React.PureComponent {
 }
 
 export default connect(
-  ({ images, sections, isCanvasGridView, editMode, webview, pins }) => ({
+  ({ images, sections, isCanvasGridView, editMode, webview, pins, project }) => ({
     images,
     sections,
     isCanvasGridView,
     editMode,
     webview,
     pins,
+    project
   }),
-  dispatch => bindActionCreators({ ...actions, fetchData }, dispatch),
+  dispatch => bindActionCreators({ ...actions, fetchData, fetchProjects }, dispatch),
 )(Canvas)

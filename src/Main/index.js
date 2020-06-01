@@ -29,10 +29,10 @@ const Main = ({ auth, authCheck }) => {
         <Logo src={logo} />
       </LoaderView>
     )
-
+  const notInCanvas = /^(?!.*(\/canvas)).*$/
   return (
     <Fragment>
-      <Toolbar />
+      <Route path={notInCanvas} component={Toolbar} />
       <MainArea>
         <Switch>
           <Route path={ROUTES.ROOT} exact component={Projects} />

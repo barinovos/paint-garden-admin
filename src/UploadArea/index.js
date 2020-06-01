@@ -5,7 +5,7 @@ import { canvasTopOffset, canvasLeftOffset, reCalcSizeWithZoom } from '../utils/
 import UploadModal from './UploadModal'
 import * as actions from '../Sections/actions'
 const UploadArea = ({addUpload, zoomLevel, project_id}) => {
-    const [ShowModal, setShowModal] = useState({})
+    const [ShowModal, setShowModal] = useState(false)
     const [x, setX] = useState(0);
     const [y, setY] = useState(0);
 

@@ -114,7 +114,7 @@ class DndArea extends React.PureComponent {
             </Fragment>
           )}
 
-          {editMode === EDIT_MODES.upload && (
+          {editMode === EDIT_MODES.area && (
               <Fragment>
                 <UploadArea
                   addUpload={addSection}
