@@ -16,7 +16,7 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
     setWidth(calcSizeWithZoom(item.width, zoomLevel));
     setX(calcSizeWithZoom(item.posx, zoomLevel));
     setY(calcSizeWithZoom(item.posy, zoomLevel));
-  }, [zoomLevel]);
+  }, [zoomLevel, item.posx, item.posy, item.height, item.width]);
 
   const onDragStop = (e, d) => {
     setX(d.x);

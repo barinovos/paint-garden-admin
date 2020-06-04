@@ -21,3 +21,9 @@ export const InnerArea = styled.div`
   min-width: 100%;
   min-height: 100%;
 `
+
+
+export const UploadWrapper = styled.div`
+  width: 100%;
+  `
+

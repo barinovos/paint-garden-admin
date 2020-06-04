@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Area, InnerArea } from './Styled'
+import { Area, InnerArea, UploadWrapper } from './Styled'
 import { DropTarget } from 'react-dnd'
 import DragImage from '../DragImage'
 import ResizableImage from '../ResizableImage'
 import CanvasImage from '../CanvasImage'
+import UploadRibbon from '../UploadRibbon'
 import Pins from '../Pins'
 import { calcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
 import Constants from '../constants'
@@ -130,6 +131,22 @@ class DndArea extends React.PureComponent {
                     zoomLevel={zoomLevel}
                   />
                 ))}
+              </Fragment>
+          )}
+
+
+          {editMode === EDIT_MODES.upload && (
+              <Fragment>
+                {items.map((item, i) => (
+                    <CanvasImage
+                      key={i}
+                      item={item}
+                      onSelect={onSelect}
+                      selectedItemId={selectedItemId}
+                      zoomLevel={zoomLevel}
+                      showRibbon= {item.id === selectedItemId}
+                    />
+                  ))}
               </Fragment>
           )}
         </InnerArea>
