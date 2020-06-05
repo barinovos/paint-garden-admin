@@ -10,6 +10,7 @@ import DndArea from '../DndArea'
 import ActionsBar from '../ActionsBar'
 import ProjectPicker from '../ProjectPicker'
 import { ImageType, SectionType } from '../types'
+import close from '../assets/close.svg'
 import Constants from '../constants'
 const { MAX_ZOOM_LEVEL } = Constants
 
@@ -38,6 +39,7 @@ class Canvas extends React.PureComponent {
       project_id: project_id,
       activeImageIndex: 0,
       activeImageIndexes: {},
+      showPreview: true,
     }
   }
 
@@ -90,6 +92,10 @@ class Canvas extends React.PureComponent {
     })
   }
 
+  changeShowPreview = () => {
+    this.setState({showPreview: false})
+  }
+
   render() {
     const {
       images,
@@ -134,6 +140,7 @@ class Canvas extends React.PureComponent {
           project_id={project_id}
           projects={project}
         />
+
         <ActionsBar
           zoomLevel={zoomLevel}
           sectionName={sectionName}
@@ -169,7 +176,10 @@ class Canvas extends React.PureComponent {
           uploadImages={uploadImages}
           activeImageIndex={activeImageIndex}
           onChangeActiveImageIndex={this.onChangeActiveImageIndex}
+          hidePreview={this.changeShowPreview}
+          showPreview={this.state.showPreview}
         />
+
       </Wrapper>
     )
   }

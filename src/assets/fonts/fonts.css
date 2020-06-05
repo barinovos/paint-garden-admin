@@ -69,3 +69,16 @@
 	font-weight: 600;
 	font-style: normal;
 }
+
+@font-face {
+	font-family: 'Spartan Light';
+	src: url('Spartan-Light.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Spartan SemiBold';
+	src: url('Spartan-SemiBold.ttf') format('truetype');
+	font-weight: 600;
+	font-style: normal;
+}

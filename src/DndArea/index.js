@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Area, InnerArea, UploadWrapper } from './Styled'
+import { Area, InnerArea, UploadWrapper, PreviewLink, Link } from './Styled'
 import { DropTarget } from 'react-dnd'
 import DragImage from '../DragImage'
 import ResizableImage from '../ResizableImage'
 import CanvasImage from '../CanvasImage'
 import UploadRibbon from '../UploadRibbon'
+import close from '../assets/close.svg'
 import Pins from '../Pins'
 import { calcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
 import Constants from '../constants'
@@ -38,6 +39,7 @@ function collect(connect, monitor) {
 
 
 class DndArea extends React.PureComponent {
+
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
     onUpdate: PropTypes.func.isRequired,
@@ -77,7 +79,9 @@ class DndArea extends React.PureComponent {
       project_id,
       addSection,
       uploadImages,
-      onChangeActiveImageIndex
+      onChangeActiveImageIndex,
+      hidePreview,
+      showPreview
     } = this.props
 
     return (
@@ -155,6 +159,17 @@ class DndArea extends React.PureComponent {
               </Fragment>
           )}
         </InnerArea>
+        {showPreview && (
+          <PreviewLink>
+                Your canvas is published
+                <Link href = {"//paint.garden/" + project_id}>here</Link>
+                <img
+                  alt = "Preview of the canvas"
+                  src = {close} style={{verticalAlign: 'bottom', marginLeft: '10px'}}
+                  onClick={() => hidePreview()}
+                />
+          </PreviewLink>
+        )}
       </Area>
     )
   }

@@ -27,3 +27,22 @@ export const UploadWrapper = styled.div`
   width: 100%;
   `
 
+
+  export const PreviewLink = styled.div`
+  background: rgba(0,0,0,0.59);
+  border-radius: 4px;
+  position: fixed;
+  z-index: 20000;
+  bottom: 0vh;
+  right: 5vw;
+  font-size: 13px;
+  font-family: Spartan Light;
+  padding 15px;
+  color: #FFFFFF;
+`
+
+export const Link = styled.a`
+  display: inline-block;
+  color:#4DA1FF;
+  margin-left: 10px;
+`
