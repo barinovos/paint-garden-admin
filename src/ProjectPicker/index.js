@@ -21,9 +21,6 @@ const ProjectPicker = ({projects, project_id}) => {
     }
 
     return (
-        console.log('Ovde'),
-        console.log(projects),
-        console.log(project_id),
         <Wrapper>
             <Link to={ROUTES.ROOT} style={{verticalAlign: "middle"}}>
                 <Logo src={logo} alt={'Logo'} />

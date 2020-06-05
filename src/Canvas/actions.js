@@ -51,7 +51,6 @@ export function addPin(pin, project_id) {
 }
 
 export function addSection(data) {
-  console.log(data);
   return dispatch =>
     api
       .post(Constants.API.SECTION, {
@@ -72,13 +71,12 @@ export function addSection(data) {
 }
 
 export function uploadImages(data, sectionId) {
-  console.log('ovde');
   return dispatch => {
-    console.log('ovde2');
     const formData = new FormData()
     var images = [data.image];
     for (var i = 0; i < images.length; i++) {
       const file = images[i]
+      console.log(file)
       // Check the file type.
       if (!file.type.match('image.*')) {
         continue
@@ -86,11 +84,8 @@ export function uploadImages(data, sectionId) {
       // Add the file to the request.
       formData.append('images[]', file, file.name)
     }
-    console.log('ovd4');
     formData.append('sectionId', sectionId)
     formData.append('projectId', data.project_id)
-    console.log(data);
-    console.log(sectionId);
     return api.post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(resp =>
       dispatch(fetchData(data.project_id))
     )

@@ -48,7 +48,6 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
     //   setWidth(reCalcSizeWithZoom(width + d.width, zoomLevel));
     // }
 
-  console.log(item.mime);
   return (
     <Rnd
       style={{

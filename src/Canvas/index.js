@@ -35,9 +35,12 @@ class Canvas extends React.PureComponent {
     this.state = {
       selectedSection: null,
       zoomLevel: -10,
-      project_id: project_id
+      project_id: project_id,
+      activeImageIndex: 0,
+      activeImageIndexes: {},
     }
   }
+
   componentDidUpdate = (prevProps) => {
     if(this.props.match.params.project_id !== prevProps.match.params.project_id ) {
       const project_id = this.props.match.params.project_id;
@@ -46,26 +49,45 @@ class Canvas extends React.PureComponent {
       this.setState({
         selectedSection: null,
         zoomLevel: -10,
-        project_id: project_id
+        project_id: project_id,
+        activeImageIndex: 0
       })
    };
   };
 
-  onSectionSelect = sId => this.setState({ selectedSection: this.props.sections.find(s => s.id === sId) })
+  onSectionSelect = selectedSection => {
+    const { activeImageIndexes } = this.state
+  // check for not set up index
+    const activeImageIndex =
+    activeImageIndexes[selectedSection.id] === undefined
+    ? selectedSection.imageIds.length - 1
+    : activeImageIndexes[selectedSection.id]
+      this.setState({
+        selectedSection: this.props.sections.find(s => s.id === selectedSection.id),
+        activeImageIndexes: { ...activeImageIndexes, [selectedSection.id]: activeImageIndex },
+        activeImageIndex: activeImageIndex
+      })
+  }
 
   onChangeCanvasMode = mode => {
     this.setState({ selectedSection: null })
-    console.log(mode);
     this.props.changeCanvasMode(mode)
   }
 
   onAddPin = pin => {
-    console.log(this.state);
     this.props.addPin(pin, this.state.project_id);
   }
 
   onZoomChange = zoomLevel => {
     this.setState({ zoomLevel })
+  }
+
+  onChangeActiveImageIndex = index => {
+    console.log(index);
+    const { selectedSection, activeImageIndexes } = this.state
+    this.setState({
+      activeImageIndexes: { ...activeImageIndexes, [selectedSection.id]: +index },
+    })
   }
 
   render() {
@@ -84,21 +106,26 @@ class Canvas extends React.PureComponent {
       deletePin,
       uploadImageToPin,
       addSection,
+      uploadImages,
+      activeImageIndex,
     } = this.props
     const { selectedSection, zoomLevel, project_id } = this.state
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
     const items = sections
       .filter(s => s.canvas && s.imageIds.length)
-      .map(({ id, imageIds, posx, posy, width, height, thumb, type, mime }) => ({
+      .map(({ id, imageIds, posx, posy, width, height, images: images_section, thumb, type, mime }) => ({
         id,
-        path: images.find(im => im.id === imageIds[imageIds.length - 1]).url,
+        path: images.find(im => im.id === imageIds[this.state.activeImageIndexes[id] !== undefined ? imageIds.length - 1 - this.state.activeImageIndexes[id] : imageIds.length - 1],
+          ).url,
         posx,
         posy,
         width,
         height,
         thumb: images.find(im => im.id === imageIds[imageIds.length - 1]).url_thumb,
+        images_section,
         mime: images.find(im => im.id === imageIds[imageIds.length - 1]).mime,
         mimeType: images.find(im => im.id === imageIds[imageIds.length - 1]).mime_type,
+        imageIds
       }))
 
     return (
@@ -139,6 +166,9 @@ class Canvas extends React.PureComponent {
           onUploadImageToPin={uploadImageToPin}
           project_id={project_id}
           addSection={addSection}
+          uploadImages={uploadImages}
+          activeImageIndex={activeImageIndex}
+          onChangeActiveImageIndex={this.onChangeActiveImageIndex}
         />
       </Wrapper>
     )

@@ -75,7 +75,9 @@ class DndArea extends React.PureComponent {
       onEditPin,
       onUploadImageToPin,
       project_id,
-      addSection
+      addSection,
+      uploadImages,
+      onChangeActiveImageIndex
     } = this.props
 
     return (
@@ -145,6 +147,9 @@ class DndArea extends React.PureComponent {
                       selectedItemId={selectedItemId}
                       zoomLevel={zoomLevel}
                       showRibbon= {item.id === selectedItemId}
+                      uploadImages={uploadImages}
+                      project_id={project_id}
+                      onChangeActiveImageIndex={onChangeActiveImageIndex}
                     />
                   ))}
               </Fragment>
