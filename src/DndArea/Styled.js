@@ -33,8 +33,8 @@ export const UploadWrapper = styled.div`
   border-radius: 4px;
   position: fixed;
   z-index: 20000;
-  bottom: 0vh;
-  right: 5vw;
+  top: 0vh;
+  right: 0vw;
   font-size: 13px;
   font-family: Spartan Light;
   padding 15px;

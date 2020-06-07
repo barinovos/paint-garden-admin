@@ -18,6 +18,8 @@ export const ZoomButtons = styled.div`
   bottom: 10vh;
   right: 5vw;
   z-index: 2;
+  padding: 15px 0;
+  width: 200px;
 `
 
 export const ZoomButton = styled.div`

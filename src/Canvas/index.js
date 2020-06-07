@@ -155,7 +155,7 @@ class Canvas extends React.PureComponent {
         <ZoomButtons>
           <ZoomButton onClick={() => zoomLevel > -MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel - 1)}>-</ZoomButton>
           <ZoomButton onClick={() => zoomLevel < MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel + 1)}>+</ZoomButton>
-          <ZoomButton>{zoomLevel}</ZoomButton>
+          <ZoomButton>{zoomLevel * 10 + '%'}</ZoomButton>
       </ZoomButtons>
         <DndArea
           zoomLevel={zoomLevel}
