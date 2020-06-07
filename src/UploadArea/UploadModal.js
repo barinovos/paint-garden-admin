@@ -39,8 +39,8 @@ const UploadModal = ({onSave, onClose, project_id}) => {
               project_id: project_id,
               title:title,
               image:image,
-              width: width ? +width : null,
-              height: height ? +height : null,
+              width: width ? +width : 500,
+              height: height ? +height : 500,
               depth: depth ? +depth : null,
               year: year ? +year : null,
               synopisis: synopisis ? +synopisis : null,
@@ -106,7 +106,7 @@ const UploadModal = ({onSave, onClose, project_id}) => {
                 <Button onClick={onClose} secondary>
                   Cancel
                 </Button>
-                <Button onClick={handleSubmit}>Create</Button>
+                <Button  onClick={handleSubmit}>Create</Button>
             </RightAlignedRow>
         </ContentWrapper>
        </ModalWrapper>
