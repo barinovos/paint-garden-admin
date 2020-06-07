@@ -58,8 +58,12 @@ export function addSection(data) {
         posx: data.x,
         posy: data.y,
         canvas: true,
-        width: 500,
-        height: 500,
+        width: data.width,
+        height: data.height,
+        depth: data.depth,
+        year: data.year,
+        synopisis: data.synopisis,
+        medium: data.medium,
         projectId: data.project_id
       })
       .then(

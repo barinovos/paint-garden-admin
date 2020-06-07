@@ -58,11 +58,12 @@ class Canvas extends React.PureComponent {
   };
 
   onSectionSelect = selectedSection => {
+    console.log(selectedSection);
     const { activeImageIndexes } = this.state
   // check for not set up index
     const activeImageIndex =
     activeImageIndexes[selectedSection.id] === undefined
-    ? selectedSection.imageIds.length - 1
+    ? 0 //selectedSection.imageIds.length - 1
     : activeImageIndexes[selectedSection.id]
       this.setState({
         selectedSection: this.props.sections.find(s => s.id === selectedSection.id),

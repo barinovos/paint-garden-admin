@@ -77,7 +77,7 @@ class Sections extends React.PureComponent {
         </Link>
         <Row onClick={() => this.setState({ showModal: true, isCreate: true, section: null })}>
           <Icon src={add} />
-          <TextBlue>Create section</TextBlue>
+          <TextBlue>Create area</TextBlue>
         </Row>
         <SectionsInnerArea>
           {sections.map(s => (

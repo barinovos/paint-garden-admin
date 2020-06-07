@@ -102,12 +102,16 @@ export default class SectionModal extends React.PureComponent {
           <ItemTextArea value={synopisis} onChange={this.onChangeState('synopisis')} placeholder="Synopisis" />
           <JustifiedRow>
             <ItemInput value={height} onChange={this.onChangeState('height')} placeholder="Height" width={30} />
+            <span style={{color: "red"}}>{this.state.errors["height"]}</span>
             <ItemInput value={width} onChange={this.onChangeState('width')} placeholder="Width" width={30} />
+            <span style={{color: "red"}}>{this.state.errors["width"]}</span>
             <ItemInput value={depth} onChange={this.onChangeState('depth')} placeholder="Depth" width={30} />
+            <span style={{color: "red"}}>{this.state.errors["depth"]}</span>
           </JustifiedRow>
           <JustifiedRow>
             <ItemInput value={medium} onChange={this.onChangeState('medium')} placeholder="Medium" width={65} />
             <ItemInput value={year} onChange={this.onChangeState('year')} placeholder="Year" width={30} />
+             <span style={{color: "red"}}>{this.state.errors["year"]}</span>
           </JustifiedRow>
           <RightAlignedRow>
             <Button onClick={onClose} secondary>

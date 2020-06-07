@@ -68,7 +68,7 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
       // minHeight={height / 3}
       // minWidth={width / 3}
       //lockAspectRatio={true}
-      onClick={() => onSelect(item.id)}
+      onClick={() => onSelect(item)}
       dragAxis={'both'}
       onResizeStop={onResizeStop}
       onDragStop={onDragStop}
