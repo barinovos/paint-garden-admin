@@ -5,7 +5,18 @@ import { Wrapper } from './Styled'
 import { calcSizeWithZoom } from '../utils/calcZoom'
 import UploadRibbon from '../UploadRibbon'
 
-const CanvasImage = ({ item, onSelect, selectedItemId, zoomLevel, showRibbon = false, uploadImages = null, project_id, onChangeActiveImageIndex }) => {
+const CanvasImage = ({
+    item,
+    onSelect,
+    selectedItemId,
+    zoomLevel,
+    showRibbon = false,
+    uploadImages = null,
+    project_id,
+    onChangeActiveImageIndex,
+    deleteSection,
+    deleteImage
+  }) => {
   const height = calcSizeWithZoom(item.height, zoomLevel)
   const width = calcSizeWithZoom(item.width, zoomLevel)
   const x = calcSizeWithZoom(item.posx, zoomLevel)
@@ -25,6 +36,8 @@ const CanvasImage = ({ item, onSelect, selectedItemId, zoomLevel, showRibbon = f
             project_id={project_id}
             selectedItemId={selectedItemId}
             onChangeActiveImageIndex={onChangeActiveImageIndex}
+            deleteSection={deleteSection}
+            deleteImage={deleteImage}
           />
       )}
 

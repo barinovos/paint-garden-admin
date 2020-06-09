@@ -44,3 +44,6 @@ export const HiddenInput = styled.input.attrs({
     height: 35px;
   `;
 
+  export const ImageWrapper = styled.div`
+    position: relative;
+  `

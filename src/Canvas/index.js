@@ -86,7 +86,6 @@ class Canvas extends React.PureComponent {
   }
 
   onChangeActiveImageIndex = index => {
-    console.log(index);
     const { selectedSection, activeImageIndexes } = this.state
     this.setState({
       activeImageIndexes: { ...activeImageIndexes, [selectedSection.id]: +index },
@@ -95,6 +94,16 @@ class Canvas extends React.PureComponent {
 
   changeShowPreview = () => {
     this.setState({showPreview: false})
+  }
+
+  deleteImage = (id, section_id) => {
+    this.setState({
+      activeImageIndexes: {},
+      activeImageIndex: 0
+    })
+    console.log(this.state.activeImageIndexes)
+    console.log('hola')
+    this.props.deleteImage(id, section_id);
   }
 
   render() {
@@ -115,6 +124,7 @@ class Canvas extends React.PureComponent {
       addSection,
       uploadImages,
       activeImageIndex,
+      deleteSection
     } = this.props
     const { selectedSection, zoomLevel, project_id } = this.state
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
@@ -122,7 +132,9 @@ class Canvas extends React.PureComponent {
       .filter(s => s.canvas && s.imageIds.length)
       .map(({ id, imageIds, posx, posy, width, height, images: images_section, thumb, type, mime }) => ({
         id,
-        path: images.find(im => im.id === imageIds[this.state.activeImageIndexes[id] !== undefined ? imageIds.length - 1 - this.state.activeImageIndexes[id] : imageIds.length - 1],
+        path: images.find(im => im.id === imageIds[this.state.activeImageIndexes[id] !== undefined? imageIds.length - 1 - this.state.activeImageIndexes[id] : imageIds.length - 1],
+          console.log(imageIds),
+          console.log(images),
           ).url,
         posx,
         posy,
@@ -179,6 +191,8 @@ class Canvas extends React.PureComponent {
           onChangeActiveImageIndex={this.onChangeActiveImageIndex}
           hidePreview={this.changeShowPreview}
           showPreview={this.state.showPreview}
+          deleteSection={deleteSection}
+          deleteImage={this.deleteImage}
         />
 
       </Wrapper>

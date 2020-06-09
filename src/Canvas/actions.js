@@ -110,6 +110,33 @@ export function deletePin(pinId) {
       .then(resp => dispatch({ type: actionTypes.REMOVE_PIN, pinId }))
 }
 
+
+export function deleteSection(id) {
+  return dispatch =>
+    api.delete(`${Constants.API.SECTION}/${id}`).then(resp =>
+      dispatch({
+        type: actionTypes.DELETE_SECTION,
+        id,
+      }),
+    )
+}
+
+export function deleteImage(id, section_id) {
+  return dispatch =>
+    api.delete(`${Constants.API.IMAGE}/${id}`).then(resp =>
+      dispatch({
+        type: actionTypes.DELETE_IMAGE,
+        id,
+      }),
+
+      dispatch({
+        type: actionTypes.DELETE_IMAGE_SECTION,
+        id,
+        section_id
+      }),
+    )
+}
+
 export function uploadImageToPin(file, pinId) {
   return dispatch => {
     const formData = new FormData()

@@ -10,6 +10,24 @@ export function isCanvasGridViewReducer(state = true, action) {
   }
 }
 
+export function imagesReducer(state = [], action) {
+  switch (action.type) {
+    case actionTypes.UPDATE_DB:
+      return action.images || []
+    case actionTypes.CREATE_IMAGE:
+      return [...state, ...action.images]
+    case actionTypes.DELETE_IMAGE:
+      console.log('reducer')
+      console.log(state.sections.imageIds)
+      console.log(action.id)
+      state.sections.map(s => s.imageIds.filter(imgId => imgId !== action.id))
+      console.log(state.sections.imageIds)
+      return state.images.filter(im => im.id !== action.id)
+    default:
+      return state
+  }
+}
+
 export function editModeReducer(state = Constants.EDIT_MODES.resize, action) {
   switch (action.type) {
     case actionTypes.CHANGE_CANVAS_MODE:

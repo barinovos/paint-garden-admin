@@ -81,7 +81,9 @@ class DndArea extends React.PureComponent {
       uploadImages,
       onChangeActiveImageIndex,
       hidePreview,
-      showPreview
+      showPreview,
+      deleteSection,
+      deleteImage
     } = this.props
 
     return (
@@ -154,6 +156,8 @@ class DndArea extends React.PureComponent {
                       uploadImages={uploadImages}
                       project_id={project_id}
                       onChangeActiveImageIndex={onChangeActiveImageIndex}
+                      deleteSection={deleteSection}
+                      deleteImage={deleteImage}
                     />
                   ))}
               </Fragment>

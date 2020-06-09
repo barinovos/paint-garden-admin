@@ -10,6 +10,7 @@ export default {
   UPDATE_SECTION: 'app.sections.UPDATE',
   CREATE_SECTION: 'app.sections.CREATE',
   DELETE_SECTION: 'app.sections.DELETE',
+  DELETE_IMAGE_SECTION: 'app.sections.DELETE_IMAGE_SECTION',
   CREATE_IMAGE: 'app.images.CREATE',
   DELETE_IMAGE: 'app.images.DELETE',
   UPDATE_WEBVIEW: 'app.canvas.UPDATE_WEBVIEW',
