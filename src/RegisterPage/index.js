@@ -54,7 +54,6 @@ const RegisterPage = ({ history }) => {
       return register(api.apiUrl, credentials)
         .then(() => history.push(Constants.ROUTES.ROOT))
         .catch(er => {
-          //console.log(er)
           setError({
             message: 'Oops something went wrong, check your data and send again.',
           })

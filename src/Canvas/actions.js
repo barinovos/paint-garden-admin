@@ -77,10 +77,9 @@ export function addSection(data) {
 export function uploadImages(data, sectionId) {
   return dispatch => {
     const formData = new FormData()
-    var images = [data.image];
+    var images = data.images;
     for (var i = 0; i < images.length; i++) {
       const file = images[i]
-      console.log(file)
       // Check the file type.
       if (!file.type.match('image.*')) {
         continue

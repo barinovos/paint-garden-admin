@@ -83,9 +83,7 @@ export default class PinModal extends React.PureComponent {
               </AddImage>
             )}
           <ItemInput value={headline} onChange={this.onChangeState('headline')} placeholder="Headline" />
-          <ItemInput value={medium} onChange={this.onChangeState('medium')} placeholder="Medium" />
           <ItemTextArea value={description} onChange={this.onChangeState('description')} placeholder="Description" />
-          <ItemInput value={link} onChange={this.onChangeState('link')} placeholder="Hyperlink to Store (buy here)" />
           <RightAlignedRow>
             <Button onClick={onClose} secondary>
               Cancel

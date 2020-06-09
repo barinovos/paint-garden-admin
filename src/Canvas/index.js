@@ -58,7 +58,6 @@ class Canvas extends React.PureComponent {
   };
 
   onSectionSelect = selectedSection => {
-    console.log(selectedSection);
     const { activeImageIndexes } = this.state
   // check for not set up index
     const activeImageIndex =
@@ -101,8 +100,6 @@ class Canvas extends React.PureComponent {
       activeImageIndexes: {},
       activeImageIndex: 0
     })
-    console.log(this.state.activeImageIndexes)
-    console.log('hola')
     this.props.deleteImage(id, section_id);
   }
 
@@ -133,8 +130,7 @@ class Canvas extends React.PureComponent {
       .map(({ id, imageIds, posx, posy, width, height, images: images_section, thumb, type, mime }) => ({
         id,
         path: images.find(im => im.id === imageIds[this.state.activeImageIndexes[id] !== undefined? imageIds.length - 1 - this.state.activeImageIndexes[id] : imageIds.length - 1],
-          console.log(imageIds),
-          console.log(images),
+
           ).url,
         posx,
         posy,

@@ -33,7 +33,6 @@ const LoginPage = ({ history }) => {
       return authenticate(api.apiUrl, credentials)
         .then(() => history.push(Constants.ROUTES.ROOT))
         .catch(er => {
-          //console.log(er)
           setError({
             message: 'Sorry, unknown username/password combination',
           })

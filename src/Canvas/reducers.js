@@ -16,13 +16,6 @@ export function imagesReducer(state = [], action) {
       return action.images || []
     case actionTypes.CREATE_IMAGE:
       return [...state, ...action.images]
-    case actionTypes.DELETE_IMAGE:
-      console.log('reducer')
-      console.log(state.sections.imageIds)
-      console.log(action.id)
-      state.sections.map(s => s.imageIds.filter(imgId => imgId !== action.id))
-      console.log(state.sections.imageIds)
-      return state.images.filter(im => im.id !== action.id)
     default:
       return state
   }

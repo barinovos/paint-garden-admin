@@ -11,7 +11,7 @@ const UploadRibbon = ({item, uploadImages , project_id, selectedItemId, onChange
     return(
         <Wrapper>
             <UploadButton>
-                <HiddenInput onChange={ev => uploadImages({ image: ev.target.files[0], project_id: project_id}, item.id)}/>
+                <HiddenInput onChange={ev => uploadImages({ images: ev.target.files, project_id: project_id}, item.id)}/>
                 <Icon style={{padding: '6px 7px', paddingRight: '20px', borderRight: '1px solid #F0F3F4', marginRight: '10px'}}  src={upload} />
             </UploadButton>
             {item.images_section && item.images_section.map((image, i) => (

@@ -28,10 +28,6 @@ const UploadArea = ({addUpload, zoomLevel, project_id}) => {
         setShowModal(false)
     }
 
-    // const onClose = (ev) => {
-    //     console.log('test');
-    //    // triggerModal({ open: false })
-    // }
     return(
         <Wrapper onClick={onUpload}>
 

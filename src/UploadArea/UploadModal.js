@@ -33,18 +33,14 @@ const UploadModal = ({onSave, onClose, project_id}) => {
 
   const handleSubmit = () => {
 
-    const { height, width, depth, year, synopisis, medium } = values;
+    const { height, width} = values;
       if (title.length > minTitleLength) {
           onSave({
               project_id: project_id,
               title:title,
-              image:image,
+              images:[image],
               width: width ? +width : 500,
-              height: height ? +height : 500,
-              depth: depth ? +depth : null,
-              year: year ? +year : null,
-              synopisis: synopisis ? +synopisis : null,
-              medium: medium ? +medium : null,
+              height: height ? +height : 500
 
           });
       }
@@ -63,8 +59,6 @@ const UploadModal = ({onSave, onClose, project_id}) => {
     switch (prop) {
       case 'height':
       case 'width':
-      case 'depth':
-      case 'year':
         return validateNumber(val)
       default:
         return true
@@ -82,15 +76,9 @@ const UploadModal = ({onSave, onClose, project_id}) => {
               placeholder="Title"
             />
             <span style={{color: "red"}}>{errors["title"]}</span>
-            <ItemTextArea  onChange={onChangeState('synopisis')} placeholder="Synopisis" />
           <JustifiedRow>
             <ItemInput  onChange={onChangeState('height')} placeholder="Height" width={30} />
             <ItemInput  onChange={onChangeState('width')} placeholder="Width" width={30} />
-            <ItemInput  onChange={onChangeState('depth')} placeholder="Depth" width={30} />
-          </JustifiedRow>
-          <JustifiedRow>
-            <ItemInput onChange={onChangeState('medium')} placeholder="Medium" width={65} />
-            <ItemInput  onChange={onChangeState('year')} placeholder="Year" width={30} />
           </JustifiedRow>
 
             <AddImage >
@@ -100,8 +88,6 @@ const UploadModal = ({onSave, onClose, project_id}) => {
 
              <p style={{color: "red"}}>{errors["height"]}</p>
              <p style={{color: "red"}}>{errors["width"]}</p>
-             <p style={{color: "red"}}>{errors["depth"]}</p>
-             <p style={{color: "red"}}>{errors["year"]}</p>
           <RightAlignedRow>
                 <Button onClick={onClose} secondary>
                   Cancel

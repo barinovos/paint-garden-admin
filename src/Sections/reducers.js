@@ -14,8 +14,6 @@ export function imagesReducer(state = [], action) {
 }
 
 export function sectionsReducer(state = [], action) {
-  console.log(action);
-  console.log('SECTION REDUCER')
   switch (action.type) {
     case actionTypes.UPDATE_DB:
       return action.sections || []
@@ -32,7 +30,6 @@ export function sectionsReducer(state = [], action) {
           imageIds: [...s.imageIds, ...action.images.map(im => im.id)]
         } : s)
     case actionTypes.DELETE_IMAGE_SECTION:
-      console.log('DELETE SECTION REDUCER')
       return state.map(s =>
         s.id === action.section_id ? {
           ...s,
