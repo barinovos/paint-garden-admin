@@ -1,16 +1,15 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Area, InnerArea, UploadWrapper, PreviewLink, Link } from './Styled'
+import { Area, InnerArea, PreviewLink, Link } from './Styled'
 import { DropTarget } from 'react-dnd'
-import DragImage from '../DragImage'
 import ResizableImage from '../ResizableImage'
 import CanvasImage from '../CanvasImage'
-import UploadRibbon from '../UploadRibbon'
 import close from '../assets/close.svg'
 import Pins from '../Pins'
 import { calcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
 import Constants from '../constants'
 import UploadArea from '../UploadArea'
+
 const { EDIT_MODES } = Constants
 
 const squareTarget = {
@@ -37,9 +36,7 @@ function collect(connect, monitor) {
   }
 }
 
-
 class DndArea extends React.PureComponent {
-
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
     onUpdate: PropTypes.func.isRequired,
@@ -58,7 +55,7 @@ class DndArea extends React.PureComponent {
     onEditPin: PropTypes.func,
     onUploadImageToPin: PropTypes.func,
     project_id: PropTypes.string,
-    c: PropTypes.func
+    c: PropTypes.func,
   }
 
   render() {
@@ -83,12 +80,12 @@ class DndArea extends React.PureComponent {
       hidePreview,
       showPreview,
       deleteSection,
-      deleteImage
+      deleteImage,
     } = this.props
 
     return (
       <Area isGrid={isCanvasGridView} ref={instance => connectDropTarget(instance)}>
-        <InnerArea >
+        <InnerArea>
           {editMode === EDIT_MODES.resize &&
             items.map((item, i) => (
               <ResizableImage
@@ -124,54 +121,50 @@ class DndArea extends React.PureComponent {
           )}
 
           {editMode === EDIT_MODES.area && (
-              <Fragment>
-                <UploadArea
-                  addUpload={addSection}
+            <Fragment>
+              <UploadArea addUpload={addSection} zoomLevel={zoomLevel} project_id={project_id} />
+              {items.map((item, i) => (
+                <CanvasImage
+                  key={i}
+                  item={item}
+                  onSelect={onSelect}
+                  selectedItemId={selectedItemId}
                   zoomLevel={zoomLevel}
-                  project_id={project_id}
                 />
-                {items.map((item, i) => (
-                  <CanvasImage
-                    key={i}
-                    item={item}
-                    onSelect={onSelect}
-                    selectedItemId={selectedItemId}
-                    zoomLevel={zoomLevel}
-                  />
-                ))}
-              </Fragment>
+              ))}
+            </Fragment>
           )}
 
-
           {editMode === EDIT_MODES.upload && (
-              <Fragment>
-                {items.map((item, i) => (
-                    <CanvasImage
-                      key={i}
-                      item={item}
-                      onSelect={onSelect}
-                      selectedItemId={selectedItemId}
-                      zoomLevel={zoomLevel}
-                      showRibbon= {item.id === selectedItemId}
-                      uploadImages={uploadImages}
-                      project_id={project_id}
-                      onChangeActiveImageIndex={onChangeActiveImageIndex}
-                      deleteSection={deleteSection}
-                      deleteImage={deleteImage}
-                    />
-                  ))}
-              </Fragment>
+            <Fragment>
+              {items.map((item, i) => (
+                <CanvasImage
+                  key={i}
+                  item={item}
+                  onSelect={onSelect}
+                  selectedItemId={selectedItemId}
+                  zoomLevel={zoomLevel}
+                  showRibbon={item.id === selectedItemId}
+                  uploadImages={uploadImages}
+                  project_id={project_id}
+                  onChangeActiveImageIndex={onChangeActiveImageIndex}
+                  deleteSection={deleteSection}
+                  deleteImage={deleteImage}
+                />
+              ))}
+            </Fragment>
           )}
         </InnerArea>
         {showPreview && (
           <PreviewLink>
-                Your canvas is published
-                <Link href = {"//paint.garden/" + project_id}>here</Link>
-                <img
-                  alt = "Preview of the canvas"
-                  src = {close} style={{verticalAlign: 'bottom', marginLeft: '10px'}}
-                  onClick={() => hidePreview()}
-                />
+            Your canvas is published
+            <Link href={'//paint.garden/' + project_id}>here</Link>
+            <img
+              alt="Preview of the canvas"
+              src={close}
+              style={{ verticalAlign: 'bottom', marginLeft: '10px' }}
+              onClick={() => hidePreview()}
+            />
           </PreviewLink>
         )}
       </Area>

@@ -75,8 +75,10 @@ export function uploadImages(files, sectionId, projectId) {
     for (var i = 0; i < files.length; i++) {
       const file = files[i]
       // Check the file type.
-      if (!file.type.match('image.*')) {
-        continue
+      if (!file.type.includes('image') && !file.type.includes('video')) {
+        // skip the API call for non-image or non-video file types
+        // TODO: implement an error notification for a user for this case
+        return
       }
       // Add the file to the request.
       formData.append('images[]', file, file.name)

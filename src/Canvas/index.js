@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes, { func } from 'prop-types'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchData } from '../Sections/actions'
@@ -10,7 +10,6 @@ import DndArea from '../DndArea'
 import ActionsBar from '../ActionsBar'
 import ProjectPicker from '../ProjectPicker'
 import { ImageType, SectionType } from '../types'
-import close from '../assets/close.svg'
 import Constants from '../constants'
 const { MAX_ZOOM_LEVEL } = Constants
 
@@ -30,7 +29,7 @@ class Canvas extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    const project_id = props.match.params.project_id;
+    const project_id = props.match.params.project_id
     props.fetchData(project_id)
     props.fetchProjects()
     this.state = {
@@ -43,32 +42,32 @@ class Canvas extends React.PureComponent {
     }
   }
 
-  componentDidUpdate = (prevProps) => {
-    if(this.props.match.params.project_id !== prevProps.match.params.project_id ) {
-      const project_id = this.props.match.params.project_id;
+  componentDidUpdate = prevProps => {
+    if (this.props.match.params.project_id !== prevProps.match.params.project_id) {
+      const project_id = this.props.match.params.project_id
       this.props.fetchData(project_id)
       this.props.fetchProjects()
       this.setState({
         selectedSection: null,
         zoomLevel: -10,
         project_id: project_id,
-        activeImageIndex: 0
+        activeImageIndex: 0,
       })
-   };
-  };
+    }
+  }
 
   onSectionSelect = selectedSection => {
     const { activeImageIndexes } = this.state
-  // check for not set up index
+    // check for not set up index
     const activeImageIndex =
-    activeImageIndexes[selectedSection.id] === undefined
-    ? 0 //selectedSection.imageIds.length - 1
-    : activeImageIndexes[selectedSection.id]
-      this.setState({
-        selectedSection: this.props.sections.find(s => s.id === selectedSection.id),
-        activeImageIndexes: { ...activeImageIndexes, [selectedSection.id]: activeImageIndex },
-        activeImageIndex: activeImageIndex
-      })
+      activeImageIndexes[selectedSection.id] === undefined
+        ? 0 //selectedSection.imageIds.length - 1
+        : activeImageIndexes[selectedSection.id]
+    this.setState({
+      selectedSection: this.props.sections.find(s => s.id === selectedSection.id),
+      activeImageIndexes: { ...activeImageIndexes, [selectedSection.id]: activeImageIndex },
+      activeImageIndex: activeImageIndex,
+    })
   }
 
   onChangeCanvasMode = mode => {
@@ -77,7 +76,7 @@ class Canvas extends React.PureComponent {
   }
 
   onAddPin = pin => {
-    this.props.addPin(pin, this.state.project_id);
+    this.props.addPin(pin, this.state.project_id)
   }
 
   onZoomChange = zoomLevel => {
@@ -92,15 +91,15 @@ class Canvas extends React.PureComponent {
   }
 
   changeShowPreview = () => {
-    this.setState({showPreview: false})
+    this.setState({ showPreview: false })
   }
 
   deleteImage = (id, section_id) => {
     this.setState({
       activeImageIndexes: {},
-      activeImageIndex: 0
+      activeImageIndex: 0,
     })
-    this.props.deleteImage(id, section_id);
+    this.props.deleteImage(id, section_id)
   }
 
   render() {
@@ -121,7 +120,7 @@ class Canvas extends React.PureComponent {
       addSection,
       uploadImages,
       activeImageIndex,
-      deleteSection
+      deleteSection,
     } = this.props
     const { selectedSection, zoomLevel, project_id } = this.state
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
@@ -129,9 +128,15 @@ class Canvas extends React.PureComponent {
       .filter(s => s.canvas && s.imageIds.length)
       .map(({ id, imageIds, posx, posy, width, height, images: images_section, thumb, type, mime }) => ({
         id,
-        path: images.find(im => im.id === imageIds[this.state.activeImageIndexes[id] !== undefined? imageIds.length - 1 - this.state.activeImageIndexes[id] : imageIds.length - 1],
-
-          ).url,
+        path: images.find(
+          im =>
+            im.id ===
+            imageIds[
+              this.state.activeImageIndexes[id] !== undefined
+                ? imageIds.length - 1 - this.state.activeImageIndexes[id]
+                : imageIds.length - 1
+            ],
+        ).url,
         posx,
         posy,
         width,
@@ -140,15 +145,12 @@ class Canvas extends React.PureComponent {
         images_section,
         mime: images.find(im => im.id === imageIds[imageIds.length - 1]).mime,
         mimeType: images.find(im => im.id === imageIds[imageIds.length - 1]).mime_type,
-        imageIds
+        imageIds,
       }))
 
     return (
       <Wrapper>
-        <ProjectPicker
-          project_id={project_id}
-          projects={project}
-        />
+        <ProjectPicker project_id={project_id} projects={project} />
 
         <ActionsBar
           zoomLevel={zoomLevel}
@@ -164,7 +166,7 @@ class Canvas extends React.PureComponent {
           <ZoomButton onClick={() => zoomLevel > -MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel - 1)}>-</ZoomButton>
           <ZoomButton onClick={() => zoomLevel < MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel + 1)}>+</ZoomButton>
           <ZoomButton>{zoomLevel * 10 + '%'}</ZoomButton>
-      </ZoomButtons>
+        </ZoomButtons>
         <DndArea
           zoomLevel={zoomLevel}
           items={items}
@@ -190,7 +192,6 @@ class Canvas extends React.PureComponent {
           deleteSection={deleteSection}
           deleteImage={this.deleteImage}
         />
-
       </Wrapper>
     )
   }
@@ -204,7 +205,7 @@ export default connect(
     editMode,
     webview,
     pins,
-    project
+    project,
   }),
   dispatch => bindActionCreators({ ...actions, fetchData, fetchProjects }, dispatch),
 )(Canvas)

@@ -46,12 +46,11 @@ export default class PinModal extends React.PureComponent {
   onUpload = ev => {
     this.props.onImageUpload(ev.target.files[0], this.state.id)
     this.setState({ temp_path: URL.createObjectURL(ev.target.files[0]) })
-    //this.props.onClose()
   }
 
   render() {
     const { onClose, onDelete } = this.props
-    const { temp_path, image, image_url, headline, medium, description, id, link, url } = this.state
+    const { temp_path, image_url, headline, description, id, url } = this.state
 
     return (
       <Wrapper onClick={onClose}>
@@ -68,20 +67,25 @@ export default class PinModal extends React.PureComponent {
               />
             )}
           </JustifiedRow>
-          {id ?
-            (url ? (
+          {id ? (
+            url ? (
               <Image src={url} />
             ) : (
               <AddImage>
-                <img style = {{maxWidth: "100%", maxHeight: "100%" }} src={temp_path ? temp_path : (image_url ? image_url : add)} alt="upload" />
+                <img
+                  style={{ maxWidth: '100%', maxHeight: '100%' }}
+                  src={temp_path ? temp_path : image_url ? image_url : add}
+                  alt="upload"
+                />
                 <HiddenInput onChange={this.onUpload} />
               </AddImage>
-            )) : (
-              <AddImage >
-                <img  style = {{maxWidth: "100%", maxHeight: "100%" }} src={temp_path ? temp_path : add} alt="upload" />
-                <HiddenInput onChange={this.onChangeState('image')} />
-              </AddImage>
-            )}
+            )
+          ) : (
+            <AddImage>
+              <img style={{ maxWidth: '100%', maxHeight: '100%' }} src={temp_path ? temp_path : add} alt="upload" />
+              <HiddenInput onChange={this.onChangeState('image')} />
+            </AddImage>
+          )}
           <ItemInput value={headline} onChange={this.onChangeState('headline')} placeholder="Headline" />
           <ItemTextArea value={description} onChange={this.onChangeState('description')} placeholder="Description" />
           <RightAlignedRow>

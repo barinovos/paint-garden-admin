@@ -41,14 +41,13 @@ class Sections extends React.PureComponent {
   constructor(props) {
     super(props)
     const project_id = props.match.params.project_id
-    this.state.project_id = project_id;
+    this.state.project_id = project_id
     props.fetchData(project_id)
   }
 
   componentWillUnmount() {
-    this.props.clearData();
-   }
-
+    this.props.clearData()
+  }
 
   onFinishCreateEdit = section => {
     this.setState({ showModal: false })
@@ -70,11 +69,11 @@ class Sections extends React.PureComponent {
 
     return (
       <SectionsWrapper>
-        <Link to={`/canvas/${this.state.project_id}`}>
-          <TextBlue>
-            Canvas
-          </TextBlue>
-        </Link>
+        <div style={{ marginBottom: 20 }}>
+          <Link to={`/canvas/${this.state.project_id}`}>
+            <TextBlue>Canvas</TextBlue>
+          </Link>
+        </div>
         <Row onClick={() => this.setState({ showModal: true, isCreate: true, section: null })}>
           <Icon src={add} />
           <TextBlue>Create area</TextBlue>
