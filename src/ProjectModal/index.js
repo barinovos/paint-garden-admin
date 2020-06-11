@@ -5,20 +5,24 @@ import { Button, Title, ItemInput, JustifiedRow, RightAlignedRow } from '../Comm
 import { ProjectType } from '../types'
 import add from '../assets/add.svg'
 
-const ProjectModal = ({onSave, updateProject, onClose}) => {
+const ProjectModal = ({onSave, updateProject, onClose, parentId}) => {
     const [title, setTitle]             = useState(updateProject !== null ? updateProject.title : "");
     const [errors, setError]            = useState([]);
     const [project_id, setProjectID]    = useState(updateProject !== null ? updateProject.id : null);
     const [temp_path, setTempPath]      = useState("");
     const [image_url, setImageUrl]      = useState(updateProject !== null ? updateProject.image : null);
     const [image, setImage]             = useState("");
+    const [invite, setInvite]           = useState("");
     const minTitleLength                = 6;
     const handleSubmit = () => {
         if (title.length > minTitleLength) {
+            let shared_with = invite.split(",");
             onSave({
                 id: project_id,
                 title:title,
-                image:image
+                image:image,
+                parentId: parentId,
+                shared_with: shared_with
             });
         }
     }
@@ -62,6 +66,12 @@ const ProjectModal = ({onSave, updateProject, onClose}) => {
                         <img style = {{maxWidth: "100%", maxHeight: "100%" }} src={temp_path ? temp_path : add} alt="upload" />
                         <HiddenInput onChange={onUploadChangeImage} />
                     </AddImage>
+                )}
+                {(parentId !== undefined &&
+                <div  >
+                Invite people to collaborate, put commas between emails.
+                    <ItemInput value={invite} onChange ={ev => setInvite(ev.target.value)}  placeholder="Invite" />
+                </div>
                 )}
             <RightAlignedRow>
                 <Button onClick={onClose} secondary>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom';
 import { bindActionCreators } from 'redux'
 import {ProjectType} from '../types'
 import {ProjectsWrapper, ProjectsList, Title, CreateButton} from './Styled'
@@ -12,10 +13,11 @@ const Projects = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [isCreate, setIsCreate] = useState(true);
     const [updateProject, setUpdateProject] = useState(null);
+    const { project_id } = useParams();
 
     useEffect(() => {
-        props.fetchData()
-    }, [])
+        props.fetchData(project_id)
+    }, [project_id])
 
     const createButtonClicked = () => {
         setShowModal(true)
@@ -44,16 +46,20 @@ const Projects = (props) => {
 
 
     return (
+        console.log(props.projects),
         <ProjectsWrapper>
-            <Title>Projects</Title>
-            <CreateButton onClick={createButtonClicked}>Create project</CreateButton>
+            <Title>{project_id === undefined ? 'Projects' : 'Canvases'}</Title>
+            <CreateButton onClick={createButtonClicked}>Create {project_id === undefined ?  'project' : 'canvas'}</CreateButton>
             <ProjectsList>
-                {props.project.map(p => (
-                    <ProjectSingle key ={p.id} project={p} onEdit={editButtonClicked} onDelete={onProjectDelete}/>
-                ))}
+                {props.project.length ? (props.project.map(p => (
+                    <ProjectSingle key ={p.id} project={p} onEdit={editButtonClicked} onDelete={onProjectDelete} parentId={project_id}/>
+                ))): (
+                    <div>No canvases</div>
+                )
+                }
             </ProjectsList>
 
-        {showModal && <ProjectModal onSave={onFinishCreateEdit} updateProject={updateProject} onClose={onCloseModal} />}
+        {showModal && <ProjectModal  onSave={onFinishCreateEdit} updateProject={updateProject} onClose={onCloseModal} parentId={project_id} />}
         </ProjectsWrapper>
     )
 }

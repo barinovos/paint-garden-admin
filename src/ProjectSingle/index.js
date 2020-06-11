@@ -8,7 +8,7 @@ import { Icon } from '../Common/Styled'
 import {Wrapper, Title, DateWrapper, ImageWrapper, Overlay, Icons} from './Styled'
 
 
-const Projects = ({project, onEdit, onDelete}) => {
+const Projects = ({project, onEdit, onDelete, parentId}) => {
     return (
         <Wrapper>
             <ImageWrapper>
@@ -19,7 +19,7 @@ const Projects = ({project, onEdit, onDelete}) => {
                     <Icon src={trash} onClick= {() => onDelete(project.id)} />
                 </Icons>
             </ImageWrapper>
-            <Link to={`/sections/${project.id}`}>
+            <Link to={`${parentId === undefined ? '/canvmases/' : '/sections/'}${project.id}`}>
                 <Title>
                     {project.title}
                 </Title>

@@ -5,15 +5,27 @@ const {
   API: { DB, PROJECT},
 } = Constants
 
-export function fetchData() {
-    return dispatch => api.get(`${PROJECT}`)
+export function fetchData(project_id) {
+  let url = PROJECT;
+    if (project_id !== undefined) {
+     url =  url + '/' + project_id;
+    }
+    return dispatch => api.get(`${url}`)
         .then(resp => dispatch(updateProjects(resp.data)));
 }
 
 export function createProject(project) {
+  console.log(project);
   const formData = new FormData();
   formData.append('title', project.title);
   formData.append('image', project.image, project.image.name);
+  if (project.parentId !== undefined) {
+    formData.append('parent_id', project.parentId);
+  }
+
+  if (project.shared_with.length > 0) {
+    formData.append('shared_with', JSON.stringify(project.shared_with));
+  }
   return dispatch => api.post(`${PROJECT}`,formData,
   { headers: { 'Content-Type': 'multipart/form-data' } }
   ).then(resp => dispatch(createdProject(resp.data)));

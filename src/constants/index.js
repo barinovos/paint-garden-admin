@@ -2,6 +2,7 @@ export default {
   ROUTES: {
     ROOT: '/',
     CANVAS: '/canvas',
+    CANVASES: '/canvmases',
     NOT_FOUND: '/not-found',
     LOGIN: '/login',
     REGISTER: '/register',

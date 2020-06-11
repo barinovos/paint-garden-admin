@@ -38,6 +38,7 @@ const Main = ({ auth, authCheck }) => {
           <Route path={ROUTES.ROOT} exact component={Projects} />
           <Route path={ROUTES.SECTIONS + '/:project_id'} exact component={Sections} />
           <Route path={ROUTES.PROJECTS} exact component={Projects} />
+          <Route path={ROUTES.CANVASES + '/:project_id'}  component={Projects} />
           <Route path={ROUTES.CANVAS+ '/:project_id'} component={Canvas} />
           <Route path={ROUTES.LOGIN} component={LoginPage} />
           <Route path={ROUTES.REGISTER} component={RegisterPage} />
