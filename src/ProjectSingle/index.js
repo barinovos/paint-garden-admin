@@ -19,7 +19,7 @@ const Projects = ({project, onEdit, onDelete, parentId}) => {
                     <Icon src={trash} onClick= {() => onDelete(project.id)} />
                 </Icons>
             </ImageWrapper>
-            <Link to={`${parentId === undefined ? '/canvmases/' : '/sections/'}${project.id}`}>
+            <Link to={`${parentId === undefined ? '/canvases/' : '/sections/'}${project.id}`}>
                 <Title>
                     {project.title}
                 </Title>

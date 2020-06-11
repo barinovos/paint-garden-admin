@@ -32,7 +32,7 @@ const Main = ({ auth, authCheck }) => {
 
   return (
     <Fragment>
-      <Route exact={true} path={[ROUTES.ROOT, `${ROUTES.SECTIONS}/:project_id`, ROUTES.PROJECTS]} component={Toolbar} />
+      <Route exact={true} path={[ROUTES.ROOT, `${ROUTES.CANVASES}/:project_id`, `${ROUTES.SECTIONS}/:project_id`, ROUTES.PROJECTS]} component={Toolbar} />
       <MainArea>
         <Switch>
           <Route path={ROUTES.ROOT} exact component={Projects} />
