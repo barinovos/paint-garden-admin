@@ -26,7 +26,7 @@ const ProjectModal = ({onSave, updateProject, onClose, parentId}) => {
             });
         }
     }
-  }
+
 
   const handleChange = ev => {
     const title = ev.target.value
@@ -44,7 +44,6 @@ const ProjectModal = ({onSave, updateProject, onClose, parentId}) => {
     setImage(ev.target.files[0])
     setTempPath(URL.createObjectURL(ev.target.files[0]))
   }
-
     return (
         <Wrapper onClick={onClose}>
             <ContentWrapper onClick={ev => ev.stopPropagation()}>

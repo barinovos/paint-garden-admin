@@ -44,16 +44,6 @@ const Projects = (props) => {
     isCreate ? props.createProject(project) : props.updateProject(project)
   }
 
-  return (
-    <ProjectsWrapper>
-      <Title>Projects</Title>
-      <CreateButton onClick={createButtonClicked}>Create project</CreateButton>
-      <ProjectsList>
-        {props.project.map(p => (
-          <ProjectSingle key={p.id} project={p} onEdit={editButtonClicked} onDelete={onProjectDelete} />
-        ))}
-      </ProjectsList>
-
     return (
         <ProjectsWrapper>
             <Title>{project_id === undefined ? 'Projects' : 'Canvases'}</Title>
