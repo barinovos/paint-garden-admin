@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { connect, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { bindActionCreators } from 'redux'
-import {ProjectType} from '../types'
-import {ProjectsWrapper, ProjectsList, Title, CreateButton} from './Styled'
+import { ProjectType } from '../types'
+import { ProjectsWrapper, ProjectsList, Title, CreateButton } from './Styled'
 import ProjectSingle from '../ProjectSingle'
 import ProjectModal from '../ProjectModal'
 import * as actions from './actions'
@@ -19,34 +19,42 @@ const Projects = (props) => {
         props.fetchData(project_id)
     }, [project_id])
 
-    const createButtonClicked = () => {
-        setShowModal(true)
-        setIsCreate(true)
-        setUpdateProject(null)
-    }
+  const createButtonClicked = () => {
+    setShowModal(true)
+    setIsCreate(true)
+    setUpdateProject(null)
+  }
 
-    const editButtonClicked = project => {
-        setShowModal(true)
-        setIsCreate(false)
-        setUpdateProject(project)
-    }
+  const editButtonClicked = project => {
+    setShowModal(true)
+    setIsCreate(false)
+    setUpdateProject(project)
+  }
 
-   const onCloseModal = () => {
-        setShowModal(false)
-   }
+  const onCloseModal = () => {
+    setShowModal(false)
+  }
 
-   const onProjectDelete = project_id => {
-       props.deleteProject(project_id)
-   }
+  const onProjectDelete = project_id => {
+    props.deleteProject(project_id)
+  }
 
   const onFinishCreateEdit = project => {
     setShowModal(false)
     isCreate ? props.createProject(project) : props.updateProject(project)
   }
 
+  return (
+    <ProjectsWrapper>
+      <Title>Projects</Title>
+      <CreateButton onClick={createButtonClicked}>Create project</CreateButton>
+      <ProjectsList>
+        {props.project.map(p => (
+          <ProjectSingle key={p.id} project={p} onEdit={editButtonClicked} onDelete={onProjectDelete} />
+        ))}
+      </ProjectsList>
 
     return (
-        console.log(props.projects),
         <ProjectsWrapper>
             <Title>{project_id === undefined ? 'Projects' : 'Canvases'}</Title>
             <CreateButton onClick={createButtonClicked}>Create {project_id === undefined ?  'project' : 'canvas'}</CreateButton>
@@ -65,10 +73,10 @@ const Projects = (props) => {
 }
 
 Projects.propTypes = {
-    projects: PropTypes.arrayOf(ProjectType),
+  projects: PropTypes.arrayOf(ProjectType),
 }
 
 export default connect(
-    ({ project }) => ({ project }),
-    dispatch => bindActionCreators({...actions}, dispatch),
-  )(Projects)
+  ({ project }) => ({ project }),
+  dispatch => bindActionCreators({ ...actions }, dispatch),
+)(Projects)

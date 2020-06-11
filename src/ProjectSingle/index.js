@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import {ProjectType} from '../types'
+import { ProjectType } from '../types'
 import { Link } from 'react-router-dom'
 import edit from '../assets/edit.svg'
 import trash from '../assets/trash.svg'
 import { Icon } from '../Common/Styled'
-import {Wrapper, Title, DateWrapper, ImageWrapper, Overlay, Icons} from './Styled'
+import { Wrapper, Title, DateWrapper, ImageWrapper, Overlay, Icons } from './Styled'
 
 
 const Projects = ({project, onEdit, onDelete, parentId}) => {
@@ -29,11 +29,10 @@ const Projects = ({project, onEdit, onDelete, parentId}) => {
     )
 }
 
-
 Projects.propTypes = {
-    project: ProjectType,
-    onEdit: PropTypes.func,
-    onDelete: PropTypes.func,
+  project: ProjectType,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
 }
 
 export default Projects

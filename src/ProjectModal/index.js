@@ -26,24 +26,24 @@ const ProjectModal = ({onSave, updateProject, onClose, parentId}) => {
             });
         }
     }
+  }
 
-    const handleChange = ev => {
-        const title = ev.target.value;
-        let errors  = {};
-        if (title.length < minTitleLength) {
-            errors.title = `Length of the title must be bigger than ${minTitleLength}`;
-            setError(errors);
-        } else {
-            setError({});
-        }
-        setTitle(ev.target.value)
+  const handleChange = ev => {
+    const title = ev.target.value
+    let errors = {}
+    if (title.length < minTitleLength) {
+      errors.title = `Length of the title must be bigger than ${minTitleLength}`
+      setError(errors)
+    } else {
+      setError({})
     }
+    setTitle(ev.target.value)
+  }
 
-
-    const onUploadChangeImage =  ev => {
-        setImage(ev.target.files[0]);
-        setTempPath(URL.createObjectURL(ev.target.files[0]));
-    }
+  const onUploadChangeImage = ev => {
+    setImage(ev.target.files[0])
+    setTempPath(URL.createObjectURL(ev.target.files[0]))
+  }
 
     return (
         <Wrapper onClick={onClose}>
@@ -84,10 +84,9 @@ const ProjectModal = ({onSave, updateProject, onClose, parentId}) => {
     )
 }
 
-
 ProjectModal.propTypes = {
-    onSave: PropTypes.func,
-    updateProject: ProjectType,
-    onClose: PropTypes.func,
+  onSave: PropTypes.func,
+  updateProject: ProjectType,
+  onClose: PropTypes.func,
 }
-export default ProjectModal;
+export default ProjectModal

@@ -29,14 +29,14 @@ const Main = ({ auth, authCheck }) => {
         <Logo src={logo} />
       </LoaderView>
     )
-  const notInCanvas = /^(?!.*(\/canvas)).*$/
+
   return (
     <Fragment>
-      <Route path={notInCanvas} component={Toolbar} />
+      <Route exact={true} path={[ROUTES.ROOT, `${ROUTES.SECTIONS}/:project_id`, ROUTES.PROJECTS]} component={Toolbar} />
       <MainArea>
         <Switch>
           <Route path={ROUTES.ROOT} exact component={Projects} />
-          <Route path={ROUTES.SECTIONS + '/:project_id'} exact component={Sections} />
+          <Route path={`${ROUTES.SECTIONS}/:project_id`} exact component={Sections} />
           <Route path={ROUTES.PROJECTS} exact component={Projects} />
           <Route path={ROUTES.CANVASES + '/:project_id'}  component={Projects} />
           <Route path={ROUTES.CANVAS+ '/:project_id'} component={Canvas} />
@@ -54,7 +54,7 @@ Main.propTypes = {
     isAuthenticated: PropTypes.bool,
   }),
   authCheck: PropTypes.func,
-  location: PropTypes.object
+  location: PropTypes.object,
 }
 
 export default connect(
