@@ -76,7 +76,7 @@ const Projects = (props) => {
               {active_project && (
                 <div>{active_project.title}</div>)}
               {active_project.id && <CreateCanvas onClick={() => createButtonClicked(active_project.id)} >Create canvas</CreateCanvas>}
-                {props.canvases && (props.canvases.map(c => (
+                {props.canvases.length && (props.canvases.map(c => (
                     <ProjectSingle key ={c.id} project={c} onEdit={editButtonClicked} onDelete={onProjectDelete} parentId={active_project}/>
                 )))}
             </ProjectsList>
@@ -92,6 +92,6 @@ Projects.propTypes = {
 }
 
 export default connect(
-  ({ project }) => ({ project }),
+  ({ project, canvases }) => ({ project, canvases }),
   dispatch => bindActionCreators({ ...actions }, dispatch),
 )(Projects)
