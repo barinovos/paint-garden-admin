@@ -16,7 +16,10 @@ const ProjectModal = ({onSave, updateProject, onClose, parentId}) => {
     const minTitleLength                = 6;
     const handleSubmit = () => {
         if (title.length > minTitleLength) {
-            let shared_with = invite.split(",");
+            let shared_with = [];
+            if (invite !== "") {
+                shared_with = invite.split(",");
+            }
             onSave({
                 id: project_id,
                 title:title,

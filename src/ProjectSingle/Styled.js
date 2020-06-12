@@ -2,8 +2,10 @@ import styled from 'styled-components'
 import colors from '../constants/colors'
 export const Wrapper = styled.div`
     margin: 20px 30px;
-    display: inline-block;
     text-align: center;
+    max-width: 220px;
+    display: inline-flex;
+    flex-direction: column;
 `
 
 export const Title = styled.span `

@@ -15,6 +15,16 @@ export function fetchData(project_id) {
         .then(resp => dispatch(updateProjects(resp.data)));
 }
 
+export function fetchCanvases(parent_id) {
+  let url = PROJECT;
+    if (parent_id !== undefined) {
+     url =  url + '/' + parent_id;
+    }
+    return dispatch => api.get(`${url}`)
+        .then(resp => dispatch(updateCanvases(resp.data)));
+
+}
+
 export function createProject(project) {
   console.log(project);
   const formData = new FormData();
@@ -35,7 +45,9 @@ export function createProject(project) {
 export function updateProject(project) {
   const formData = new FormData()
   formData.append('title', project.title)
-  formData.append('image', project.image, project.image.name)
+  if (project.image !== "") {
+    formData.append('image', project.image, project.image.name)
+  }
   return dispatch =>
     api
       .post(`${PROJECT}/${project.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
@@ -49,6 +61,11 @@ export function deleteProject(project_id) {
 const updateProjects = projects => ({
   type: actionTypes.UPDATE_PROJECTS,
   projects,
+})
+
+const updateCanvases = canvases => ({
+  type: actionTypes.UPDATE_CANVASES,
+  canvases,
 })
 
 const createdProject = project => ({
