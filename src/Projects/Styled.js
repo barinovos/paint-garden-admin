@@ -2,6 +2,7 @@ import styled from 'styled-components'
 export const ProjectsWrapper = styled.div`
 `
 export const ProjectsList = styled.div`
+    margin: 20px;
 `
 
 export const ProjectSidebar = styled.div`
@@ -66,4 +67,32 @@ export const CreateButton = styled.button `
     padding: 10px 30px;
     margin-left: 30px;
     cursor: pointer;
+`
+
+export const ProjectTitle = styled.div`
+    display: inline-block;
+    font-family: Spartan;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 17px;
+    line-height: 19px;
+    margin: 0 0 0 40px;
+    color: #202020;
+    text-decoration: underline;
+`
+
+export const ProjectsTopBar = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+export const ProjectBarRight = styled.div`
+`
+
+export const InviteButton = styled.div`
+    border: 1px solid #4DA1FF;
+    box-sizing: border-box;
+    border-radius: 4px;
+    color: #4DA1FF;
+    padding: 10px 30px;
+    display: inline-block;
 `

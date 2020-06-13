@@ -30,7 +30,7 @@ export function createProject(project) {
   const formData = new FormData();
   formData.append('title', project.title);
   formData.append('image', project.image, project.image.name);
-  if (project.parentId !== undefined) {
+  if (project.parentId !== undefined && project.parentId !== null) {
     formData.append('parent_id', project.parentId);
   }
 
@@ -55,7 +55,11 @@ export function updateProject(project) {
 }
 
 export function deleteProject(project_id) {
-  return dispatch => api.delete(`${PROJECT}/${project_id}`).then(resp => dispatch(refreshData(resp.data)))
+  return dispatch => api.delete(`${PROJECT}/${project_id}`).then(resp => {
+    dispatch(refreshData(resp.data))
+    dispatch({ type: actionTypes.DELETE_PROJECT })
+  }
+  )
 }
 
 const updateProjects = projects => ({
