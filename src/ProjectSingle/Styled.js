@@ -3,16 +3,20 @@ import colors from '../constants/colors'
 export const Wrapper = styled.div`
     margin: 20px 30px;
     text-align: center;
-    max-width: 220px;
+    width: 220px;
     display: inline-flex;
     flex-direction: column;
+    position: relative;
 `
 
 export const Title = styled.span `
-    font-family: ProximaNova;
+    font-family: Spartan SemiBold;
+    font-style: normal;
+    font-weight: normal;
     display: block;
     color: #4DA1FF;
-    font-size: 0.8em;
+    font-size: 12px;
+    color: #000000;
 `
 
 export const DateWrapper = styled.span `
@@ -57,4 +61,14 @@ export const Icons = styled.div`
     display: block;
     transform: translateY(0px);
   }
+`
+
+export const InfoOverlay = styled.div `
+    text-align: left;
+    position: absolute;
+    bottom: 5px;
+    padding: 12px;
+    width: 100%;
+    background-color: #fff;
+    opacity: 0.7;
 `

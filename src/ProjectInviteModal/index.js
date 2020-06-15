@@ -5,7 +5,7 @@ import { Button, Title, ItemInput, JustifiedRow, RightAlignedRow } from '../Comm
 import { ProjectType } from '../types'
 import add from '../assets/add.svg'
 
-const ProjectModal = ({onSave, updateProject, onClose, parentId = null}) => {
+const ProjectInviteModal = ({onSave, updateProject, onClose, parentId = null}) => {
     const [title, setTitle]             = useState(updateProject !== null ? updateProject.title : "");
     const [errors, setError]            = useState([]);
     const [project_id, setProjectID]    = useState(updateProject !== null ? updateProject.id : null);
@@ -80,9 +80,9 @@ const ProjectModal = ({onSave, updateProject, onClose, parentId = null}) => {
     )
 }
 
-ProjectModal.propTypes = {
+ProjectInviteModal.propTypes = {
   onSave: PropTypes.func,
   updateProject: ProjectType,
   onClose: PropTypes.func,
 }
-export default ProjectModal
+export default ProjectInviteModal

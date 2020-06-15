@@ -36,18 +36,19 @@ export const ProjectListing = styled.div`
 `
 
 export const CreateCanvas = styled.div`
-background-color: #4DA1FF;
-border-radius: 3px;
-display: inline-block;
-width: 220px;
-padding: 100px 0;
-color: #fff;
-text-align: center;
-font-weight: 600;
-font-size: 15px;
-line-height: 20px;
-color: #FFFFFF;
-margin: 40px;
+    background-color: #4DA1FF;
+    border-radius: 3px;
+    display: inline-block;
+    width: 220px;
+    padding: 100px 0;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    color: #FFFFFF;
+    margin: 20px 30px;
+    cursor: pointer;
 `
 
 export const Title = styled.span `
@@ -87,6 +88,13 @@ export const ProjectsTopBar = styled.div`
 `
 export const ProjectBarRight = styled.div`
 `
+export const CanvasesWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+`
+
+
 
 export const InviteButton = styled.div`
     border: 1px solid #4DA1FF;

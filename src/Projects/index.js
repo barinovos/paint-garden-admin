@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import { ProjectType } from '../types'
 import edit from '../assets/edit.svg'
 import trash from '../assets/trash_.svg'
-import { ProjectsWrapper, ProjectsList, Title, CreateButton, ProjectSidebar, CanvasArea, ProjectListing, CreateCanvas, ProjectTitle, ProjectsTopBar, InviteButton, ProjectBarRight } from './Styled'
+import { ProjectsWrapper, ProjectsList, Title, CreateButton, ProjectSidebar, CanvasArea, ProjectListing, CreateCanvas, ProjectTitle, ProjectsTopBar, InviteButton, ProjectBarRight, CanvasesWrapper } from './Styled'
 import ProjectSingle from '../ProjectSingle'
 import ProjectModal from '../ProjectModal'
 import { Icon } from '../Common/Styled'
@@ -23,7 +23,7 @@ const Projects = (props) => {
         props.fetchData()
     }, [])
 
-  const createButtonClicked = (event, parent_id = null) => {
+  const createButtonClicked =  (e, parent_id)  => {
     console.log('CREATE BUTTON CLICKED')
     console.log(parent_id)
     setProjectId(parent_id)
@@ -93,7 +93,8 @@ const Projects = (props) => {
                   </ProjectBarRight>
                 </ProjectsTopBar>
               )}
-              {active_project.id && (<CreateCanvas onClick={() => createButtonClicked(active_project.id)} >Create canvas</CreateCanvas>)}
+              <CanvasesWrapper>
+              {active_project.id && (<CreateCanvas onClick={(e) => createButtonClicked(e, active_project.id)} >Create canvas</CreateCanvas>)}
                 {props.project.length && props.project
                 .filter(p => p.id === active_project.id)
                 .map(p => (
@@ -102,6 +103,7 @@ const Projects = (props) => {
                     )
                 ))
                 }
+              </CanvasesWrapper>
             </ProjectsList>
             </CanvasArea>
 
