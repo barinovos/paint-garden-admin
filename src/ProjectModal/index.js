@@ -69,6 +69,7 @@ const ProjectModal = ({onSave, updateProject, onClose, parentId = null}) => {
                         <HiddenInput onChange={onUploadChangeImage} />
                     </AddImage>
                 )}
+
             <RightAlignedRow>
                 <Button onClick={onClose} secondary>
                 Cancel

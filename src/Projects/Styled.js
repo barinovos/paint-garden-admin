@@ -103,4 +103,5 @@ export const InviteButton = styled.div`
     color: #4DA1FF;
     padding: 10px 30px;
     display: inline-block;
+    cursor: pointer;
 `

@@ -9,11 +9,13 @@ import trash from '../assets/trash_.svg'
 import { ProjectsWrapper, ProjectsList, Title, CreateButton, ProjectSidebar, CanvasArea, ProjectListing, CreateCanvas, ProjectTitle, ProjectsTopBar, InviteButton, ProjectBarRight, CanvasesWrapper } from './Styled'
 import ProjectSingle from '../ProjectSingle'
 import ProjectModal from '../ProjectModal'
+import ProjectInviteModal from '../ProjectInviteModal'
 import { Icon } from '../Common/Styled'
 import * as actions from './actions'
 
 const Projects = (props) => {
     const [showModal, setShowModal] = useState(false);
+    const [showModalInvite, setShowModalInvite] = useState(false);
     const [isCreate, setIsCreate] = useState(true);
     const [updateProject, setUpdateProject] = useState(null);
     const [project_id, setProjectId ] = useState(null);
@@ -24,8 +26,6 @@ const Projects = (props) => {
     }, [])
 
   const createButtonClicked =  (e, parent_id)  => {
-    console.log('CREATE BUTTON CLICKED')
-    console.log(parent_id)
     setProjectId(parent_id)
     setShowModal(true)
     setIsCreate(true)
@@ -42,6 +42,10 @@ const Projects = (props) => {
     setShowModal(false)
   }
 
+  const onCloseModalInvite = () => {
+    setShowModalInvite(false)
+  }
+
   const onProjectDelete = project_id => {
     props.deleteProject(project_id)
     updateActiveProject()
@@ -53,6 +57,10 @@ const Projects = (props) => {
     updateActiveProject()
   }
 
+  const onInvite = project => {
+    props.sendInvites(project);
+  }
+
   const changeActiveProject = p => {
     setActiveProject(p);
   }
@@ -60,6 +68,10 @@ const Projects = (props) => {
   const updateActiveProject = () => {
     let new_active_project = props.project.filter(p => p.id === active_project.id );
     setActiveProject(new_active_project.length > 0 ? new_active_project[0] : {});
+  }
+
+  const inviteButtonClicked = () =>  {
+    setShowModalInvite(true);
   }
 
     return (
@@ -88,7 +100,7 @@ const Projects = (props) => {
                 <ProjectsTopBar>
                   <ProjectTitle>{active_project.title}</ProjectTitle>
                   <ProjectBarRight>
-                    <InviteButton>Invite</InviteButton>
+                    <InviteButton onClick={inviteButtonClicked}>Invite</InviteButton>
                     <Icon style={{display: 'inline-block', marginLeft: '10px'}} src={trash} onClick={() => onProjectDelete(active_project.id)} />
                   </ProjectBarRight>
                 </ProjectsTopBar>
@@ -108,6 +120,7 @@ const Projects = (props) => {
             </CanvasArea>
 
         {showModal && <ProjectModal  onSave={onFinishCreateEdit} updateProject={updateProject} onClose={onCloseModal} parentId={project_id} />}
+        {showModalInvite && <ProjectInviteModal  onSave={onInvite} updateProject={updateProject} onClose={onCloseModalInvite} projectId={active_project.id} />}
         </ProjectsWrapper>
     )
 }

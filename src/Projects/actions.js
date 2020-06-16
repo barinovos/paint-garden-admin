@@ -25,8 +25,19 @@ export function fetchCanvases(parent_id) {
 
 }
 
+export function sendInvites (project) {
+  const formData = new FormData()
+  if (project.shared_with.length > 0) {
+    formData.append('shared_with', JSON.stringify(project.shared_with));
+  }
+
+  return dispatch =>
+    api
+      .post(`${PROJECT}/${project.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .then(resp => dispatch(refreshData(resp.data)))
+}
+
 export function createProject(project) {
-  console.log(project);
   const formData = new FormData();
   formData.append('title', project.title);
   formData.append('image', project.image, project.image.name);

@@ -36,6 +36,15 @@ export const AddImage = styled.div`
   margin-bottom: 1.2em;
 `
 
+export const TextArea = styled.textarea `
+    font-family: Spartan light;
+    border: 1px solid #E7E7E7;
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 100%;
+    height: 300px;
+    padding: 10px;
+`
 
 export const HiddenInput = styled.input.attrs({
   type: 'file',
