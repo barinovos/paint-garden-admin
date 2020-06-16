@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Wrapper, ContentWrapper, Image, AddImage, HiddenInput } from './Styled'
+import { Wrapper, ContentWrapper, Image, AddImage, HiddenInput, TitleWrapper } from './Styled'
 import { Button, Title, ItemInput, JustifiedRow, RightAlignedRow } from '../Common/Styled'
 import { ProjectType } from '../types'
 import add from '../assets/add.svg'
+import { Icon } from '../Common/Styled'
+import trash from '../assets/trash_.svg'
 
-const ProjectModal = ({onSave, updateProject, onClose, parentId = null}) => {
+const ProjectModal = ({onSave, updateProject, onClose, parentId = null, onDelete}) => {
     const [title, setTitle]             = useState(updateProject !== null ? updateProject.title : "");
     const [errors, setError]            = useState([]);
     const [project_id, setProjectID]    = useState(updateProject !== null ? updateProject.id : null);
@@ -47,10 +49,20 @@ const ProjectModal = ({onSave, updateProject, onClose, parentId = null}) => {
     setImage(ev.target.files[0])
     setTempPath(URL.createObjectURL(ev.target.files[0]))
   }
+
+  const deleteProject = () => {
+    onDelete(updateProject.id);
+    onClose();
+  }
     return (
         <Wrapper onClick={onClose}>
             <ContentWrapper onClick={ev => ev.stopPropagation()}>
-                <Title>Project detail</Title>
+                <TitleWrapper>
+                    <Title style={{margin: '0',}}>Project detail</Title>
+                    {updateProject && (
+                        <Icon style={{display: 'inline-block', marginLeft: '10px'}} src={trash} onClick={deleteProject} />
+                    )}
+                </TitleWrapper>
                 <JustifiedRow  >
                     <ItemInput value={title} onChange={handleChange} placeholder="Title" />
                 </JustifiedRow>

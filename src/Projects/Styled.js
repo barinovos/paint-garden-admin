@@ -58,6 +58,7 @@ export const Title = styled.span `
     font-size: 15px;
     line-height: 17px;
     color: #202020;
+    padding: 10px;
 `
 
 export const CreateButton = styled.button `
@@ -68,6 +69,7 @@ export const CreateButton = styled.button `
     padding: 10px 30px;
     margin-left: 30px;
     cursor: pointer;
+    margin-right: 10px;
 `
 
 export const ProjectTitle = styled.div`
@@ -94,8 +96,6 @@ export const CanvasesWrapper = styled.div`
     flex-wrap: wrap;
 `
 
-
-
 export const InviteButton = styled.div`
     border: 1px solid #4DA1FF;
     box-sizing: border-box;
@@ -105,3 +105,9 @@ export const InviteButton = styled.div`
     display: inline-block;
     cursor: pointer;
 `
+export const ProjectSidebarControls = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+
+

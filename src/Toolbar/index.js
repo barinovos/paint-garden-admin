@@ -22,7 +22,6 @@ const Toolbar = ({ location, history }) => {
           <LinkText bold>Paint.garden</LinkText>
         </Link>
         <Link to={ROUTES.ROOT}>
-          <LinkText active={ROUTES.ROOT === location.pathname}>Projects</LinkText>
         </Link>
       </LinksArea>
       <LinksArea>

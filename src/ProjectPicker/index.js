@@ -10,10 +10,11 @@ const { ROUTES } = Constants
 const ProjectPicker = ({ projects, project_id }) => {
   const [showOther, setShowOther] = useState(false)
   let current_project = projects.find(element => element.id === project_id)
+  let parent_project  = projects.find(element => element.id === current_project.parent_id)
 
-  let other_projects = projects.filter(e => {
-    return e.id !== project_id
-  })
+  // let other_projects = projects.filter(e => {
+  //   return e.id !== project_id
+  // })
 
   const arrowClicked = () => {
     setShowOther(!showOther)
@@ -39,7 +40,7 @@ const ProjectPicker = ({ projects, project_id }) => {
       />
       {showOther && (
         <OtherWrapper>
-          {other_projects.map(op => (
+          {parent_project.children.map(op => (
             <Link
               key={op.id}
               to={ROUTES.CANVAS + '/' + op.id}

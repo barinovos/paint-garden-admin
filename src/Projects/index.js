@@ -5,8 +5,7 @@ import { useParams } from 'react-router-dom';
 import { bindActionCreators } from 'redux'
 import { ProjectType } from '../types'
 import edit from '../assets/edit.svg'
-import trash from '../assets/trash_.svg'
-import { ProjectsWrapper, ProjectsList, Title, CreateButton, ProjectSidebar, CanvasArea, ProjectListing, CreateCanvas, ProjectTitle, ProjectsTopBar, InviteButton, ProjectBarRight, CanvasesWrapper } from './Styled'
+import { ProjectsWrapper, ProjectsList, Title, CreateButton, ProjectSidebar, CanvasArea, ProjectListing, CreateCanvas, ProjectTitle, ProjectsTopBar, InviteButton, ProjectBarRight, CanvasesWrapper, ProjectSidebarControls } from './Styled'
 import ProjectSingle from '../ProjectSingle'
 import ProjectModal from '../ProjectModal'
 import ProjectInviteModal from '../ProjectInviteModal'
@@ -77,12 +76,13 @@ const Projects = (props) => {
     return (
         <ProjectsWrapper>
             <ProjectSidebar>
-              <Title>My Projects</Title>
-              <CreateButton onClick={createButtonClicked}>Add</CreateButton>
+              <ProjectSidebarControls>
+                <Title>My Projects</Title>
+                <CreateButton onClick={createButtonClicked}>Add</CreateButton>
+              </ProjectSidebarControls>
               {props.project.length ? (props.project
                     .filter(p => p.parent_id === null)
                     .map(p => (
-                    //<ProjectSingle key ={p.id} project={p} onEdit={editButtonClicked} onDelete={onProjectDelete} parentId={project_id}/>
                     <ProjectListing active = {p.id === (active_project ? active_project.id : null)} onClick={() => changeActiveProject(p)}>
                       {p.title}
                       {p.id === active_project.id && (
@@ -101,7 +101,6 @@ const Projects = (props) => {
                   <ProjectTitle>{active_project.title}</ProjectTitle>
                   <ProjectBarRight>
                     <InviteButton onClick={inviteButtonClicked}>Invite</InviteButton>
-                    <Icon style={{display: 'inline-block', marginLeft: '10px'}} src={trash} onClick={() => onProjectDelete(active_project.id)} />
                   </ProjectBarRight>
                 </ProjectsTopBar>
               )}
@@ -119,7 +118,7 @@ const Projects = (props) => {
             </ProjectsList>
             </CanvasArea>
 
-        {showModal && <ProjectModal  onSave={onFinishCreateEdit} updateProject={updateProject} onClose={onCloseModal} parentId={project_id} />}
+        {showModal && <ProjectModal  onSave={onFinishCreateEdit} updateProject={updateProject} onClose={onCloseModal} parentId={project_id}  onDelete={onProjectDelete} />}
         {showModalInvite && <ProjectInviteModal  onSave={onInvite} updateProject={updateProject} onClose={onCloseModalInvite} projectId={active_project.id} />}
         </ProjectsWrapper>
     )

@@ -51,3 +51,9 @@ export const HiddenInput = styled.input.attrs({
   cursor: pointer;
 `
 
+export const TitleWrapper = styled.div `
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`
+

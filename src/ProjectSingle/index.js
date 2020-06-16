@@ -11,6 +11,7 @@ import { Wrapper, Title, DateWrapper, ImageWrapper, Overlay, Icons, InfoOverlay 
 const Projects = ({project, onEdit, onDelete, parentId}) => {
     return (
         <Wrapper>
+            <Link to={`${'/canvas/' }${project.id}`}>
             <ImageWrapper>
                 <img alt = "default_image" src ={project.image ? project.image : "default.jpeg"} width="100%" height="100%"/>
                 <Overlay/>
@@ -26,6 +27,7 @@ const Projects = ({project, onEdit, onDelete, parentId}) => {
                     </Title>
                 </Link>
             </InfoOverlay>
+            </Link>
             {/* <DateWrapper>{new Date(project.createdAt).toLocaleString("en-GB", {day: 'numeric', month: 'long', year: 'numeric' })}</DateWrapper> */}
         </Wrapper>
     )

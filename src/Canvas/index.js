@@ -34,7 +34,7 @@ class Canvas extends React.PureComponent {
     props.fetchProjects()
     this.state = {
       selectedSection: null,
-      zoomLevel: -10,
+      zoomLevel: 0,
       project_id: project_id,
       activeImageIndex: 0,
       activeImageIndexes: {},
@@ -49,7 +49,7 @@ class Canvas extends React.PureComponent {
       this.props.fetchProjects()
       this.setState({
         selectedSection: null,
-        zoomLevel: -10,
+        zoomLevel: 0,
         project_id: project_id,
         activeImageIndex: 0,
       })

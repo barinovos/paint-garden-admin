@@ -7,7 +7,7 @@ cursor: pointer;
 height: 50px;
 max-height: 50px;
 min-width: 200px;
-z-index: 15000;
+z-index: 150000000000;
 display: flex;
 justify-content: left;
 align-items: center;
