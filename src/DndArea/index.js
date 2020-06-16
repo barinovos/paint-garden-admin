@@ -158,12 +158,14 @@ class DndArea extends React.PureComponent {
         {showPreview && (
           <PreviewLink>
             Your canvas is published
-            <Link href={'//paint.garden/' + project_id}>here</Link>
+            <Link href={'//paint.garden/#/' + project_id} target="_blank">
+              here
+            </Link>
             <img
               alt="Preview of the canvas"
               src={close}
               style={{ verticalAlign: 'bottom', marginLeft: '10px' }}
-              onClick={() => hidePreview()}
+              onClick={hidePreview}
             />
           </PreviewLink>
         )}

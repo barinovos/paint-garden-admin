@@ -7,31 +7,31 @@ import add from '../assets/add.svg'
 import { Icon } from '../Common/Styled'
 import trash from '../assets/trash_.svg'
 
-const ProjectModal = ({onSave, updateProject, onClose, parentId = null, onDelete}) => {
-    const [title, setTitle]             = useState(updateProject !== null ? updateProject.title : "");
-    const [errors, setError]            = useState([]);
-    const [project_id, setProjectID]    = useState(updateProject !== null ? updateProject.id : null);
-    const [temp_path, setTempPath]      = useState("");
-    const [image_url, setImageUrl]      = useState(updateProject !== null ? updateProject.image : null);
-    const [image, setImage]             = useState("");
-    const [invite, setInvite]           = useState("");
-    const minTitleLength                = 6;
-    const handleSubmit = () => {
-        if (title.length > minTitleLength) {
-            let shared_with = [];
-            if (invite !== "") {
-                shared_with = invite.split(",");
-            }
-            onSave({
-                id: project_id,
-                title:title,
-                image:image,
-                parentId: parentId,
-                shared_with: shared_with
-            });
-        }
-    }
+const ProjectModal = ({ onSave, updateProject, onClose, parentId = null, onDelete }) => {
+  const [title, setTitle] = useState(updateProject !== null ? updateProject.title : '')
+  const [errors, setError] = useState([])
+  const [project_id] = useState(updateProject !== null ? updateProject.id : null)
+  const [temp_path, setTempPath] = useState('')
+  const [image_url] = useState(updateProject !== null ? updateProject.image : null)
+  const [image, setImage] = useState('')
+  const [invite] = useState('')
+  const minTitleLength = 6
 
+  const handleSubmit = () => {
+    if (title.length > minTitleLength) {
+      let shared_with = []
+      if (invite !== '') {
+        shared_with = invite.split(',')
+      }
+      onSave({
+        id: project_id,
+        title: title,
+        image: image,
+        parentId: parentId,
+        shared_with: shared_with,
+      })
+    }
+  }
 
   const handleChange = ev => {
     const title = ev.target.value
@@ -51,46 +51,51 @@ const ProjectModal = ({onSave, updateProject, onClose, parentId = null, onDelete
   }
 
   const deleteProject = () => {
-    onDelete(updateProject.id);
-    onClose();
+    onDelete(updateProject.id)
+    onClose()
   }
-    return (
-        <Wrapper onClick={onClose}>
-            <ContentWrapper onClick={ev => ev.stopPropagation()}>
-                <TitleWrapper>
-                    <Title style={{margin: '0',}}>Project detail</Title>
-                    {updateProject && (
-                        <Icon style={{display: 'inline-block', marginLeft: '10px'}} src={trash} onClick={deleteProject} />
-                    )}
-                </TitleWrapper>
-                <JustifiedRow  >
-                    <ItemInput value={title} onChange={handleChange} placeholder="Title" />
-                </JustifiedRow>
-                <span style={{display: "block",color: "red", fontSize: "12px"}}>{errors.title}</span>
-                {project_id ?
-                    (updateProject.picture ? (
-                    <Image src={updateProject.picture} />
-                    ) : (
-                    <AddImage>
-                        <img style = {{maxWidth: "100%", maxHeight: "100%" }} src={temp_path ? temp_path : (image_url ? image_url : add)} alt="upload" />
-                        <HiddenInput onChange={onUploadChangeImage} />
-                    </AddImage>
-                    )) : (
-                    <AddImage >
-                        <img style = {{maxWidth: "100%", maxHeight: "100%" }} src={temp_path ? temp_path : add} alt="upload" />
-                        <HiddenInput onChange={onUploadChangeImage} />
-                    </AddImage>
-                )}
+  return (
+    <Wrapper onClick={onClose}>
+      <ContentWrapper onClick={ev => ev.stopPropagation()}>
+        <TitleWrapper>
+          <Title style={{ margin: '0' }}>Project detail</Title>
+          {updateProject && (
+            <Icon style={{ display: 'inline-block', marginLeft: '10px' }} src={trash} onClick={deleteProject} />
+          )}
+        </TitleWrapper>
+        <JustifiedRow>
+          <ItemInput value={title} onChange={handleChange} placeholder="Title" />
+        </JustifiedRow>
+        <span style={{ display: 'block', color: 'red', fontSize: '12px' }}>{errors.title}</span>
+        {project_id ? (
+          updateProject.picture ? (
+            <Image src={updateProject.picture} />
+          ) : (
+            <AddImage>
+              <img
+                style={{ maxWidth: '100%', maxHeight: '100%' }}
+                src={temp_path ? temp_path : image_url ? image_url : add}
+                alt="upload"
+              />
+              <HiddenInput onChange={onUploadChangeImage} />
+            </AddImage>
+          )
+        ) : (
+          <AddImage>
+            <img style={{ maxWidth: '100%', maxHeight: '100%' }} src={temp_path ? temp_path : add} alt="upload" />
+            <HiddenInput onChange={onUploadChangeImage} />
+          </AddImage>
+        )}
 
-            <RightAlignedRow>
-                <Button onClick={onClose} secondary>
-                Cancel
-                </Button>
-                <Button onClick={handleSubmit}>Save</Button>
-            </RightAlignedRow>
-            </ContentWrapper>
-        </Wrapper>
-    )
+        <RightAlignedRow>
+          <Button onClick={onClose} secondary>
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit}>Save</Button>
+        </RightAlignedRow>
+      </ContentWrapper>
+    </Wrapper>
+  )
 }
 
 ProjectModal.propTypes = {

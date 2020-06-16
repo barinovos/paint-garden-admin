@@ -19,8 +19,8 @@ export const PreviewLink = styled.div`
   border-radius: 4px;
   position: fixed;
   z-index: 20000;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
   font-size: 13px;
   font-family: Spartan Light, sans-serif;
   padding: 15px;
