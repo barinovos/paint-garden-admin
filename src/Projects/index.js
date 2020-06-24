@@ -38,6 +38,11 @@ const Projects = props => {
     props.fetchData()
   }, []) // eslint-disable-line
 
+  // set default active project after data fetched
+  if (!active_project.id && props.project.length) {
+    setActiveProject(props.project.filter(p => p.parent_id === null)[0])
+  }
+
   const createButtonClicked = (e, parent_id) => {
     setProjectId(parent_id)
     setShowModal(true)
@@ -70,9 +75,7 @@ const Projects = props => {
     updateActiveProject()
   }
 
-  const onInvite = project => {
-    props.sendInvites(project)
-  }
+  const onInvite = project => props.sendInvites(project)
 
   const changeActiveProject = p => {
     setActiveProject(p)
@@ -97,11 +100,8 @@ const Projects = props => {
         {props.project.length ? (
           props.project
             .filter(p => p.parent_id === null)
-            .map(p => (
-              <ProjectListing
-                active={p.id === (active_project ? active_project.id : null)}
-                onClick={() => changeActiveProject(p)}
-              >
+            .map((p, i) => (
+              <ProjectListing key={i} active={p.id === active_project.id} onClick={() => changeActiveProject(p)}>
                 {p.title}
                 {p.id === active_project.id && (
                   <Icon style={{ verticalAlign: 'middle' }} src={edit} onClick={() => editButtonClicked(p)} />

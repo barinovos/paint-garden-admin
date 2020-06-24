@@ -6,6 +6,11 @@ const ButtonMainStyle = css`
   color: ${colors.mainGrey};
   min-width: 120px;
   text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 1px 1px 4px 0 ${colors.blue};
+  }
 `
 
 const ButtonAlarmStyle = css`
@@ -13,11 +18,19 @@ const ButtonAlarmStyle = css`
   color: ${colors.red};
   min-width: 120px;
   text-align: center;
+
+  &:hover {
+    box-shadow: 2px 2px 2px 2px ${colors.red};
+  }
 `
 
 const ButtonSecondaryStyle = css`
   background: transparent;
   color: ${colors.dark};
+
+  &:hover {
+    background: ${colors.lightGrey};
+  }
 `
 
 const BasicText = css`
@@ -27,12 +40,14 @@ const BasicText = css`
   color: ${colors.grey};
 `
 
-export const Text = styled.div`
+export const Text = styled.p`
+  margin: 0;
   ${BasicText};
 `
 
-export const TextBlue = styled.div`
+export const TextBlue = styled.p`
   ${BasicText};
+  margin: 0;
   cursor: pointer;
   color: ${colors.mainGrey};
 
@@ -52,11 +67,11 @@ export const LinkText = styled.div`
   }
 `
 export const LoginButton = styled.div`
-  background: #4DA1FF;
+  background: #4da1ff;
   border-radius: 6px;
   width: 90%;
   text-align: center;
-  font-family: Proxima Nova;
+  font-family: Proxima Nova, sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
@@ -64,7 +79,8 @@ export const LoginButton = styled.div`
   min-height: 32px;
   /* identical to box height, or 133% */
   padding: 0 16px;
-  color: #FFFFFF;
+  color: #ffffff;
+
   @media (min-width: 768px) {
     width: 350px;
   }
@@ -74,6 +90,8 @@ export const Button = styled.div`
   border-radius: 3px;
   position: relative;
   display: inline-block;
+  outline: none;
+  border: none;
   cursor: pointer;
   padding: 10px 20px;
   text-decoration: none;
@@ -81,13 +99,8 @@ export const Button = styled.div`
 `
 
 export const MainArea = styled.div`
-  height: calc(100% - 60px);
   overflow-y: auto;
   height: 100%;
-`
-
-export const IconWrapper = styled.div`
-  cursor: pointer;
 `
 
 const ActiveImage = css`
@@ -128,6 +141,12 @@ export const ItemInput = styled.input`
   text-overflow: ellipsis;
   padding: 0 16px;
   width: ${props => props.width || 100}%;
+
+  ${props =>
+    props.error &&
+    `
+    border: 1px solid ${colors.red};
+  `}
 `
 
 export const ItemTextArea = styled.textarea`
@@ -136,12 +155,20 @@ export const ItemTextArea = styled.textarea`
   line-height: 20px;
   width: 100%;
   padding: 10px 16px;
+
+  ${props =>
+    props.error &&
+    `
+    border: 1px solid ${colors.red};
+  `}
 `
 
 export const JustifiedRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+
+  ${props => props.direction === 'column' && 'flex-direction: column'}
 `
 
 export const RightAlignedRow = styled.div`
@@ -161,8 +188,6 @@ export const Title = styled.div`
   margin-bottom: 20px;
 `
 
-
-
 export const AddImage = styled.div`
   height: 85px;
   background: lightgray;
@@ -172,4 +197,10 @@ export const AddImage = styled.div`
   align-items: center;
   position: relative;
   margin-bottom: 1.2em;
+`
+
+export const ErrorMessage = styled.p`
+  margin-top: 1em;
+  color: ${colors.red};
+  text-align: center;
 `

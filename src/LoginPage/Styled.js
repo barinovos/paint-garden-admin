@@ -25,7 +25,6 @@ export const LoginInput = styled(ItemInput)`
   color: ${colors.inputTextGray};
   ${props => props.error && `border: 1px solid ${colors.red}`};
 
-
   &:active,
   &:focus {
     border: 1px solid ${colors.formBorderBlue};
@@ -37,7 +36,7 @@ export const LoginInput = styled(ItemInput)`
   }
 `
 
-export const ButtonText = styled.p `
+export const ButtonText = styled.p`
   padding: 6px 0;
   font-family: Proxima Nova Regular;
 `
@@ -61,30 +60,24 @@ export const Title = styled.p`
   color: ${colors.formTitleGray};
 `
 
-export const ErrorMessage = styled.p`
+export const PrivacyPolicyText = styled.p`
   margin-top: 1em;
-  color: ${colors.red};
-  text-align: center;
-`
-
-export const PrivacyPolicyText = styled.p `
-  margin-top: 1em;
-  font-family: Proxima Nova Regular;
+  font-family: Proxima Nova Regular, sans-serif;
   font-style: normal;
   font-weight: 300;
   font-size: 9px;
   line-height: 11px;
 
-  color: #7F7F7F;
+  color: #7f7f7f;
 `
 
-export const LinkText = styled.span `
-  color: #4DA1FF;
+export const LinkText = styled.span`
+  color: #4da1ff;
 `
 
-export const RegisterText = styled.p `
+export const RegisterText = styled.p`
   margin-top: 1.5em;
-  font-family: Proxima Nova Light;
+  font-family: Proxima Nova Light, sans-serif;
   font-style: normal;
   font-weight: 300;
   font-size: 15px;

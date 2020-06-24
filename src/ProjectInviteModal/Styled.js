@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import colors from '../constants/colors'
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -20,30 +21,16 @@ export const ContentWrapper = styled.form`
   padding: 18px 21px;
 `
 
-export const Image = styled.img`
-  max-width: 100%;
-  margin-bottom: 1.2em;
-`
+export const TextArea = styled.textarea`
+  font-family: Spartan light, sans-serif;
+  border: 1px solid #e7e7e7;
+  box-sizing: border-box;
+  border-radius: 4px;
+  width: 100%;
+  height: 300px;
+  padding: 10px;
 
-export const AddImage = styled.div`
-  height: 85px;
-  background: lightgray;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  margin-bottom: 1.2em;
-`
-
-export const TextArea = styled.textarea `
-    font-family: Spartan light;
-    border: 1px solid #E7E7E7;
-    box-sizing: border-box;
-    border-radius: 4px;
-    width: 100%;
-    height: 300px;
-    padding: 10px;
+  ${props => props.error && `border: 1px solid ${colors.red};`}
 `
 
 export const HiddenInput = styled.input.attrs({
@@ -59,4 +46,3 @@ export const HiddenInput = styled.input.attrs({
   width: 100%;
   cursor: pointer;
 `
-

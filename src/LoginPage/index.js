@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import { Wrapper, LoginInput, Logo, Title, ErrorMessage, ButtonText, PrivacyPolicyText, LinkText, RegisterText } from './Styled'
-import { LoginButton} from '../Common/Styled'
+import { Wrapper, LoginInput, Logo, Title, ButtonText, PrivacyPolicyText, LinkText, RegisterText } from './Styled'
+import { LoginButton, ErrorMessage } from '../Common/Styled'
 
 import { Link } from 'react-router-dom'
 import { authenticate } from '../utils/auth'
@@ -71,8 +71,18 @@ const LoginPage = ({ history }) => {
         <ButtonText>Log In</ButtonText>
       </LoginButton>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
-      <PrivacyPolicyText>By clicking here you agree to thee terms of our <Link to={ROUTES.POLICY}><LinkText>Privacy policy</LinkText></Link></PrivacyPolicyText>
-      <RegisterText>Don't have an account? <Link to={ROUTES.REGISTER}><LinkText>Register</LinkText></Link></RegisterText>
+      <PrivacyPolicyText>
+        By clicking here you agree to thee terms of our{' '}
+        <Link to={ROUTES.POLICY}>
+          <LinkText>Privacy policy</LinkText>
+        </Link>
+      </PrivacyPolicyText>
+      <RegisterText>
+        Don't have an account?{' '}
+        <Link to={ROUTES.REGISTER}>
+          <LinkText>Register</LinkText>
+        </Link>
+      </RegisterText>
     </Wrapper>
   )
 }

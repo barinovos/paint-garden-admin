@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import { Wrapper, RegisterInput, Logo, Title, ErrorMessage, ButtonText, PrivacyPolicyText, LinkText, RegisterText } from './Styled'
-import { LoginButton} from '../Common/Styled'
+import { Wrapper, RegisterInput, Logo, Title, ButtonText, PrivacyPolicyText, LinkText, RegisterText } from './Styled'
+import { LoginButton, ErrorMessage } from '../Common/Styled'
 
 import { Link } from 'react-router-dom'
 import { register } from '../utils/auth'
@@ -25,27 +25,32 @@ const RegisterPage = ({ history }) => {
     }
 
     if (!password) {
-        setError({ password: true, message: 'Please, fill in the password' })
+      setError({ password: true, message: 'Please, fill in the password' })
     }
 
     if (!name) {
-        setError({ name: false, message: 'Please, fill in the name' })
+      setError({ name: false, message: 'Please, fill in the name' })
     }
 
     if (!password && !email) {
-        return setError({ email: true, password: true, message: 'Please, fill in the email and password' })
+      return setError({ email: true, password: true, message: 'Please, fill in the email and password' })
     }
 
     if (!name && !email) {
-        return setError({ email: true, name: true, message: 'Please, fill in the name and email' })
+      return setError({ email: true, name: true, message: 'Please, fill in the name and email' })
     }
 
     if (!name && !password) {
-        return setError({ password: true, name: true, message: 'Please, fill in the name and password' })
+      return setError({ password: true, name: true, message: 'Please, fill in the name and password' })
     }
 
     if (!name && !password && !email) {
-        return setError({ password: true, name: true, email: true, message: 'Please, fill in the name and password and email' })
+      return setError({
+        password: true,
+        name: true,
+        email: true,
+        message: 'Please, fill in the name and password and email',
+      })
     }
   }
 
@@ -99,8 +104,18 @@ const RegisterPage = ({ history }) => {
         <ButtonText>Register</ButtonText>
       </LoginButton>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
-      <PrivacyPolicyText>By clicking here you agree to thee terms of our <Link to={ROUTES.POLICY}><LinkText>Privacy policy</LinkText></Link></PrivacyPolicyText>
-      <RegisterText>Allready have an account? <Link to={ROUTES.LOGIN}><LinkText>Log in</LinkText></Link></RegisterText>
+      <PrivacyPolicyText>
+        By clicking here you agree to thee terms of our{' '}
+        <Link to={ROUTES.POLICY}>
+          <LinkText>Privacy policy</LinkText>
+        </Link>
+      </PrivacyPolicyText>
+      <RegisterText>
+        Allready have an account?{' '}
+        <Link to={ROUTES.LOGIN}>
+          <LinkText>Log in</LinkText>
+        </Link>
+      </RegisterText>
     </Wrapper>
   )
 }
