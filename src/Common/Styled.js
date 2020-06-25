@@ -180,6 +180,7 @@ export const RightAlignedRow = styled.div`
 export const Icon = styled.img.attrs({ alt: '' })`
   cursor: pointer;
   margin-right: 7px;
+  vertical-align: middle;
 `
 
 export const Title = styled.div`
@@ -203,4 +204,9 @@ export const ErrorMessage = styled.p`
   margin-top: 1em;
   color: ${colors.red};
   text-align: center;
+`
+
+export const FullSizeImage = styled.img`
+  max-width: 100%;
+  max-height: 100%;
 `

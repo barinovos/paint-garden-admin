@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Route, Switch } from 'react-router-dom'
+
 import Constants from '../constants'
 import Toolbar from '../Toolbar'
 import Canvas from '../Canvas'
@@ -13,12 +14,14 @@ import LoginPage from '../LoginPage'
 import { authCheck } from './actions'
 import { MainArea } from '../Common/Styled'
 import { Logo, LoaderView } from './Styled'
+
 import logo from '../assets/logo.svg'
+
 const { ROUTES } = Constants
 
-const Main = ({ auth, authCheck }) => {
+const Main = ({ user, authCheck }) => {
   // check for Auth, only once
-  const needAuthCheck = !auth.isAuthenticated && ROUTES.LOGIN !== window.location.pathname
+  const needAuthCheck = !user && ROUTES.LOGIN !== window.location.pathname
   useEffect(() => {
     if (needAuthCheck) authCheck()
   })
@@ -32,14 +35,18 @@ const Main = ({ auth, authCheck }) => {
 
   return (
     <Fragment>
-      <Route exact={true} path={[ROUTES.ROOT, `${ROUTES.CANVASES}/:project_id`, `${ROUTES.SECTIONS}/:project_id`, ROUTES.PROJECTS]} component={Toolbar} />
+      <Route
+        exact={true}
+        path={[ROUTES.ROOT, `${ROUTES.CANVASES}/:project_id`, `${ROUTES.SECTIONS}/:project_id`, ROUTES.PROJECTS]}
+        component={Toolbar}
+      />
       <MainArea>
         <Switch>
           <Route path={ROUTES.ROOT} exact component={Projects} />
           <Route path={`${ROUTES.SECTIONS}/:project_id`} exact component={Sections} />
           <Route path={ROUTES.PROJECTS} exact component={Projects} />
-          <Route path={ROUTES.CANVASES + '/:project_id'}  component={Projects} />
-          <Route path={ROUTES.CANVAS+ '/:project_id'} component={Canvas} />
+          <Route path={ROUTES.CANVASES + '/:project_id'} component={Projects} />
+          <Route path={ROUTES.CANVAS + '/:project_id'} component={Canvas} />
           <Route path={ROUTES.LOGIN} component={LoginPage} />
           <Route path={ROUTES.REGISTER} component={RegisterPage} />
           <Route render={() => <div>Not found</div>} />
@@ -50,14 +57,12 @@ const Main = ({ auth, authCheck }) => {
 }
 
 Main.propTypes = {
-  auth: PropTypes.shape({
-    isAuthenticated: PropTypes.bool,
-  }),
+  user: PropTypes.object,
   authCheck: PropTypes.func,
   location: PropTypes.object,
 }
 
 export default connect(
-  ({ auth }) => ({ auth }),
+  ({ user }) => ({ user }),
   dispatch => bindActionCreators({ authCheck }, dispatch),
 )(Main)

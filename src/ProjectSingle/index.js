@@ -25,7 +25,6 @@ const Projects = ({ project, onEdit, onDelete }) => {
           </Link>
         </InfoOverlay>
       </Link>
-      {/* <DateWrapper>{new Date(project.createdAt).toLocaleString("en-GB", {day: 'numeric', month: 'long', year: 'numeric' })}</DateWrapper> */}
     </Wrapper>
   )
 }

@@ -1,30 +1,12 @@
 import actionTypes from '../constants/actionTypes'
+import accessManager from '../utils/accessManager'
 
-export function authReducer(state = { isAuthenticated: false }, action) {
+export function userReducer(state = null, action) {
   switch (action.type) {
     case actionTypes.AUTHORISE:
-      return { isAuthenticated: true }
+      return accessManager(action.user)
     case actionTypes.AUTH_ERROR:
-      return { isAuthenticated: false }
-    default:
-      return state
-  }
-}
-
-export function projectReducer(state = {}, action) {
-  switch (action.type) {
-    case actionTypes.UPDATE_DB:
-    case actionTypes.CHANGE_PROJECT:
-      return action.project || {}
-    default:
-      return state
-  }
-}
-
-export function userReducer(state = {}, action) {
-  switch (action.type) {
-    case actionTypes.UPDATE_DB:
-      return action.user || {}
+      return null
     default:
       return state
   }

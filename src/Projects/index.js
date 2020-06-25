@@ -3,44 +3,48 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ProjectType } from '../types'
-import edit from '../assets/edit.svg'
 import {
   ProjectsWrapper,
   ProjectsList,
-  Title,
-  CreateButton,
-  ProjectSidebar,
   CanvasArea,
-  ProjectListing,
-  CreateCanvas,
   ProjectTitle,
   ProjectsTopBar,
   InviteButton,
   ProjectBarRight,
-  CanvasesWrapper,
-  ProjectSidebarControls,
 } from './Styled'
-import ProjectSingle from '../ProjectSingle'
 import ProjectModal from '../ProjectModal'
 import ProjectInviteModal from '../ProjectInviteModal'
-import { Icon } from '../Common/Styled'
+import LeftPanel from './LeftPanel'
 import * as actions from './actions'
+import CanvasesList from './CanvasesList'
 
-const Projects = props => {
+const Projects = ({ fetchData, project, user, deleteProject, createProject, sendInvites, ...props }) => {
   const [showModal, setShowModal] = useState(false)
   const [showModalInvite, setShowModalInvite] = useState(false)
   const [isCreate, setIsCreate] = useState(true)
   const [updateProject, setUpdateProject] = useState(null)
-  const [project_id, setProjectId] = useState(null)
-  const [active_project, setActiveProject] = useState({})
+  const [projectId, setProjectId] = useState(null)
+  const [activeProject, setActiveProject] = useState({})
 
   useEffect(() => {
-    props.fetchData()
+    fetchData()
   }, []) // eslint-disable-line
 
+  const isModerator = user.isModerator()
+
   // set default active project after data fetched
-  if (!active_project.id && props.project.length) {
-    setActiveProject(props.project.filter(p => p.parent_id === null)[0])
+  if (project.length) {
+    // the use case for teacher account
+    const firstProject = isModerator ? project.filter(p => p.parent_id === null)[0] : project[0]
+    if (firstProject && !activeProject.id)
+      setActiveProject(
+        isModerator
+          ? firstProject
+          : {
+              id: firstProject.parent_id,
+              title: firstProject.parent_title || 'No title',
+            },
+      )
   }
 
   const createButtonClicked = (e, parent_id) => {
@@ -56,91 +60,52 @@ const Projects = props => {
     setUpdateProject(project)
   }
 
-  const onCloseModal = () => {
-    setShowModal(false)
-  }
-
-  const onCloseModalInvite = () => {
-    setShowModalInvite(false)
-  }
-
-  const onProjectDelete = project_id => {
-    props.deleteProject(project_id)
+  const onProjectDelete = projectId => {
+    deleteProject(projectId)
     updateActiveProject()
   }
 
   const onFinishCreateEdit = project => {
     setShowModal(false)
-    isCreate ? props.createProject(project) : props.updateProject(project)
+    isCreate ? createProject(project) : props.updateProject(project)
     updateActiveProject()
   }
 
-  const onInvite = project => props.sendInvites(project)
-
-  const changeActiveProject = p => {
-    setActiveProject(p)
-  }
-
   const updateActiveProject = () => {
-    let new_active_project = props.project.filter(p => p.id === active_project.id)
+    let new_active_project = project.filter(p => p.id === activeProject.id)
     setActiveProject(new_active_project.length > 0 ? new_active_project[0] : {})
-  }
-
-  const inviteButtonClicked = () => {
-    setShowModalInvite(true)
   }
 
   return (
     <ProjectsWrapper>
-      <ProjectSidebar>
-        <ProjectSidebarControls>
-          <Title>My Projects</Title>
-          <CreateButton onClick={createButtonClicked}>Add</CreateButton>
-        </ProjectSidebarControls>
-        {props.project.length ? (
-          props.project
-            .filter(p => p.parent_id === null)
-            .map((p, i) => (
-              <ProjectListing key={i} active={p.id === active_project.id} onClick={() => changeActiveProject(p)}>
-                {p.title}
-                {p.id === active_project.id && (
-                  <Icon style={{ verticalAlign: 'middle' }} src={edit} onClick={() => editButtonClicked(p)} />
-                )}
-              </ProjectListing>
-            ))
-        ) : (
-          <div>No projects</div>
-        )}
-      </ProjectSidebar>
+      <LeftPanel
+        isModerator={isModerator}
+        activeProjectId={activeProject.id}
+        onChangeActiveProject={setActiveProject}
+        onCreate={createButtonClicked}
+        onEdit={editButtonClicked}
+        projects={project}
+      />
       <CanvasArea>
         <ProjectsList>
-          {active_project.title && (
+          {activeProject.title && (
             <ProjectsTopBar>
-              <ProjectTitle>{active_project.title}</ProjectTitle>
-              <ProjectBarRight>
-                <InviteButton onClick={inviteButtonClicked}>Invite</InviteButton>
-              </ProjectBarRight>
+              <ProjectTitle>{activeProject.title}</ProjectTitle>
+              {isModerator && (
+                <ProjectBarRight>
+                  <InviteButton onClick={() => setShowModalInvite(true)}>Invite</InviteButton>
+                </ProjectBarRight>
+              )}
             </ProjectsTopBar>
           )}
-          <CanvasesWrapper>
-            {active_project.id && (
-              <CreateCanvas onClick={e => createButtonClicked(e, active_project.id)}>Create canvas</CreateCanvas>
-            )}
-            {props.project.length &&
-              props.project
-                .filter(p => p.id === active_project.id)
-                .map(p =>
-                  p.children.map(c => (
-                    <ProjectSingle
-                      key={c.id}
-                      project={c}
-                      onEdit={editButtonClicked}
-                      onDelete={onProjectDelete}
-                      parentId={active_project.id}
-                    />
-                  )),
-                )}
-          </CanvasesWrapper>
+          <CanvasesList
+            isModerator={isModerator}
+            projects={project}
+            onEdit={editButtonClicked}
+            onCreate={createButtonClicked}
+            activeProjectId={activeProject.id}
+            onDelete={onProjectDelete}
+          />
         </ProjectsList>
       </CanvasArea>
 
@@ -148,17 +113,17 @@ const Projects = props => {
         <ProjectModal
           onSave={onFinishCreateEdit}
           updateProject={updateProject}
-          onClose={onCloseModal}
-          parentId={project_id}
+          onClose={() => setShowModal(false)}
+          parentId={projectId}
           onDelete={onProjectDelete}
         />
       )}
       {showModalInvite && (
         <ProjectInviteModal
-          onSave={onInvite}
+          onSave={sendInvites}
           updateProject={updateProject}
-          onClose={onCloseModalInvite}
-          projectId={active_project.id}
+          onClose={() => setShowModalInvite(false)}
+          projectId={activeProject.id}
         />
       )}
     </ProjectsWrapper>
@@ -167,9 +132,10 @@ const Projects = props => {
 
 Projects.propTypes = {
   projects: PropTypes.arrayOf(ProjectType),
+  user: PropTypes.object,
 }
 
 export default connect(
-  ({ project, canvases }) => ({ project, canvases }),
+  ({ project, canvases, user }) => ({ project, canvases, user }),
   dispatch => bindActionCreators({ ...actions }, dispatch),
 )(Projects)
