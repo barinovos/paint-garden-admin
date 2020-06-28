@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import flatten from 'lodash/flatten'
 import { Wrapper, Logo, CanvasName, OtherWrapper, Arrow, ProjectLink } from './Styled'
 import logo from '../assets/logo.svg'
 import arrow from '../assets/arrow.svg'
@@ -10,7 +11,12 @@ const { ROUTES } = Constants
 
 const ProjectPicker = ({ projects, projectId, isModerator }) => {
   const [showOther, setShowOther] = useState(false)
-  const currentProject = projects.find(element => element.id === projectId)
+  const currentProject = isModerator
+    ? flatten(projects.map(p => p.children)).find(p => p.id === projectId)
+    : projects.find(p => p.id === projectId)
+  if (!currentProject) {
+    return null
+  }
   const parentId = currentProject ? currentProject.parent_id : ''
   const parentProjects = isModerator
     ? projects.find(element => element.id === parentId).children

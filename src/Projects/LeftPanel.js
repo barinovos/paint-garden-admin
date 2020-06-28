@@ -22,8 +22,7 @@ const LeftPanel = ({ isModerator, onCreate, onChangeActiveProject, onEdit, activ
       {isModerator && <CreateButton onClick={onCreate}>Add</CreateButton>}
     </ProjectSidebarControls>
     {isModerator
-      ? projects ||
-        []
+      ? (projects || [])
           .filter(p => p.parent_id === null)
           .map((p, i) => (
             <ProjectListing key={i} active={p.id === activeProjectId} onClick={() => onChangeActiveProject(p)}>
