@@ -30,7 +30,7 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
     fetchData()
   }, []) // eslint-disable-line
 
-  const isModerator = user.isModerator()
+  const isModerator = user && user.isModerator()
 
   // set default active project after data fetched
   if (project.length) {

@@ -12,7 +12,9 @@ const CanvasesList = ({ isModerator, projects, activeProjectId, onCreate, onEdit
       ? (projects || [])
           .filter(p => p.id === activeProjectId)
           .map(p => p.children.map(c => <ProjectSingle key={c.id} project={c} onEdit={onEdit} onDelete={onDelete} />))
-      : projects.filter(p => p.parent_id === activeProjectId).map(p => <ProjectSingle key={p.id} project={p} />)}
+      : projects
+          .filter(p => p.parent_id === activeProjectId)
+          .map(p => <ProjectSingle key={p.id} project={p} viewMode={true} />)}
   </CanvasesWrapper>
 )
 
