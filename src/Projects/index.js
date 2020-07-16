@@ -31,9 +31,6 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
     authCheck()
     fetchData()
   }, []) // eslint-disable-line
-  console.log('OVDEEE');
-  console.log(user);
-  console.log(project);
   const isModerator = user && user.isModerator()
 
   // set default active project after data fetched
