@@ -14,6 +14,12 @@ export function fetchData(project_id) {
   return dispatch => api.get(`${url}`).then(resp => dispatch(updateProjects(resp.data)))
 }
 
+
+export function authCheck() {
+  return dispatch =>
+    api.post(Constants.API.AUTH_CHECK, {}).then(resp => dispatch({ type: actionTypes.AUTHORISE, user: resp.data.user }))
+}
+
 export function fetchCanvases(parent_id) {
   let url = PROJECT
   if (parent_id !== undefined) {

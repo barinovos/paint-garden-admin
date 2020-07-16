@@ -17,8 +17,9 @@ import ProjectInviteModal from '../ProjectInviteModal'
 import LeftPanel from './LeftPanel'
 import * as actions from './actions'
 import CanvasesList from './CanvasesList'
+import { authCheck } from './actions'
 
-const Projects = ({ fetchData, project, user, deleteProject, createProject, sendInvites, ...props }) => {
+const Projects = ({ fetchData, project, user, deleteProject, createProject, sendInvites, authCheck, ...props }) => {
   const [showModal, setShowModal] = useState(false)
   const [showModalInvite, setShowModalInvite] = useState(false)
   const [isCreate, setIsCreate] = useState(true)
@@ -27,9 +28,12 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
   const [activeProject, setActiveProject] = useState({})
 
   useEffect(() => {
+    authCheck()
     fetchData()
   }, []) // eslint-disable-line
-
+  console.log('OVDEEE');
+  console.log(user);
+  console.log(project);
   const isModerator = user && user.isModerator()
 
   // set default active project after data fetched
