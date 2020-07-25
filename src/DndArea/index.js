@@ -107,6 +107,7 @@ class DndArea extends React.PureComponent {
                 deletePin={onDeletePin}
                 uploadImage={onUploadImageToPin}
                 zoomLevel={zoomLevel}
+                editMode={editMode}
               />
               {items.map((item, i) => (
                 <CanvasImage

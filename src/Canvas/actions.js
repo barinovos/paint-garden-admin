@@ -35,7 +35,7 @@ export function addPin(pin, project_id) {
   formData.append('headline', pin.headline)
   formData.append('posx', pin.posx)
   formData.append('posy', pin.posy)
-  formData.append('image', pin.image, pin.image.name)
+  if (pin.image)formData.append('image', pin.image, pin.image.name)
   if (pin.medium) formData.append('medium', pin.medium)
   if (pin.description) formData.append('description', pin.description)
   if (pin.url) formData.append('url', pin.url)

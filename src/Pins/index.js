@@ -4,17 +4,22 @@ import Pin from './Pin'
 import PinModal from './PinModal'
 import { PinViewWrapper } from './Styled'
 import { canvasTopOffset, canvasLeftOffset, reCalcSizeWithZoom } from '../utils/calcZoom'
+import Constants from '../constants'
 
-const Pins = ({ pins, addPin, deletePin, editPin, uploadImage, zoomLevel }) => {
+const { EDIT_MODES } = Constants;
+
+const Pins = ({ pins, addPin, deletePin, editPin, uploadImage, zoomLevel, editMode }) => {
   const [modal, triggerModal] = useState({})
 
   const onAddPin = ev => {
     const x = reCalcSizeWithZoom(ev.clientX - canvasLeftOffset, zoomLevel)
-    const y = reCalcSizeWithZoom(ev.clientY - canvasTopOffset, zoomLevel)
-    triggerModal({
-      open: true,
-      onSave: data => addPin({ ...data, posx: x, posy: y }),
-    })
+    const y = reCalcSizeWithZoom(ev.clientY, zoomLevel)
+    if (editMode === EDIT_MODES.annotation) {
+      triggerModal({
+        open: true,
+        onSave: data => addPin({ ...data, posx: x, posy: y }),
+      })
+    }
   }
 
   const onShowModalForEdit = pin =>
