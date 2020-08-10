@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { PinWrapper } from './Styled'
 import { calcSizeWithZoom } from '../utils/calcZoom'
-import PinIcon from '../assets/pin_active.svg'
+import PinIcon from '../assets/Pin_active.svg'
 
 const Pin = ({ data, onPinClick, zoomLevel }) => (
   <PinWrapper x={calcSizeWithZoom(data.posx, zoomLevel)} y={calcSizeWithZoom(data.posy, zoomLevel)}>
