@@ -1,25 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ProjectType } from '../types'
-import {
-  ProjectsWrapper,
-  ProjectsList,
-  CanvasArea,
-  ProjectTitle,
-  ProjectsTopBar,
-  InviteButton,
-  ProjectBarRight,
-} from './Styled'
+import { CanvasArea, ProjectTitle, ProjectsTopBar, InviteButton, ProjectBarRight } from './Styled'
 import ProjectModal from '../ProjectModal'
 import ProjectInviteModal from '../ProjectInviteModal'
 import LeftPanel from './LeftPanel'
 import * as actions from './actions'
 import CanvasesList from './CanvasesList'
-import { authCheck } from './actions'
 
-const Projects = ({ fetchData, project, user, deleteProject, createProject, sendInvites, authCheck, ...props }) => {
+const Projects = ({ fetchData, project, user, deleteProject, createProject, sendInvites, ...props }) => {
   const [showModal, setShowModal] = useState(false)
   const [showModalInvite, setShowModalInvite] = useState(false)
   const [isCreate, setIsCreate] = useState(true)
@@ -28,7 +19,6 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
   const [activeProject, setActiveProject] = useState({})
 
   useEffect(() => {
-    authCheck()
     fetchData()
   }, []) // eslint-disable-line
   const isModerator = user && user.isModerator()
@@ -36,16 +26,8 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
   // set default active project after data fetched
   if (project.length) {
     // the use case for teacher account
-    const firstProject = isModerator ? project.filter(p => p.parent_id === null)[0] : project[0]
-    if (firstProject && !activeProject.id)
-      setActiveProject(
-        isModerator
-          ? firstProject
-          : {
-              id: firstProject.parent_id,
-              title: firstProject.parent_title || 'No title',
-            },
-      )
+    const firstProject = project.filter(p => p.parent_id === null)[0]
+    if (firstProject && !activeProject.id) setActiveProject(firstProject)
   }
 
   const createButtonClicked = (e, parent_id) => {
@@ -78,7 +60,7 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
   }
 
   return (
-    <ProjectsWrapper>
+    <Fragment>
       <LeftPanel
         isModerator={isModerator}
         activeProjectId={activeProject.id}
@@ -88,26 +70,24 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
         projects={project}
       />
       <CanvasArea>
-        <ProjectsList>
-          {activeProject.title && (
-            <ProjectsTopBar>
-              <ProjectTitle>{activeProject.title}</ProjectTitle>
-              {isModerator && (
-                <ProjectBarRight>
-                  <InviteButton onClick={() => setShowModalInvite(true)}>Invite</InviteButton>
-                </ProjectBarRight>
-              )}
-            </ProjectsTopBar>
-          )}
-          <CanvasesList
-            isModerator={isModerator}
-            projects={project}
-            onEdit={editButtonClicked}
-            onCreate={createButtonClicked}
-            activeProjectId={activeProject.id}
-            onDelete={onProjectDelete}
-          />
-        </ProjectsList>
+        {activeProject.title && (
+          <ProjectsTopBar>
+            <ProjectTitle>{activeProject.title}</ProjectTitle>
+            {isModerator && (
+              <ProjectBarRight>
+                <InviteButton onClick={() => setShowModalInvite(true)}>Invite</InviteButton>
+              </ProjectBarRight>
+            )}
+          </ProjectsTopBar>
+        )}
+        <CanvasesList
+          isModerator={isModerator}
+          projects={project}
+          onEdit={editButtonClicked}
+          onCreate={createButtonClicked}
+          activeProjectId={activeProject.id}
+          onDelete={onProjectDelete}
+        />
       </CanvasArea>
 
       {showModal && (
@@ -127,7 +107,7 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
           projectId={activeProject.id}
         />
       )}
-    </ProjectsWrapper>
+    </Fragment>
   )
 }
 

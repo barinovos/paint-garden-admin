@@ -7,9 +7,8 @@ export const Wrapper = styled.div`
   height: 100%;
 `
 
-
 export const ZoomButtons = styled.div`
-  display: flex
+  display: flex;
   border-radius: 4px;
   background: white;
   margin-right: 10px;
@@ -33,6 +32,6 @@ export const ZoomButton = styled.div`
   text-align: center;
   user-select: none;
   &:first-child {
-    border-right: 1px solid ${colors.lightGrey}
+    border-right: 1px solid ${colors.lightGrey};
   }
 `

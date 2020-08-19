@@ -9,18 +9,14 @@ import Constants from '../constants'
 
 const { ROUTES } = Constants
 
-const ProjectPicker = ({ projects, projectId, isModerator }) => {
+const ProjectPicker = ({ projects, projectId }) => {
   const [showOther, setShowOther] = useState(false)
-  const currentProject = isModerator
-    ? flatten(projects.map(p => p.children)).find(p => p.id === projectId)
-    : projects.find(p => p.id === projectId)
+  const currentProject = flatten(projects.map(p => p.children)).find(p => p.id === projectId)
   if (!currentProject) {
     return null
   }
   const parentId = currentProject ? currentProject.parent_id : ''
-  const parentProjects = isModerator
-    ? projects.find(element => element.id === parentId).children
-    : projects.filter(p => p.parent_id === parentId)
+  const parentProjects = projects.find(element => element.id === parentId).children
 
   const arrowClicked = () => {
     setShowOther(!showOther)
@@ -47,7 +43,6 @@ const ProjectPicker = ({ projects, projectId, isModerator }) => {
 }
 
 ProjectPicker.propTypes = {
-  isModerator: PropTypes.bool,
   projects: PropTypes.array,
   projectId: PropTypes.string,
 }

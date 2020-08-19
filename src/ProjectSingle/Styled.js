@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import colors from '../constants/colors'
 
 export const Wrapper = styled.div`
-  margin: 20px 30px;
+  margin-right: 36px;
+  margin-bottom: 36px;
   text-align: center;
   width: 220px;
   height: 220px;
@@ -11,18 +12,33 @@ export const Wrapper = styled.div`
   position: relative;
 `
 
-export const Title = styled.span`
+export const Title = styled.div`
   font-family: Spartan SemiBold, sans-serif;
   font-style: normal;
   font-weight: normal;
   display: block;
   font-size: 12px;
+  line-height: 16px;
   color: #000000;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`
+
+export const UserName = styled.div`
+  font-size: 10px;
+  line-height: 14px;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `
 
 export const ImageWrapper = styled.div`
   display: block;
   position: relative;
+  height: 100%;
 `
 
 export const Overlay = styled.div`
@@ -60,9 +76,8 @@ export const Icons = styled.div`
 export const InfoOverlay = styled.div`
   text-align: left;
   position: absolute;
-  bottom: 5px;
-  padding: 12px;
+  bottom: 0;
+  padding: 10px 12px;
   width: 100%;
-  background-color: #fff;
-  opacity: 0.7;
+  background-color: rgba(77, 161, 255, 0.6);
 `

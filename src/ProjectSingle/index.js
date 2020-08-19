@@ -5,12 +5,18 @@ import { Link } from 'react-router-dom'
 import edit from '../assets/edit.svg'
 import trash from '../assets/trash.svg'
 import { Icon } from '../Common/Styled'
-import { Wrapper, Title, ImageWrapper, Overlay, Icons, InfoOverlay } from './Styled'
+import { Wrapper, Title, UserName, ImageWrapper, Overlay, Icons, InfoOverlay } from './Styled'
 
 const ProjectSingle = ({ project, onEdit, onDelete, viewMode }) => {
   return (
     <Wrapper>
-      <Link to={`${'/canvas/'}${project.id}`}>
+      <Link
+        to={`${'/canvas/'}${project.id}`}
+        style={{
+          height: '100%',
+          display: 'block',
+        }}
+      >
         <ImageWrapper>
           <img alt="default_image" src={project.image ? project.image : 'default.jpeg'} width="100%" height="100%" />
           <Overlay />
@@ -22,9 +28,8 @@ const ProjectSingle = ({ project, onEdit, onDelete, viewMode }) => {
           )}
         </ImageWrapper>
         <InfoOverlay>
-          <Link to={`${'/canvas/'}${project.id}`}>
-            <Title>{project.title}</Title>
-          </Link>
+          <Title>{project.title}</Title>
+          <UserName>User: {project.userId}</UserName>
         </InfoOverlay>
       </Link>
     </Wrapper>

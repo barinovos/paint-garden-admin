@@ -122,11 +122,9 @@ class Canvas extends React.PureComponent {
       uploadImages,
       activeImageIndex,
       deleteSection,
-      user,
     } = this.props
     const { selectedSection, zoomLevel, project_id } = this.state
 
-    const isModerator = user && user.isModerator()
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
     const items = sections
       .filter(s => s.canvas && s.imageIds.length)
@@ -154,7 +152,7 @@ class Canvas extends React.PureComponent {
 
     return (
       <Wrapper>
-        <ProjectPicker projectId={project_id} projects={project} isModerator={isModerator} />
+        <ProjectPicker projectId={project_id} projects={project} />
 
         <ActionsBar
           zoomLevel={zoomLevel}

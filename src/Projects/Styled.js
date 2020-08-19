@@ -1,8 +1,4 @@
 import styled from 'styled-components'
-export const ProjectsWrapper = styled.div``
-export const ProjectsList = styled.div`
-  margin: 20px;
-`
 
 export const ProjectSidebar = styled.div`
   width: 20vw;
@@ -17,6 +13,7 @@ export const CanvasArea = styled.div`
   width: 80vw;
   display: inline-block;
   vertical-align: top;
+  padding-bottom: 36px;
 `
 
 export const ProjectListing = styled.div`
@@ -46,12 +43,13 @@ export const CreateCanvas = styled.div`
   font-size: 15px;
   line-height: 20px;
   color: #ffffff;
-  margin: 20px 30px;
+  margin-right: 36px;
+  margin-bottom: 36px;
   cursor: pointer;
 `
 
 export const Title = styled.span`
-  font-family: Spartan SemiBold;
+  font-family: Spartan SemiBold, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
@@ -78,7 +76,6 @@ export const ProjectTitle = styled.div`
   font-weight: 800;
   font-size: 17px;
   line-height: 19px;
-  margin: 0 0 0 40px;
   color: #202020;
   text-decoration: underline;
 `
@@ -86,6 +83,8 @@ export const ProjectTitle = styled.div`
 export const ProjectsTopBar = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 36px 36px 0;
 `
 
 export const ProjectBarRight = styled.div``
@@ -109,4 +108,18 @@ export const ProjectSidebarControls = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.7em;
+`
+
+export const OtherProjects = styled.div`
+  width: 100%;
+  border-top: 1px solid #d8dfe5;
+  padding: 20px 0 0 36px;
+`
+
+export const MyProjects = styled.div`
+  width: 100%;
+  padding: 24px 0 0 36px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 `

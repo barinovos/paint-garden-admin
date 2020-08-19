@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 
 import Constants from '../constants'
 import Toolbar from '../Toolbar'
@@ -11,7 +11,7 @@ import Sections from '../Sections'
 import Projects from '../Projects'
 import RegisterPage from '../RegisterPage'
 import LoginPage from '../LoginPage'
-import { authCheck } from './actions'
+import { authCheck, logout } from './actions'
 import { MainArea } from '../Common/Styled'
 import { Logo, LoaderView } from './Styled'
 
@@ -19,9 +19,9 @@ import logo from '../assets/logo.svg'
 
 const { ROUTES } = Constants
 
-const Main = ({ user, authCheck }) => {
+const Main = ({ user, authCheck, history, logout }) => {
   // check for Auth, only once
-  const needAuthCheck = !user && ROUTES.LOGIN !== window.location.pathname
+  const needAuthCheck = !user && ROUTES.LOGIN !== history.location.pathname
   useEffect(() => {
     if (needAuthCheck) authCheck()
   })
@@ -38,7 +38,7 @@ const Main = ({ user, authCheck }) => {
       <Route
         exact={true}
         path={[ROUTES.ROOT, `${ROUTES.CANVASES}/:project_id`, `${ROUTES.SECTIONS}/:project_id`, ROUTES.PROJECTS]}
-        component={Toolbar}
+        render={() => <Toolbar onLogout={() => logout(history)} />}
       />
       <MainArea>
         <Switch>
@@ -59,10 +59,10 @@ const Main = ({ user, authCheck }) => {
 Main.propTypes = {
   user: PropTypes.object,
   authCheck: PropTypes.func,
-  location: PropTypes.object,
+  history: PropTypes.object,
 }
 
 export default connect(
   ({ user }) => ({ user }),
-  dispatch => bindActionCreators({ authCheck }, dispatch),
-)(Main)
+  dispatch => bindActionCreators({ authCheck, logout }, dispatch),
+)(withRouter(Main))

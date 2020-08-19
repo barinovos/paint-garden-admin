@@ -210,3 +210,13 @@ export const FullSizeImage = styled.img`
   max-width: 100%;
   max-height: 100%;
 `
+
+export const SubTitle = styled.p`
+  font-family: Spartan, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 19px;
+  color: #202020;
+  margin-bottom: 1em;
+`

@@ -6,6 +6,7 @@ export function userReducer(state = null, action) {
     case actionTypes.AUTHORISE:
       return accessManager(action.user)
     case actionTypes.AUTH_ERROR:
+    case actionTypes.LOGOUT:
       return null
     default:
       return state
