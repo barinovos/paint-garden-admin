@@ -3,6 +3,7 @@ export default {
   blue: '#00ABDD',
   darkBlue: '#6D878F',
   formBorderBlue: '#4DA1FF',
+  hoverBlue: '#4DA1FF',
   buttonBg: '#E0F4FD',
   darkGrey: '#979797',
   rgbaGray: '0, 0, 0, 0.415565',

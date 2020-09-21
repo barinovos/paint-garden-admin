@@ -7,10 +7,11 @@ import { fetchData as fetchProjects } from '../Projects/actions'
 import * as actions from './actions'
 import { Wrapper, ZoomButton, ZoomButtons } from './Styled'
 import DndArea from '../DndArea'
-import ActionsBar from '../ActionsBar'
+import ActionsBar from '../ActionsBarNew'
 import ProjectPicker from '../ProjectPicker'
 import { ImageType, SectionType } from '../types'
 import Constants from '../constants'
+
 const { MAX_ZOOM_LEVEL } = Constants
 
 class Canvas extends React.PureComponent {
@@ -169,6 +170,7 @@ class Canvas extends React.PureComponent {
           <ZoomButton onClick={() => zoomLevel < MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel + 1)}>+</ZoomButton>
           <ZoomButton>{zoomLevel * 10 + '%'}</ZoomButton>
         </ZoomButtons>
+
         <DndArea
           zoomLevel={zoomLevel}
           items={items}
