@@ -1,16 +1,22 @@
 import styled from 'styled-components'
-import colors from '../constants/colors'
+import colors from '../../constants/colors'
 
 export const Wrapper = styled.div`
   display: block;
   background-color: #fff;
   border-radius: 4px;
-  padding: 12px;
   position: fixed;
   text-align: center;
   top: 20vh;
-  left: 2vw;
+  left: 20px;
   z-index: 20000;
+`
+export const ActionButtonWrapper = styled.a`
+  padding: 10px;
+  display: block;
+
+  padding-bottom: 2px;
+  padding-top: 2px;
 `
 
 export const ActionButton = styled.div`

@@ -15,5 +15,5 @@ export default {
   inputTextGray: '#787878',
   pink: '#d69498',
   red: '#b6373f',
-  black: '#000',
+  black: '#393939',
 }

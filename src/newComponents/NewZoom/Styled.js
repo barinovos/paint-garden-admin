@@ -1,0 +1,39 @@
+import styled from 'styled-components'
+import colors from '../../constants/colors'
+
+export const Wrapper = styled.div`
+  display: flex;
+  border-radius: 4px;
+  background: white;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 5px;
+  z-index: 2;
+`
+
+export const Button = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${colors.black};
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+  font-weight: 300;
+  font-size: 2em;
+  padding: 10px;
+  text-transform: uppercase;
+  &:first-child {
+    border-right: 1px solid #f0f3f4;
+  }
+`
+export const Value = styled.div`
+  display: flex;
+  align-items: center;
+  /* padding: 5px; */
+  padding: 10px;
+  font-size: 15px;
+  line-height: 18px;
+`

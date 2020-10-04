@@ -5,10 +5,12 @@ import { bindActionCreators } from 'redux'
 import { fetchData } from '../Sections/actions'
 import { fetchData as fetchProjects } from '../Projects/actions'
 import * as actions from './actions'
-import { Wrapper, ZoomButton, ZoomButtons } from './Styled'
+import { Wrapper } from './Styled'
 import DndArea from '../DndArea'
-import ActionsBar from '../ActionsBarNew'
-import ProjectPicker from '../ProjectPicker'
+import Zoom from '../newComponents/NewZoom'
+import ActionsBar from '../newComponents/ActionsBarNew'
+import Dialogue from '../newComponents/DialogueNew'
+import ProjectHeader from '../newComponents/ProjectPickerNew'
 import { ImageType, SectionType } from '../types'
 import Constants from '../constants'
 
@@ -153,7 +155,10 @@ class Canvas extends React.PureComponent {
 
     return (
       <Wrapper>
-        <ProjectPicker projectId={project_id} projects={project} />
+        {/* Name to be changed since it's now a header */}
+        <ProjectHeader projectId={project_id} projects={project} />
+
+        <Dialogue />
 
         <ActionsBar
           zoomLevel={zoomLevel}
@@ -165,11 +170,11 @@ class Canvas extends React.PureComponent {
           onZoomChange={zoomLevel => this.setState({ zoomLevel })}
         />
 
-        <ZoomButtons>
-          <ZoomButton onClick={() => zoomLevel > -MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel - 1)}>-</ZoomButton>
-          <ZoomButton onClick={() => zoomLevel < MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel + 1)}>+</ZoomButton>
-          <ZoomButton>{zoomLevel * 10 + '%'}</ZoomButton>
-        </ZoomButtons>
+        <Zoom
+          onClickPlus={() => zoomLevel < MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel + 1)}
+          onClickMinus={() => zoomLevel > -MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel - 1)}
+          zoomLevel={zoomLevel}
+        />
 
         <DndArea
           zoomLevel={zoomLevel}

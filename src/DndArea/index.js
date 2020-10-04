@@ -4,7 +4,6 @@ import { Area, InnerArea, PreviewLink, Link } from './Styled'
 import { DropTarget } from 'react-dnd'
 import ResizableImage from '../ResizableImage'
 import CanvasImage from '../CanvasImage'
-import close from '../assets/close.svg'
 import Pins from '../Pins'
 import { calcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
 import Constants from '../constants'
@@ -158,16 +157,10 @@ class DndArea extends React.PureComponent {
         </InnerArea>
         {showPreview && (
           <PreviewLink>
-            Your canvas is published
+            Your canvas is published here:
             <Link href={'//paint.garden/#/' + project_id} target="_blank">
-              here
+              paint.garden/{project_id}
             </Link>
-            <img
-              alt="Preview of the canvas"
-              src={close}
-              style={{ verticalAlign: 'bottom', marginLeft: '10px' }}
-              onClick={hidePreview}
-            />
           </PreviewLink>
         )}
       </Area>
