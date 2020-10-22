@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Area, InnerArea, PreviewLink, Link } from './Styled'
 import { DropTarget } from 'react-dnd'
@@ -8,6 +8,7 @@ import Pins from '../Pins'
 import { calcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
 import Constants from '../constants'
 import UploadArea from '../UploadArea'
+import DropzoneArea from '../newComponents/DropzoneArea'
 
 const { EDIT_MODES } = Constants
 
@@ -82,8 +83,12 @@ class DndArea extends React.PureComponent {
       deleteImage,
     } = this.props
 
+
+
     return (
       <Area isGrid={isCanvasGridView} ref={instance => connectDropTarget(instance)}>
+      <DropzoneArea />
+
         <InnerArea>
           {editMode === EDIT_MODES.resize &&
             items.map((item, i) => (
