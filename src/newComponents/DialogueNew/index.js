@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReactComponent as PinIcon } from '../../assets/pin__new.svg'
+import { ReactComponent as PinIcon } from '../../assets/dialogue.svg'
 
 import Tooltip from '../Tooltip'
 

@@ -13,6 +13,8 @@ import Dialogue from '../newComponents/DialogueNew'
 import ProjectHeader from '../newComponents/ProjectPickerNew'
 import { ImageType, SectionType } from '../types'
 import Constants from '../constants'
+import DropzoneArea from '../newComponents/DropzoneArea'
+
 
 const { MAX_ZOOM_LEVEL } = Constants
 
@@ -152,6 +154,18 @@ class Canvas extends React.PureComponent {
         mimeType: images.find(im => im.id === imageIds[imageIds.length - 1]).mime_type,
         imageIds,
       }))
+
+    const itemsUploaded = false
+    // NO ITEMS UPLOADED, SO SHOW THIS
+    if (!itemsUploaded)
+      return (
+        <Wrapper>
+          <ProjectHeader projectId={project_id} projects={project} />
+          <DropzoneArea />
+        </Wrapper>
+      )
+
+    // ITEMS UPLOADED SO SHOW THIS
 
     return (
       <Wrapper>
