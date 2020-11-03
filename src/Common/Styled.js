@@ -144,8 +144,10 @@ export const RightAlignedRow = styled.div`
 
 export const Icon = styled.img.attrs({ alt: '' })`
   cursor: pointer;
-  margin-right: 7px;
   vertical-align: middle;
+
+  ${props => !props.fullSize && 'margin-right: 7px;'}
+  ${props => props.fullSize && `min-height: 100%; min-width: 100%;`}
 `
 
 export const Title = styled.div`
@@ -184,4 +186,14 @@ export const SubTitle = styled.p`
   line-height: 19px;
   color: #202020;
   margin-bottom: 1em;
+`
+
+export const FlexLayout = styled.div`
+  display: flex;
+  align-items: center;
+  
+  ${props => (props.justifyContent ? `justify-content: ${props.justifyContent};` : '')}
+  ${props => (props.flexDirection ? `flex-direction: ${props.flexDirection};` : '')}
+  ${props => (props.padding ? `padding: ${props.padding};` : '')}
+  ${props => (props.margin ? `margin: ${props.margin};` : '')}
 `

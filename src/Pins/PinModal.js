@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Wrapper, ContentWrapper, AddImage, Image, HiddenInput } from './Styled'
-import { Title, Button, ItemInput, ItemTextArea, JustifiedRow, RightAlignedRow, Icon } from '../Common/Styled'
-import trash from '../assets/trash_.svg'
-import add from '../assets/add.svg'
+import * as Styled from './Styled'
+import { FlexLayout, Button, ItemTextArea, Icon } from '../Common/Styled'
+import attach from '../assets/attach.svg'
 
 export default class PinModal extends React.PureComponent {
   static propTypes = {
@@ -53,7 +52,24 @@ export default class PinModal extends React.PureComponent {
     const { temp_path, image_url, headline, description, id, url } = this.state
 
     return (
-      <Wrapper onClick={onClose}>
+      <Styled.CommentModal>
+        <FlexLayout>
+          <Styled.Avatar>f</Styled.Avatar>
+          <h2>Fred Vincent</h2>
+          <Button secondary onClick={onClose}>
+            Cancel
+          </Button>
+          <Button onClick={this.onSaveChanges}>Post</Button>
+        </FlexLayout>
+        <Styled.CommentArea value={headline} onChange={this.onChangeState('headline')} placeholder="Comment" />
+        <FlexLayout>
+          <Styled.AddImage>
+            <Icon fullSize={true} src={attach} />
+            <Styled.HiddenInput onChange={this.onChangeState('image')} />
+          </Styled.AddImage>
+        </FlexLayout>
+      </Styled.CommentModal>
+      /*<Wrapper onClick={onClose}>
         <ContentWrapper onClick={ev => ev.stopPropagation()}>
           <JustifiedRow>
             <Title>Annotation</Title>
@@ -95,7 +111,7 @@ export default class PinModal extends React.PureComponent {
             <Button onClick={this.onSaveChanges}>Save</Button>
           </RightAlignedRow>
         </ContentWrapper>
-      </Wrapper>
+      </Wrapper>*/
     )
   }
 }
