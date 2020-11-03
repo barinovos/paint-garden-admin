@@ -4,6 +4,8 @@ import Constants from '../constants'
 
 // cookie name for our App
 const cookieName = 'paint_garden_token'
+// token query name
+export const tokenName = 'access_token'
 // to clean the cookie - default date
 const defaultTime = 'Thu, 01 Jan 1970 00:00:00 GMT'
 
@@ -27,13 +29,9 @@ const getCookieByName = cookieName => {
 
 export const getAuthToken = () => getCookieByName(cookieName)
 
-export const authenticate = (apiUrl, credentials) =>
-  axios.post(`${apiUrl}${Constants.API.LOGIN}`, credentials).then(({ data }) => setCookie(data.token))
+export const setAuthToken = token => setCookie(token)
 
-export const register = (apiUrl, credentials) =>
-  axios.post(`${apiUrl}${Constants.API.REGISTER}`, credentials).then(({ data }) => setCookie(data.token))
-
-export const navigateToLogin = () => {
+export const navigateToSSO = () => {
   deleteCookie()
-  window.location.href = `${window.location.origin}${Constants.ROUTES.LOGIN}`
+  window.location.href = `https://v2-api.paint.garden/authenticate?redirect_uri=${window.location.origin}${Constants.ROUTES.LOGIN}`
 }

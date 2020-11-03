@@ -5,10 +5,9 @@ export default {
     CANVASES: '/canvases',
     NOT_FOUND: '/not-found',
     LOGIN: '/login',
-    REGISTER: '/register',
     SECTIONS: '/sections',
     PROJECTS: '/projects',
-    POLICY: '/privacyPolicy.pdf'
+    POLICY: '/privacyPolicy.pdf',
   },
   API: {
     DB: '/db',
@@ -21,7 +20,8 @@ export default {
     REGISTER: '/register',
     AUTH_CHECK: '/authcheck',
     PROJECT: '/project',
-    LOGOUT: '/logout'
+    LOGOUT: '/logout',
+    USER: '/user',
   },
   EDIT_MODES: {
     dnd: 'dnd',
@@ -29,8 +29,8 @@ export default {
     resize: 'resize',
     webview: 'webview',
     annotation: 'annotation',
-    area: 'area'
+    area: 'area',
   },
   ZOOM_MULTIPLIER: 0.8,
-  MAX_ZOOM_LEVEL: 10
-};
+  MAX_ZOOM_LEVEL: 10,
+}

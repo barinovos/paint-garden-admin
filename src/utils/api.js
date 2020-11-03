@@ -1,14 +1,9 @@
 import axios from 'axios'
-import Constants from '../constants'
 import actionTypes from '../constants/actionTypes'
-import { getAuthToken, navigateToLogin } from './auth'
+import { getAuthToken, navigateToSSO } from './auth'
 
-// const apiUrl = process.env.REACT_APP_API_URL || 'https://anth-api.herokuapp.com';
-const API_VERSION = '/api/v1'
-const apiUrl = `${process.env.REACT_APP_API_URL || 'https://api.paint.garden'}${API_VERSION}`
-// TODO: replace later with fetch of projects
-//const defaultProjectId = '1af661b4-2cb2-4fbc-a54c-15cd2e751335';
-const defaultProjectId = '1af661b4-2cb2-4fbc-a54c-15cd2e751335';
+const apiUrl = process.env.REACT_APP_API_URL || 'https://api.paint.garden/api/v2'
+
 const getHeader = () => ({
   headers: { Authorization: `Bearer ${getAuthToken()}` },
 })
@@ -16,7 +11,7 @@ const getHeader = () => ({
 const api = {
   apiUrl,
 
-  projectId: defaultProjectId,
+  projectId: '',
 
   get(url, params) {
     let path = `${apiUrl}${url}`
@@ -48,16 +43,8 @@ const api = {
     return axios.all(values)
   },
 
-  getImageUrl(path) {
-    return `${apiUrl}/${path}`
-  },
-
   setProjectId(id) {
-    api.projectId = id;
-  },
-
-  getQueryParam() {
-    return `?projectId=${api.projectId}`
+    api.projectId = id
   },
 
   setupInterceptors: store => {
@@ -68,15 +55,10 @@ const api = {
       },
       error => {
         // in this case we only care about unauthorized errors
-        // ignore errors on Login page (targeted to /login)
-        if (error.request.responseURL.indexOf(Constants.API.LOGIN) === -1) {
-          if (error.response.status === 401 || error.response.status === 429) {
-            store.dispatch({ type: actionTypes.AUTH_ERROR })
-            // send the user to the login page since the user/token is not valid
-            console.dir(error)
-            navigateToLogin()
-          } else store.dispatch({ type: actionTypes.API_ERROR, error: error.response })
-        }
+        if (error.response.status === 401 || error.response.status === 429) {
+          // send the user to the login page since the user/token is not valid
+          navigateToSSO()
+        } else store.dispatch({ type: actionTypes.API_ERROR, error: error.response })
         return Promise.reject(error)
       },
     )
