@@ -1,6 +1,6 @@
 const accessManager = user => ({
   ...user,
-  isModerator: () => user.is_moderator || user.is_admin,
+  isModerator: () => user.role && user.role.name === 'admin',
 })
 
 export default accessManager
