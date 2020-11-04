@@ -2,9 +2,12 @@ import api from '../utils/api'
 import Constants from '../constants'
 import actionTypes from '../constants/actionTypes'
 
-export function authCheck() {
+export function getUserInfo(cb) {
   return dispatch =>
-    api.post(Constants.API.AUTH_CHECK, {}).then(resp => dispatch({ type: actionTypes.AUTHORISE, user: resp.data.user }))
+    api
+      .get(Constants.API.USER)
+      .then(resp => dispatch({ type: actionTypes.AUTHORISE, user: resp.data.data }))
+      .then(() => (cb && typeof cb === 'function' ? cb() : null))
 }
 
 export function logout(history) {

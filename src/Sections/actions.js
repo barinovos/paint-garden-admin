@@ -6,8 +6,7 @@ const {
 } = Constants
 
 export function fetchData(project_id) {
-  return dispatch => api.get(`${DB}/${project_id}`)
-    .then(resp => dispatch(updateDb(resp.data)))
+  return dispatch => api.get(`${DB}/${project_id}`).then(resp => dispatch(updateDb(resp.data.data)))
 }
 
 export function createSection(data, project_id) {
@@ -17,9 +16,9 @@ export function createSection(data, project_id) {
         ...data,
         posx: 0,
         posy: 0,
-        projectId: project_id
+        projectId: project_id,
       })
-      .then(resp => dispatch({ type: actionTypes.CREATE_SECTION, section: { ...resp.data, imageIds: [] } }))
+      .then(resp => dispatch({ type: actionTypes.CREATE_SECTION, section: { ...resp.data.data, imageIds: [] } }))
 }
 
 export function addToCanvas(section) {
@@ -34,13 +33,13 @@ export function addToCanvas(section) {
         height: activeImage.height,
         canvas: true,
       })
-      .then(resp => dispatch(updateSectionsAction(resp.data)))
+      .then(resp => dispatch(updateSectionsAction(resp.data.data)))
   }
 }
 
 export function removeFromCanvas(sectionId) {
   return dispatch =>
-    api.put(`${SECTION}/${sectionId}`, { canvas: false }).then(resp => dispatch(updateSectionsAction(resp.data)))
+    api.put(`${SECTION}/${sectionId}`, { canvas: false }).then(resp => dispatch(updateSectionsAction(resp.data.data)))
 }
 
 export function deleteSection(id) {
@@ -63,10 +62,8 @@ export function deleteImage(id) {
     )
 }
 
-
-
 export function updateSection(data) {
-  return dispatch => api.put(`${SECTION}/${data.id}`, data).then(resp => dispatch(updateSectionsAction(resp.data)))
+  return dispatch => api.put(`${SECTION}/${data.id}`, data).then(resp => dispatch(updateSectionsAction(resp.data.data)))
 }
 
 export function uploadImages(files, sectionId, projectId) {
@@ -88,8 +85,8 @@ export function uploadImages(files, sectionId, projectId) {
     return api.post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(resp =>
       dispatch({
         type: actionTypes.CREATE_IMAGE,
-        images: resp.data,
-        sectionId
+        images: resp.data.data,
+        sectionId,
       }),
     )
   }
@@ -104,12 +101,11 @@ const updateDb = ({ images, sections, project, annotations, user }) => ({
   pins: annotations,
 })
 
-
-export const  clearData = () => {
-  return{
-    type: "CLEAR"
-  };
-};
+export const clearData = () => {
+  return {
+    type: 'CLEAR',
+  }
+}
 
 const updateSectionsAction = section => ({
   type: actionTypes.UPDATE_SECTION,

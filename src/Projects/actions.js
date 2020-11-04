@@ -11,21 +11,7 @@ export function fetchData(project_id) {
   if (project_id !== undefined) {
     url = url + '/' + project_id
   }
-  return dispatch => api.get(`${url}`).then(resp => dispatch(updateProjects(resp.data)))
-}
-
-
-export function authCheck() {
-  return dispatch =>
-    api.post(Constants.API.AUTH_CHECK, {}).then(resp => dispatch({ type: actionTypes.AUTHORISE, user: resp.data.user }))
-}
-
-export function fetchCanvases(parent_id) {
-  let url = PROJECT
-  if (parent_id !== undefined) {
-    url = url + '/' + parent_id
-  }
-  return dispatch => api.get(`${url}`).then(resp => dispatch(updateCanvases(resp.data)))
+  return dispatch => api.get(`${url}`).then(resp => dispatch(updateProjects(resp.data.data)))
 }
 
 export function sendInvites({ id, shared_with }) {
@@ -34,7 +20,7 @@ export function sendInvites({ id, shared_with }) {
       .post(`${PROJECT}/${id}`, {
         shared_with,
       })
-      .then(resp => dispatch(refreshData(resp.data)))
+      .then(resp => dispatch(refreshData(resp.data.data)))
 }
 
 export function createProject(project) {
@@ -51,7 +37,7 @@ export function createProject(project) {
   return dispatch =>
     api
       .post(`${PROJECT}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(resp => dispatch(createdProject(resp.data)))
+      .then(resp => dispatch(createdProject(resp.data.data)))
 }
 
 export function updateProject(project) {
@@ -63,13 +49,13 @@ export function updateProject(project) {
   return dispatch =>
     api
       .post(`${PROJECT}/${project.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(resp => dispatch(refreshData(resp.data)))
+      .then(resp => dispatch(refreshData(resp.data.data)))
 }
 
 export function deleteProject(project_id) {
   return dispatch =>
     api.delete(`${PROJECT}/${project_id}`).then(resp => {
-      dispatch(refreshData(resp.data))
+      dispatch(refreshData(resp.data.data))
       dispatch({ type: actionTypes.DELETE_PROJECT })
     })
 }
@@ -79,14 +65,9 @@ const updateProjects = projects => ({
   projects,
 })
 
-const updateCanvases = canvases => ({
-  type: actionTypes.UPDATE_CANVASES,
-  canvases,
-})
-
 const createdProject = project => ({
   type: actionTypes.CREATED_PROJECT,
   project,
 })
 
-const refreshData = data => fetchData()
+const refreshData = () => fetchData()

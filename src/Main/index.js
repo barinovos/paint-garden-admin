@@ -9,9 +9,8 @@ import Toolbar from '../Toolbar'
 import Canvas from '../Canvas'
 import Sections from '../Sections'
 import Projects from '../Projects'
-import RegisterPage from '../RegisterPage'
 import LoginPage from '../LoginPage'
-import { authCheck, logout } from './actions'
+import { getUserInfo, logout } from './actions'
 import { MainArea } from '../Common/Styled'
 import { Logo, LoaderView } from './Styled'
 
@@ -19,11 +18,11 @@ import logo from '../assets/logo.svg'
 
 const { ROUTES } = Constants
 
-const Main = ({ user, authCheck, history, logout }) => {
+const Main = ({ user, getUserInfo, history, logout }) => {
   // check for Auth, only once
   const needAuthCheck = !user && ROUTES.LOGIN !== history.location.pathname
   useEffect(() => {
-    if (needAuthCheck) authCheck()
+    if (needAuthCheck) getUserInfo()
   })
 
   if (needAuthCheck)
@@ -48,7 +47,6 @@ const Main = ({ user, authCheck, history, logout }) => {
           <Route path={ROUTES.CANVASES + '/:project_id'} component={Projects} />
           <Route path={ROUTES.CANVAS + '/:project_id'} component={Canvas} />
           <Route path={ROUTES.LOGIN} component={LoginPage} />
-          <Route path={ROUTES.REGISTER} component={RegisterPage} />
           <Route render={() => <div>Not found</div>} />
         </Switch>
       </MainArea>
@@ -64,5 +62,5 @@ Main.propTypes = {
 
 export default connect(
   ({ user }) => ({ user }),
-  dispatch => bindActionCreators({ authCheck, logout }, dispatch),
+  dispatch => bindActionCreators({ getUserInfo, logout }, dispatch),
 )(withRouter(Main))
