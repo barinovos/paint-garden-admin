@@ -59,6 +59,7 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
     setActiveProject(new_active_project.length > 0 ? new_active_project[0] : {})
   }
 
+
   return (
     <Fragment>
       <LeftPanel

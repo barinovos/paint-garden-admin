@@ -11,7 +11,11 @@ export function fetchData(project_id) {
   if (project_id !== undefined) {
     url = url + '/' + project_id
   }
-  return dispatch => api.get(`${url}`).then(resp => dispatch(updateProjects(resp.data.data)))
+  return dispatch =>
+    api.get(`${url}`).then(resp => {
+      console.log({ resp })
+      return dispatch(updateProjects(resp.data.data))
+    })
 }
 
 export function sendInvites({ id, shared_with }) {
@@ -60,10 +64,9 @@ export function deleteProject(project_id) {
     })
 }
 
-const updateProjects = projects => ({
-  type: actionTypes.UPDATE_PROJECTS,
-  projects,
-})
+const updateProjects = projects => {
+  return { type: actionTypes.UPDATE_PROJECTS, projects }
+}
 
 const createdProject = project => ({
   type: actionTypes.CREATED_PROJECT,
