@@ -8,7 +8,7 @@ import Constants from '../../constants'
 const { ROUTES } = Constants
 
 const ProjectPicker = ({ projects, projectId }) => {
-  const currentProject = flatten(projects.map(p => p.children)).find(p => p.id === projectId)
+  const currentProject = flatten(projects.map(p => p.canvas)).find(p => p.id === projectId)
   if (!currentProject) {
     return null
   }

@@ -66,21 +66,21 @@ const ProjectModal = ({ onSave, updateProject, onClose, parentId = null, onDelet
           <ItemInput value={title} onChange={handleChange} placeholder="Title" />
         </JustifiedRow>
         <span style={{ display: 'block', color: 'red', fontSize: '12px' }}>{errors.title}</span>
-        {id ? (
-          updateProject.picture ? (
-            <Image src={updateProject.picture} />
-          ) : (
-            <AddImage>
-              <FullSizeImage src={tempPath ? tempPath : imageUrl ? imageUrl : add} alt="upload" />
-              <HiddenInput onChange={onUploadChangeImage} />
-            </AddImage>
-          )
-        ) : (
-          <AddImage>
-            <FullSizeImage src={tempPath ? tempPath : add} alt="upload" />
-            <HiddenInput onChange={onUploadChangeImage} />
-          </AddImage>
-        )}
+        {/*{id ? (*/}
+        {/*  updateProject.picture ? (*/}
+        {/*    <Image src={updateProject.picture} />*/}
+        {/*  ) : (*/}
+        {/*    <AddImage>*/}
+        {/*      <FullSizeImage src={tempPath ? tempPath : imageUrl ? imageUrl : add} alt="upload" />*/}
+        {/*      <HiddenInput onChange={onUploadChangeImage} />*/}
+        {/*    </AddImage>*/}
+        {/*  )*/}
+        {/*) : (*/}
+        {/*  <AddImage>*/}
+        {/*    <FullSizeImage src={tempPath ? tempPath : add} alt="upload" />*/}
+        {/*    <HiddenInput onChange={onUploadChangeImage} />*/}
+        {/*  </AddImage>*/}
+        {/*)}*/}
 
         <RightAlignedRow>
           <Button onClick={onClose} secondary>

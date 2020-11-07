@@ -1,6 +1,7 @@
 import actionTypes from '../constants/actionTypes'
 import api from '../utils/api'
 import Constants from '../constants'
+
 const {
   API: { DB, SECTION, IMAGE },
 } = Constants
@@ -9,14 +10,17 @@ export function fetchData(project_id) {
   return dispatch => api.get(`${DB}/${project_id}`).then(resp => dispatch(updateDb(resp.data.data)))
 }
 
-export function createSection(data, project_id) {
+export function createSection(data, project_id, canvas_id) {
   return dispatch =>
     api
       .post(SECTION, {
         ...data,
-        posx: 0,
-        posy: 0,
-        projectId: project_id,
+        position: {
+            x: 0,
+            y: 0,
+        },
+        project_id: project_id,
+        canvas_id: canvas_id,
       })
       .then(resp => dispatch({ type: actionTypes.CREATE_SECTION, section: { ...resp.data.data, imageIds: [] } }))
 }
@@ -26,13 +30,17 @@ export function addToCanvas(section) {
     const images = getState().images
     const activeImage = images.find(im => im.id === section.imageIds[section.imageIds.length - 1])
     return api
-      .put(`${SECTION}/${section.id}`, {
-        posx: 0,
-        posy: 0,
-        width: section.width || activeImage.width,
-        height: activeImage.height,
-        canvas: true,
-      })
+        .put(`${SECTION}/${section.id}`, {
+            position: {
+                x: 0,
+                y: 0,
+            },
+            dimensions: {
+                width: section.width || activeImage.width,
+                height: activeImage.height,
+            },
+            canvas: true,
+        })
       .then(resp => dispatch(updateSectionsAction(resp.data.data)))
   }
 }

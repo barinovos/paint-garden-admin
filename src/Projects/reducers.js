@@ -11,7 +11,7 @@ export function projectReducer(state = [], action) {
       return [...state, action.project]
     case actionTypes.DELETE_PROJECT:
       state.map(project => 
-          project.children.filter(child => child !== action.id)
+          project
       )
       return state.filter(project => project.id !== action.id)
     case actionTypes.CHANGE_PROJECT:

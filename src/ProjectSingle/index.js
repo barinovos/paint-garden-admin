@@ -18,7 +18,7 @@ const ProjectSingle = ({ project, onEdit, onDelete, viewMode }) => {
         }}
       >
         <ImageWrapper>
-          <img alt="default_image" src={project.image ? project.image : 'default.jpeg'} width="100%" height="100%" />
+          <img alt="default_image" src={project.image ? project.image : 'default.png'} width="100%" height="100%" />
           <Overlay />
           {!viewMode && (
             <Icons>
@@ -29,7 +29,7 @@ const ProjectSingle = ({ project, onEdit, onDelete, viewMode }) => {
         </ImageWrapper>
         <InfoOverlay>
           <Title>{project.title}</Title>
-          <UserName>User: {project.userId}</UserName>
+          <UserName>By: {project.user.name}</UserName>
         </InfoOverlay>
       </Link>
     </Wrapper>

@@ -21,7 +21,7 @@ export function fetchData(project_id) {
 export function sendInvites({ id, shared_with }) {
   return dispatch =>
     api
-      .post(`${PROJECT}/${id}`, {
+      .put(`${PROJECT}/${id}`, {
         shared_with,
       })
       .then(resp => dispatch(refreshData(resp.data.data)))
@@ -30,10 +30,10 @@ export function sendInvites({ id, shared_with }) {
 export function createProject(project) {
   const formData = new FormData()
   formData.append('title', project.title)
-  formData.append('image', project.image, project.image.name)
-  if (project.parentId !== undefined && project.parentId !== null) {
-    formData.append('parent_id', project.parentId)
-  }
+  // formData.append('image', project.image, project.image.name)
+  // if (project.parentId !== undefined && project.parentId !== null) {
+  //   formData.append('parent_id', project.parentId)
+  // }
 
   if (project.shared_with.length > 0) {
     formData.append('shared_with', JSON.stringify(project.shared_with))
@@ -45,15 +45,10 @@ export function createProject(project) {
 }
 
 export function updateProject(project) {
-  const formData = new FormData()
-  formData.append('title', project.title)
-  if (project.image !== '') {
-    formData.append('image', project.image, project.image.name)
-  }
   return dispatch =>
-    api
-      .post(`${PROJECT}/${project.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(resp => dispatch(refreshData(resp.data.data)))
+      api
+          .put(`${PROJECT}/${project.id}`, {'title': project.title})
+          .then(resp => dispatch(refreshData(resp.data.data)))
 }
 
 export function deleteProject(project_id) {

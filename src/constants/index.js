@@ -10,7 +10,7 @@ export default {
     POLICY: '/privacyPolicy.pdf',
   },
   API: {
-    DB: '/db',
+    DB: '/canvas',
     SECTION: '/section',
     UPLOAD: '/upload',
     IMAGE: '/image',

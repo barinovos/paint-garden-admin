@@ -6,7 +6,7 @@ import ProjectSingle from '../ProjectSingle'
 
 const CanvasesList = ({ isModerator, projects, activeProjectId, onCreate, onEdit, onDelete }) => {
   const activeProject = (projects || []).find(p => p.id === activeProjectId) || {}
-  const childrenProjects = activeProject.children || []
+  const childrenProjects = activeProject.canvas || []
   const myProjects = childrenProjects.filter(p => p.is_me)
   const otherProjects = childrenProjects.filter(p => !p.is_me)
   const projectMapper = c => <ProjectSingle key={c.id} project={c} onEdit={onEdit} onDelete={onDelete} />
