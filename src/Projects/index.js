@@ -26,7 +26,7 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
   // set default active project after data fetched
   if (project.length) {
     // the use case for teacher account
-    const firstProject = project.filter(p => p.parent_id === null)[0]
+    const firstProject = project[0]
     if (firstProject && !activeProject.id) setActiveProject(firstProject)
   }
 
@@ -113,7 +113,7 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
 }
 
 Projects.propTypes = {
-  projects: PropTypes.arrayOf(ProjectType),
+  project: PropTypes.arrayOf(ProjectType),
   user: PropTypes.object,
 }
 
