@@ -6,7 +6,7 @@ import { ProjectType } from '../types'
 import { CanvasArea, ProjectTitle, ProjectsTopBar, InviteButton, ProjectBarRight } from './Styled'
 import ProjectModal from '../ProjectModal'
 import ProjectInviteModal from '../ProjectInviteModal'
-import LeftPanel from './LeftPanel'
+import ProjectsList from './ProjectsList'
 import * as actions from './actions'
 import CanvasesList from './CanvasesList'
 
@@ -59,10 +59,9 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
     setActiveProject(new_active_project.length > 0 ? new_active_project[0] : {})
   }
 
-
   return (
     <Fragment>
-      <LeftPanel
+      <ProjectsList
         isModerator={isModerator}
         activeProjectId={activeProject.id}
         onChangeActiveProject={setActiveProject}
@@ -83,10 +82,11 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
         )}
         <CanvasesList
           isModerator={isModerator}
-          projects={project}
+          canvases={activeProject ? activeProject.canvas : []}
           onEdit={editButtonClicked}
           onCreate={createButtonClicked}
           activeProjectId={activeProject.id}
+          userId={user.id}
           onDelete={onProjectDelete}
         />
       </CanvasArea>
@@ -118,6 +118,6 @@ Projects.propTypes = {
 }
 
 export default connect(
-  ({ project, canvases, user }) => ({ project, canvases, user }),
+  ({ project, user }) => ({ project, user }),
   dispatch => bindActionCreators({ ...actions }, dispatch),
 )(Projects)

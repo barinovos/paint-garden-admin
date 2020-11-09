@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback } from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Area, InnerArea, PreviewLink, Link } from './Styled'
 import { DropTarget } from 'react-dnd'
@@ -76,13 +76,11 @@ class DndArea extends React.PureComponent {
       addSection,
       uploadImages,
       onChangeActiveImageIndex,
-      hidePreview,
+      // hidePreview,
       showPreview,
       deleteSection,
       deleteImage,
     } = this.props
-
-
 
     return (
       <Area isGrid={isCanvasGridView} ref={instance => connectDropTarget(instance)}>

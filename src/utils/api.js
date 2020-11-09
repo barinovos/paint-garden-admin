@@ -55,7 +55,7 @@ const api = {
       },
       error => {
         // in this case we only care about unauthorized errors
-        if (error.response.status === 401 || error.response.status === 429) {
+        if (error.response && (error.response.status === 401 || error.response.status === 429)) {
           // send the user to the login page since the user/token is not valid
           navigateToSSO()
         } else store.dispatch({ type: actionTypes.API_ERROR, error: error.response })

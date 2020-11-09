@@ -20,6 +20,7 @@ export default {
     REGISTER: '/register',
     AUTH_CHECK: '/authcheck',
     PROJECT: '/project',
+    CANVAS: '/canvas',
     LOGOUT: '/logout',
     USER: '/user',
   },

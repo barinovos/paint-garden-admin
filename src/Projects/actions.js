@@ -3,7 +3,7 @@ import api from '../utils/api'
 import Constants from '../constants'
 
 const {
-  API: { PROJECT },
+  API: { PROJECT, CANVAS },
 } = Constants
 
 export function fetchData(project_id) {
@@ -12,10 +12,7 @@ export function fetchData(project_id) {
     url = url + '/' + project_id
   }
   return dispatch =>
-    api.get(`${url}`).then(resp => {
-      console.log({ resp })
-      return dispatch(updateProjects(resp.data.data))
-    })
+    api.get(`${url}`).then(resp => dispatch(updateProjects(resp.data.data)))
 }
 
 export function sendInvites({ id, shared_with }) {
@@ -44,11 +41,19 @@ export function createProject(project) {
       .then(resp => dispatch(createdProject(resp.data.data)))
 }
 
+export function createCanvas(canvas, project_id) {
+  return dispatch =>
+    api
+      .post(`${CANVAS}`, {
+        project_id,
+        ...canvas
+      })
+      .then(resp => dispatch(createdProject(resp.data.data)))
+}
+
 export function updateProject(project) {
   return dispatch =>
-      api
-          .put(`${PROJECT}/${project.id}`, {'title': project.title})
-          .then(resp => dispatch(refreshData(resp.data.data)))
+    api.put(`${PROJECT}/${project.id}`, { title: project.title }).then(resp => dispatch(refreshData(resp.data.data)))
 }
 
 export function deleteProject(project_id) {

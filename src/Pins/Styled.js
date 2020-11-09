@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import Constants from '../constants'
 
 export const Wrapper = styled.div`
   position: fixed;

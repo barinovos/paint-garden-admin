@@ -4,7 +4,7 @@ import { CreateButton, ProjectListing, ProjectSidebar, ProjectSidebarControls, T
 import { Icon } from '../Common/Styled'
 import edit from '../assets/edit.svg'
 
-const LeftPanel = ({ isModerator, onCreate, onChangeActiveProject, onEdit, activeProjectId, projects }) => (
+const ProjectsList = ({ isModerator, onCreate, onChangeActiveProject, onEdit, activeProjectId, projects }) => (
   <ProjectSidebar>
     <ProjectSidebarControls>
       <Title>My Projects</Title>
@@ -20,11 +20,11 @@ const LeftPanel = ({ isModerator, onCreate, onChangeActiveProject, onEdit, activ
   </ProjectSidebar>
 )
 
-LeftPanel.defaultProps = {
+ProjectsList.defaultProps = {
   projects: [],
 }
 
-LeftPanel.propTypes = {
+ProjectsList.propTypes = {
   isModerator: PropTypes.bool,
   activeProjectId: PropTypes.string,
   onCreate: PropTypes.func,
@@ -33,4 +33,4 @@ LeftPanel.propTypes = {
   projects: PropTypes.array,
 }
 
-export default LeftPanel
+export default ProjectsList

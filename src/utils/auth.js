@@ -1,5 +1,4 @@
 // for pure call to Auth without headers attached
-import axios from 'axios'
 import Constants from '../constants'
 
 // cookie name for our App

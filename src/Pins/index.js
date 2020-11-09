@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import Pin from './Pin'
 import PinModal from './PinModal'
 import { PinViewWrapper } from './Styled'
-import { canvasTopOffset, canvasLeftOffset, reCalcSizeWithZoom } from '../utils/calcZoom'
+import { /*canvasTopOffset, */ canvasLeftOffset, reCalcSizeWithZoom } from '../utils/calcZoom'
 import Constants from '../constants'
 
-const { EDIT_MODES } = Constants;
+const { EDIT_MODES } = Constants
 
 const Pins = ({ pins, addPin, deletePin, editPin, uploadImage, zoomLevel, editMode }) => {
   const [modal, triggerModal] = useState({})

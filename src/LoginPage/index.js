@@ -19,7 +19,7 @@ const LoginPage = ({ history, location, getUserInfo }) => {
     } catch (e) {
       navigateToSSO()
     }
-  }, [])
+  }, [history, location.search, getUserInfo])
 
   return (
     <h2>
