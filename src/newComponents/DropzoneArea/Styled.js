@@ -33,6 +33,7 @@ export const ActiveWrapper = styled.div`
 `
 
 export const UploadButton = styled.button`
+  cursor: pointer;
   margin-bottom: 10px;
   color: white;
   background-color: #4da1ff;
@@ -43,6 +44,7 @@ export const UploadButton = styled.button`
   padding: 10px 20px;
   padding-right: 40px;
   font-weight: 300;
+  transition: background-color .2s ease;
 
   & > svg {
     margin-right: 10px;
@@ -50,5 +52,9 @@ export const UploadButton = styled.button`
     height: 25px;
     padding: 5px;
     fill: white;
+  }
+
+  &:hover {
+    background-color: #3d81cc;
   }
 `
