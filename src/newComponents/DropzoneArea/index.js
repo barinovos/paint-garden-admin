@@ -5,9 +5,12 @@ import { ReactComponent as UploadIcon } from '../../assets/upload__new.svg'
 
 import * as Styled from './Styled'
 
-const DropzoneArea = ({ projectId, sectionId }) => {
-  const { getRootProps, getInputProps, open, isDragActive, uploading } = useDropzoneDefault(projectId, sectionId)
+const DropzoneArea = ({ projectId, canvasId, userId }) => {
+  const { getRootProps, getInputProps, open, isDragActive, uploading } = useDropzoneDefault(projectId, canvasId, userId)
 
+  if (uploading) {
+    return <Styled.Wrapper isDragActive={false}>Uploading...</Styled.Wrapper>
+  }
 
   return (
     <Styled.Wrapper {...getRootProps()} isDragActive={isDragActive}>

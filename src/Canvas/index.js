@@ -129,11 +129,10 @@ class Canvas extends React.PureComponent {
       deleteSection,
     } = this.props
     const { selectedSection, zoomLevel, project_id } = this.state
+    console.log(this.props.user)
 
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
-    const sectionId = selectedSection ? selectedSection.id : 'No section selected'
 
-    console.log({sectionId})
     const items = sections
       .filter(s => s.canvas && s.imageIds.length)
       .map(({ id, imageIds, posx, posy, width, height, images: images_section, thumb, type, mime }) => ({
@@ -164,7 +163,7 @@ class Canvas extends React.PureComponent {
       return (
         <Wrapper>
           <ProjectHeader projectId={project_id} projects={project} />
-          <DropzoneArea projectId={project_id}/>
+          <DropzoneArea projectId={project_id} canvasId={null} userId={this.props.user.id} />
         </Wrapper>
       )
 
