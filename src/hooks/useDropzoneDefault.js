@@ -7,6 +7,7 @@ const useDropzoneDefault = (projectId, canvasId, userId) => {
   const onDrop = useCallback(
     async acceptedFiles => {
       // API CALL FOR UPLOAD (start)
+      console.log(acceptedFiles);
       try {
         setUploading(true)
         const response = await api.post('/section', {

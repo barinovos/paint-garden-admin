@@ -129,7 +129,8 @@ class Canvas extends React.PureComponent {
       deleteSection,
     } = this.props
     const { selectedSection, zoomLevel, project_id } = this.state
-    console.log(this.props.user)
+
+    console.log(this.state)
 
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
 
@@ -159,16 +160,15 @@ class Canvas extends React.PureComponent {
 
     const itemsUploaded = false
     // NO ITEMS UPLOADED, SO SHOW THIS
-    if (!itemsUploaded)
+    if (!itemsUploaded) {
       return (
         <Wrapper>
           <ProjectHeader projectId={project_id} projects={project} />
           <DropzoneArea projectId={project_id} canvasId={null} userId={this.props.user.id} />
         </Wrapper>
       )
-
+    }
     // ITEMS UPLOADED SO SHOW THIS
-
     return (
       <Wrapper>
         {/* Name to be changed since it's now a header */}
