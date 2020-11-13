@@ -4,9 +4,23 @@ import { getAuthToken, navigateToSSO } from './auth'
 
 const apiUrl = process.env.REACT_APP_API_URL || 'https://api.paint.garden/api/v2'
 
-const getHeader = () => ({
-  headers: { Authorization: `Bearer ${getAuthToken()}` },
-})
+const getHeader = customHeaders => {
+
+  if (!customHeaders) {
+    return {
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    }
+  } else {
+    return {
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+        'Content-Type': 'multipart/form-data'
+      },
+    }
+  }
+}
 
 const api = {
   apiUrl,
@@ -24,6 +38,7 @@ const api = {
   },
 
   post(url, data) {
+    // return axios.post(`${apiUrl}${url}`, data, getHeader())
     return axios.post(`${apiUrl}${url}`, data, getHeader())
   },
 

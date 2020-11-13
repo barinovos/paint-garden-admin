@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import flatten from 'lodash/flatten'
+
 import { bindActionCreators } from 'redux'
 import { fetchData } from '../Sections/actions'
 import { fetchData as fetchProjects } from '../Projects/actions'
@@ -14,7 +16,6 @@ import ProjectHeader from '../newComponents/ProjectPickerNew'
 import { ImageType, SectionType } from '../types'
 import Constants from '../constants'
 import DropzoneArea from '../newComponents/DropzoneArea'
-
 
 const { MAX_ZOOM_LEVEL } = Constants
 
@@ -130,7 +131,6 @@ class Canvas extends React.PureComponent {
     } = this.props
     const { selectedSection, zoomLevel, project_id } = this.state
 
-    console.log(this.state)
 
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
 
@@ -160,11 +160,20 @@ class Canvas extends React.PureComponent {
 
     const itemsUploaded = false
     // NO ITEMS UPLOADED, SO SHOW THIS
-    if (!itemsUploaded) {
+
+    // INFO: EXTRACT THE CORRECT PROJECT ID HERE (This code will not work as it's special to milos account)
+    // PROJECT ID IS LOCATED IN THE project ARRAY in the correct project as the ID
+    const getProjectId = () => {
+      if (project && project.length === 4) {
+        return project[3].id
+      } else {return null}
+    }
+    // const getProjectId = () => project[3] && project[3].id || null
+;    if (!itemsUploaded) {
       return (
         <Wrapper>
           <ProjectHeader projectId={project_id} projects={project} />
-          <DropzoneArea projectId={project_id} canvasId={null} userId={this.props.user.id} />
+          <DropzoneArea projectId={getProjectId()} canvasId={project_id} userId={this.props.user.id} />
         </Wrapper>
       )
     }
