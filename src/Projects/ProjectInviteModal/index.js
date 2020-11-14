@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Wrapper, ContentWrapper, TextArea } from './Styled'
-import { Button, Title, JustifiedRow, RightAlignedRow, ErrorMessage } from '../Common/Styled'
-import { ProjectType } from '../types'
-import { parseEmails, validateEmails } from '../utils/invite'
+import { Button, Title, JustifiedRow, RightAlignedRow, ErrorMessage } from '../../Common/Styled'
+import { ProjectType } from '../../types'
+import { parseEmails, validateEmails } from '../../utils/invite'
 
 const ProjectInviteModal = ({ onSave, onClose, projectId = null }) => {
   const [invite, setInvite] = useState('')

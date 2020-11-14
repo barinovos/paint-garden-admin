@@ -5,10 +5,13 @@ export default {
   API_SUCCESS: 'API_SUCCESS',
 
   UPDATE_DB: 'app.db.UPDATE',
+  SET_ACTIVE_PROJECT: 'app.projects.SET_ACTIVE_PROJECT',
   UPDATE_PROJECTS: 'app.projects.UPDATE',
   CREATED_PROJECT: 'app.project.CREATED',
   DELETE_PROJECT: 'app.project.DELETE',
   UPDATE_CANVASES: 'app.canvases.UPDATE',
+  CREATE_CANVAS: 'app.canvases.CREATE',
+  DELETE_CANVAS: 'app.canvases.DELETE',
   UPDATE_SECTION: 'app.sections.UPDATE',
   CREATE_SECTION: 'app.sections.CREATE',
   DELETE_SECTION: 'app.sections.DELETE',
@@ -29,5 +32,5 @@ export default {
 
   CHECK_AUTH: 'app.auth.CHECK_AUTH',
   AUTHORISE: 'app.auth.AUTHORISE',
-  LOGOUT: 'app.auth.LOGOUT'
-};
+  LOGOUT: 'app.auth.LOGOUT',
+}

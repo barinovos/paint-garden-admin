@@ -7,7 +7,7 @@ import * as actions from './actions'
 import add from '../assets/add.svg'
 import edit from '../assets/edit.svg'
 import trash from '../assets/trash_.svg'
-import SectionModal from '../SectionModal'
+import SectionModal from './SectionModal'
 import DeleteModal from '../DeleteModal'
 import UploadButton from '../UploadButton'
 import ImagesList from '../ImagesList'
@@ -51,7 +51,9 @@ class Sections extends React.PureComponent {
 
   onFinishCreateEdit = section => {
     this.setState({ showModal: false })
-    this.state.isCreate ? this.props.createSection(section, this.state.project_id, this.state.canvas_id) : this.props.updateSection(section)
+    this.state.isCreate
+      ? this.props.createSection(section, this.state.project_id, this.state.canvas_id)
+      : this.props.updateSection(section)
   }
 
   onCloseModal = () => this.setState({ showModal: false })

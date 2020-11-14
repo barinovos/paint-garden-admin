@@ -119,7 +119,7 @@ class Canvas extends React.PureComponent {
       changeCanvasGridMode,
       webview,
       pins,
-      project,
+      projects,
       updateWebview,
       editPin,
       deletePin,
@@ -130,7 +130,6 @@ class Canvas extends React.PureComponent {
       deleteSection,
     } = this.props
     const { selectedSection, zoomLevel, project_id } = this.state
-
 
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
 
@@ -162,17 +161,19 @@ class Canvas extends React.PureComponent {
     // NO ITEMS UPLOADED, SO SHOW THIS
 
     // INFO: EXTRACT THE CORRECT PROJECT ID HERE (This code will not work as it's special to milos account)
-    // PROJECT ID IS LOCATED IN THE project ARRAY in the correct project as the ID
+    // PROJECT ID IS LOCATED IN THE projects ARRAY in the correct projects as the ID
     const getProjectId = () => {
-      if (project && project.length === 4) {
-        return project[3].id
-      } else {return null}
+      if (projects && projects.length === 4) {
+        return projects[3].id
+      } else {
+        return null
+      }
     }
-    // const getProjectId = () => project[3] && project[3].id || null
-;    if (!itemsUploaded) {
+    // const getProjectId = () => projects[3] && projects[3].id || null
+    if (!itemsUploaded) {
       return (
         <Wrapper>
-          <ProjectHeader projectId={project_id} projects={project} />
+          <ProjectHeader projectId={project_id} projects={projects} />
           <DropzoneArea projectId={getProjectId()} canvasId={project_id} userId={this.props.user.id} />
         </Wrapper>
       )
@@ -181,7 +182,7 @@ class Canvas extends React.PureComponent {
     return (
       <Wrapper>
         {/* Name to be changed since it's now a header */}
-        <ProjectHeader projectId={project_id} projects={project} />
+        <ProjectHeader projectId={project_id} projects={projects} />
 
         <Dialogue />
 
@@ -232,14 +233,14 @@ class Canvas extends React.PureComponent {
 }
 
 export default connect(
-  ({ images, sections, isCanvasGridView, editMode, webview, pins, project, user }) => ({
+  ({ images, sections, isCanvasGridView, editMode, webview, pins, projects, user }) => ({
     images,
     sections,
     isCanvasGridView,
     editMode,
     webview,
     pins,
-    project,
+    projects,
     user,
   }),
   dispatch => bindActionCreators({ ...actions, fetchData, fetchProjects }, dispatch),

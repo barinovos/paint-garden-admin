@@ -13,10 +13,9 @@ export function changeCanvasMode(mode) {
 
 export function updateCanvas(sectionId, canvas) {
   return dispatch =>
-    api.put(`${Constants.API.SECTION}/${sectionId}`, { ...canvas }).then(resp => {
-      dispatch(updateSection(resp.data.data))
-      dispatch({ type: actionTypes.UPDATE_CANVAS })
-    })
+    api
+      .put(`${Constants.API.SECTION}/${sectionId}`, { ...canvas })
+      .then(resp => dispatch(updateSection(resp.data.data)))
 }
 
 export function updateWebview(webview) {

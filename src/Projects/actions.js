@@ -11,8 +11,7 @@ export function fetchData(project_id) {
   if (project_id !== undefined) {
     url = url + '/' + project_id
   }
-  return dispatch =>
-    api.get(`${url}`).then(resp => dispatch(updateProjects(resp.data.data)))
+  return dispatch => api.get(`${url}`).then(resp => dispatch(updateProjects(resp.data.data)))
 }
 
 export function sendInvites({ id, shared_with }) {
@@ -46,14 +45,41 @@ export function createCanvas(canvas, project_id) {
     api
       .post(`${CANVAS}`, {
         project_id,
-        ...canvas
+        ...canvas,
       })
-      .then(resp => dispatch(createdProject(resp.data.data)))
+      .then(resp =>
+        dispatch({
+          type: actionTypes.CREATE_CANVAS,
+          canvas: resp.data.data,
+        }),
+      )
+}
+
+export function updateCanvas(canvas) {
+  return dispatch =>
+    api.put(`${CANVAS}/${canvas.id}`, canvas).then(resp =>
+      dispatch({
+        type: actionTypes.UPDATE_CANVAS,
+        canvas: resp.data.data,
+      }),
+    )
+}
+
+export function deleteCanvas(canvasId) {
+  return dispatch =>
+    api.delete(`${CANVAS}/${canvasId}`).then(() =>
+      dispatch({
+        type: actionTypes.DELETE_CANVAS,
+        id: canvasId,
+      }),
+    )
 }
 
 export function updateProject(project) {
   return dispatch =>
-    api.put(`${PROJECT}/${project.id}`, { title: project.title }).then(resp => dispatch(refreshData(resp.data.data)))
+    api
+      .put(`${PROJECT}/${project.id}`, { title: project.title })
+      .then(resp => dispatch({ type: actionTypes.CHANGE_PROJECT, project: resp.data.data }))
 }
 
 export function deleteProject(project_id) {
@@ -62,6 +88,13 @@ export function deleteProject(project_id) {
       dispatch(refreshData(resp.data.data))
       dispatch({ type: actionTypes.DELETE_PROJECT })
     })
+}
+
+export function setActiveProject(project) {
+  return {
+    type: actionTypes.SET_ACTIVE_PROJECT,
+    project,
+  }
 }
 
 const updateProjects = projects => {

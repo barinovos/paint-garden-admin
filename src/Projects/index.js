@@ -4,59 +4,50 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ProjectType } from '../types'
 import { CanvasArea, ProjectTitle, ProjectsTopBar, InviteButton, ProjectBarRight } from './Styled'
-import ProjectModal from '../ProjectModal'
-import ProjectInviteModal from '../ProjectInviteModal'
+import CreateEditModal from './CreateEditModal'
+import ProjectInviteModal from './ProjectInviteModal'
 import ProjectsList from './ProjectsList'
 import * as actions from './actions'
 import CanvasesList from './CanvasesList'
 
-const Projects = ({ fetchData, project, user, deleteProject, createProject, sendInvites, ...props }) => {
-  const [showModal, setShowModal] = useState(false)
+const Projects = ({
+  fetchData,
+  projects,
+  activeProject,
+  user,
+  deleteProject,
+  createProject,
+  sendInvites,
+  setActiveProject,
+  updateProject,
+}) => {
+  const [modal, setModal] = useState({ visible: false })
   const [showModalInvite, setShowModalInvite] = useState(false)
-  const [isCreate, setIsCreate] = useState(true)
-  const [updateProject, setUpdateProject] = useState(null)
-  const [projectId, setProjectId] = useState(null)
-  const [activeProject, setActiveProject] = useState({})
 
   useEffect(() => {
     fetchData()
   }, []) // eslint-disable-line
   const isModerator = user && user.isModerator()
 
-  // set default active project after data fetched
-  if (project.length) {
-    // the use case for teacher account
-    const firstProject = project[0]
-    if (firstProject && !activeProject.id) setActiveProject(firstProject)
-  }
+  const createButtonClicked = () =>
+    setModal({
+      visible: true,
+    })
 
-  const createButtonClicked = (e, parent_id) => {
-    setProjectId(parent_id)
-    setShowModal(true)
-    setIsCreate(true)
-    setUpdateProject(null)
-  }
-
-  const editButtonClicked = project => {
-    setShowModal(true)
-    setIsCreate(false)
-    setUpdateProject(project)
-  }
-
-  const onProjectDelete = projectId => {
-    deleteProject(projectId)
-    updateActiveProject()
-  }
+  const editButtonClicked = project =>
+    setModal({
+      visible: true,
+      project,
+    })
 
   const onFinishCreateEdit = project => {
-    setShowModal(false)
-    isCreate ? createProject(project) : props.updateProject(project)
-    updateActiveProject()
-  }
-
-  const updateActiveProject = () => {
-    let new_active_project = project.filter(p => p.id === activeProject.id)
-    setActiveProject(new_active_project.length > 0 ? new_active_project[0] : {})
+    modal.project
+      ? updateProject({
+          ...modal.project,
+          ...project,
+        })
+      : createProject(project)
+    setModal({ visible: false })
   }
 
   return (
@@ -67,7 +58,7 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
         onChangeActiveProject={setActiveProject}
         onCreate={createButtonClicked}
         onEdit={editButtonClicked}
-        projects={project}
+        projects={projects}
       />
       <CanvasArea>
         {activeProject.title && (
@@ -80,30 +71,19 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
             )}
           </ProjectsTopBar>
         )}
-        <CanvasesList
-          isModerator={isModerator}
-          canvases={activeProject ? activeProject.canvas : []}
-          onEdit={editButtonClicked}
-          onCreate={createButtonClicked}
-          activeProjectId={activeProject.id}
-          userId={user.id}
-          onDelete={onProjectDelete}
-        />
+        <CanvasesList />
       </CanvasArea>
-
-      {showModal && (
-        <ProjectModal
+      {modal.visible && (
+        <CreateEditModal
           onSave={onFinishCreateEdit}
-          updateProject={updateProject}
-          onClose={() => setShowModal(false)}
-          parentId={projectId}
-          onDelete={onProjectDelete}
+          onClose={() => setModal({ visible: false })}
+          onDelete={deleteProject}
+          entity={modal.project}
         />
       )}
       {showModalInvite && (
         <ProjectInviteModal
           onSave={sendInvites}
-          updateProject={updateProject}
           onClose={() => setShowModalInvite(false)}
           projectId={activeProject.id}
         />
@@ -113,11 +93,12 @@ const Projects = ({ fetchData, project, user, deleteProject, createProject, send
 }
 
 Projects.propTypes = {
-  project: PropTypes.arrayOf(ProjectType),
+  projects: PropTypes.arrayOf(ProjectType),
   user: PropTypes.object,
+  setActiveProject: PropTypes.func,
 }
 
 export default connect(
-  ({ project, user }) => ({ project, user }),
+  ({ projects, user, activeProject }) => ({ projects, user, activeProject }),
   dispatch => bindActionCreators({ ...actions }, dispatch),
 )(Projects)

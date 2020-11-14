@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Wrapper, ContentWrapper } from './Styled'
-import { Button, Title, ItemInput, ItemTextArea, JustifiedRow, RightAlignedRow } from '../Common/Styled'
+import { Button, Title, ItemInput, ItemTextArea, JustifiedRow, RightAlignedRow } from '../../Common/Styled'
 
 const defaultState = {
   title: '',
@@ -14,8 +14,7 @@ const defaultState = {
   errors: {},
 }
 
-
-const minTitleLength = 6;
+const minTitleLength = 6
 
 export default class SectionModal extends React.PureComponent {
   static propTypes = {
@@ -43,17 +42,17 @@ export default class SectionModal extends React.PureComponent {
   }
 
   onChangeTitle = prop => ev => {
-    let errors = {};
+    let errors = {}
     if (ev.target.value.length < minTitleLength) {
-      errors["title"] = `Tittle has to be longer than ${minTitleLength}`;
-      this.setState({errors: errors});
+      errors['title'] = `Tittle has to be longer than ${minTitleLength}`
+      this.setState({ errors: errors })
     } else {
-      errors["title"] = '';
-      this.setState({errors: errors});
+      errors['title'] = ''
+      this.setState({ errors: errors })
     }
 
     this.setState({ [prop]: ev.target.value })
-    return true;
+    return true
   }
 
   validate(prop, val) {
@@ -80,7 +79,6 @@ export default class SectionModal extends React.PureComponent {
         year: year ? +year : null,
       })
     } else {
-
     }
   }
 
@@ -92,26 +90,21 @@ export default class SectionModal extends React.PureComponent {
       <Wrapper onClick={onClose}>
         <ContentWrapper onClick={ev => ev.stopPropagation()}>
           <Title>Section detail</Title>
-          <ItemInput
-            value={title}
-            onChange={this.onChangeTitle('title')}
-            name= "title"
-          placeholder="Title"
-         />
-         <span style={{color: "red"}}>{this.state.errors["title"]}</span>
+          <ItemInput value={title} onChange={this.onChangeTitle('title')} name="title" placeholder="Title" />
+          <span style={{ color: 'red' }}>{this.state.errors['title']}</span>
           <ItemTextArea value={synopisis} onChange={this.onChangeState('synopisis')} placeholder="Synopisis" />
           <JustifiedRow>
             <ItemInput value={height} onChange={this.onChangeState('height')} placeholder="Height" width={30} />
-            <span style={{color: "red"}}>{this.state.errors["height"]}</span>
+            <span style={{ color: 'red' }}>{this.state.errors['height']}</span>
             <ItemInput value={width} onChange={this.onChangeState('width')} placeholder="Width" width={30} />
-            <span style={{color: "red"}}>{this.state.errors["width"]}</span>
+            <span style={{ color: 'red' }}>{this.state.errors['width']}</span>
             <ItemInput value={depth} onChange={this.onChangeState('depth')} placeholder="Depth" width={30} />
-            <span style={{color: "red"}}>{this.state.errors["depth"]}</span>
+            <span style={{ color: 'red' }}>{this.state.errors['depth']}</span>
           </JustifiedRow>
           <JustifiedRow>
             <ItemInput value={medium} onChange={this.onChangeState('medium')} placeholder="Medium" width={65} />
             <ItemInput value={year} onChange={this.onChangeState('year')} placeholder="Year" width={30} />
-             <span style={{color: "red"}}>{this.state.errors["year"]}</span>
+            <span style={{ color: 'red' }}>{this.state.errors['year']}</span>
           </JustifiedRow>
           <RightAlignedRow>
             <Button onClick={onClose} secondary>

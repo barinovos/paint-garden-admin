@@ -205,3 +205,34 @@ export const InfoOverlay = styled.div`
   width: 100%;
   background-color: rgba(77, 161, 255, 0.6);
 `
+
+export const ModalWrapper = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`
+export const ModalContentWrapper = styled.form`
+  width: 450px;
+  background: white;
+  box-shadow: 2px 3px 22px rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  padding: 18px 21px;
+`
+
+export const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`
+
+export const ErrorText = styled.div`
+  color: red;
+  font-size: 12px;
+`
