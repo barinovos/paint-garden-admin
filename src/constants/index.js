@@ -2,10 +2,8 @@ export default {
   ROUTES: {
     ROOT: '/',
     CANVAS: '/canvas',
-    CANVASES: '/canvases',
     NOT_FOUND: '/not-found',
     LOGIN: '/login',
-    SECTIONS: '/sections',
     PROJECTS: '/projects',
     POLICY: '/privacyPolicy.pdf',
   },

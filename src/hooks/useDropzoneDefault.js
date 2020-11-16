@@ -7,19 +7,14 @@ const useDropzoneDefault = (projectId, canvasId, userId) => {
   const onDrop = useCallback(
     async acceptedFiles => {
       // API CALL FOR UPLOAD (start)
-      console.log({ acceptedFiles })
-      // INFO: ADD 'Content-Type': 'multipart/form-data' HEADER to this REQ (somehow)
       try {
         setUploading(true)
-        const response = await api.post(
-          '/section',
-          {
-            project_id: projectId,
-            canvas_id: canvasId,
-            user_id: userId,
-            media: acceptedFiles[0],
-          },
-        );
+        const formData = new FormData()
+        formData.append('media', acceptedFiles[0], acceptedFiles[0].name)
+        formData.append('user_id', userId)
+        formData.append('project_id', projectId)
+        formData.append('canvas_id', canvasId)
+        const response = await api.post('/section', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
 
         console.log({ response })
       } catch (error) {

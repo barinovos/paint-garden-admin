@@ -23,8 +23,22 @@ const CanvasListItem = ({ canvas, onEdit, onDelete, viewMode }) => {
           <Overlay />
           {!viewMode && (
             <Icons>
-              <Icon src={edit} onClick={() => onEdit(canvas)} />
-              <Icon src={trash} onClick={() => onDelete(canvas.id)} />
+              <Icon
+                src={edit}
+                onClick={ev => {
+                  onEdit(canvas)
+                  ev.stopPropagation()
+                  ev.preventDefault()
+                }}
+              />
+              <Icon
+                src={trash}
+                onClick={ev => {
+                  onDelete(canvas.id)
+                  ev.stopPropagation()
+                  ev.preventDefault()
+                }}
+              />
             </Icons>
           )}
         </ImageWrapper>

@@ -1,6 +1,15 @@
 import actionTypes from '../constants/actionTypes'
 import Constants from '../constants'
 
+export function activeCanvasReducer(state = null, action) {
+  switch (action.type) {
+    case actionTypes.SET_CANVAS:
+      return action.canvas
+    default:
+      return state
+  }
+}
+
 export function isCanvasGridViewReducer(state = true, action) {
   switch (action.type) {
     case actionTypes.CHANGE_CANVAS_GRID_MODE:
@@ -25,15 +34,6 @@ export function editModeReducer(state = Constants.EDIT_MODES.resize, action) {
   switch (action.type) {
     case actionTypes.CHANGE_CANVAS_MODE:
       return action.mode
-    default:
-      return state
-  }
-}
-
-export function webviewReducer(state = {}, action) {
-  switch (action.type) {
-    case actionTypes.UPDATE_WEBVIEW:
-      return action.webview || state
     default:
       return state
   }

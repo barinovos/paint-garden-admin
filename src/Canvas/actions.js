@@ -1,7 +1,20 @@
 import actionTypes from '../constants/actionTypes'
 import api from '../utils/api'
 import Constants from '../constants'
-import { fetchData } from '../Sections/actions'
+
+const {
+  API: { CANVAS, SECTION },
+} = Constants
+
+export function fetchCanvasData(id) {
+  return dispatch =>
+    api.get(`${CANVAS}/${id}`).then(resp =>
+      dispatch({
+        type: actionTypes.SET_CANVAS,
+        canvas: resp.data.data,
+      }),
+    )
+}
 
 export function changeCanvasGridMode(isCanvasGridView) {
   return { type: actionTypes.CHANGE_CANVAS_GRID_MODE, isCanvasGridView }
@@ -13,16 +26,7 @@ export function changeCanvasMode(mode) {
 
 export function updateCanvas(sectionId, canvas) {
   return dispatch =>
-    api
-      .put(`${Constants.API.SECTION}/${sectionId}`, { ...canvas })
-      .then(resp => dispatch(updateSection(resp.data.data)))
-}
-
-export function updateWebview(webview) {
-  return dispatch =>
-    api
-      .put(Constants.API.WEBVIEW, webview)
-      .then(resp => dispatch({ type: actionTypes.UPDATE_WEBVIEW, webview: resp.data.data }))
+    api.put(`${SECTION}/${sectionId}`, { ...canvas }).then(resp => dispatch(updateSection(resp.data.data)))
 }
 
 export function addPin(pin, project_id) {
@@ -87,7 +91,7 @@ export function uploadImages(data, sectionId) {
     formData.append('projectId', data.project_id)
     return api
       .post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(resp => dispatch(fetchData(data.project_id)))
+      .then(resp => dispatch(fetchCanvasData(data.project_id)))
   }
 }
 

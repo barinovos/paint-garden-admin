@@ -3,11 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
-
 import Constants from '../constants'
 import Toolbar from '../Toolbar'
 import Canvas from '../Canvas'
-import Sections from '../Sections'
 import Projects from '../Projects'
 import LoginPage from '../LoginPage'
 import { getUserInfo, logout } from './actions'
@@ -36,16 +34,14 @@ const Main = ({ user, getUserInfo, history, logout }) => {
     <Fragment>
       <Route
         exact={true}
-        path={[ROUTES.ROOT, `${ROUTES.CANVASES}/:project_id`, `${ROUTES.SECTIONS}/:project_id`, ROUTES.PROJECTS]}
+        path={[ROUTES.ROOT, ROUTES.PROJECTS]}
         render={() => <Toolbar onLogout={() => logout(history)} />}
       />
       <MainArea>
         <Switch>
           <Route path={ROUTES.ROOT} exact component={Projects} />
-          <Route path={`${ROUTES.SECTIONS}/:project_id`} exact component={Sections} />
           <Route path={ROUTES.PROJECTS} exact component={Projects} />
-          <Route path={ROUTES.CANVASES + '/:project_id'} component={Projects} />
-          <Route path={ROUTES.CANVAS + '/:project_id'} component={Canvas} />
+          <Route path={ROUTES.CANVAS + '/:canvasId'} component={Canvas} />
           <Route path={ROUTES.LOGIN} component={LoginPage} />
           <Route render={() => <div>Not found</div>} />
         </Switch>

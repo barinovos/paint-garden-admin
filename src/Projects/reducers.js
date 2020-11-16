@@ -47,7 +47,7 @@ export function canvasesReducer(state = [], action) {
     case actionTypes.DELETE_CANVAS:
       return state.filter(canvases => canvases.id !== action.id)
     case actionTypes.UPDATE_CANVAS:
-      return state.map(c => (c.id !== action.id ? c : action.canvas))
+      return state.map(c => (c.id !== action.canvas.id ? c : action.canvas))
     default:
       return state
   }

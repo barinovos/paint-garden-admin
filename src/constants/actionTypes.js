@@ -24,6 +24,7 @@ export default {
   EDIT_PIN: 'app.canvas.EDIT_PIN',
   ADD_TO_CANVAS: 'app.canvas.ADD',
   REMOVE_FROM_CANVAS: 'app.canvas.REMOVE',
+  SET_CANVAS: 'app.canvas.SET',
   UPDATE_CANVAS: 'app.canvas.UPDATE',
   CHANGE_CANVAS_GRID_MODE: 'app.canvas.GRID_MODE',
   CHANGE_CANVAS_MODE: 'app.canvas.EDIT_MODE',

@@ -1,10 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import flatten from 'lodash/flatten'
-
 import { bindActionCreators } from 'redux'
-import { fetchData } from '../Sections/actions'
 import { fetchData as fetchProjects } from '../Projects/actions'
 import * as actions from './actions'
 import { Wrapper } from './Styled'
@@ -13,7 +10,6 @@ import Zoom from '../newComponents/NewZoom'
 import ActionsBar from '../newComponents/ActionsBarNew'
 import Dialogue from '../newComponents/DialogueNew'
 import ProjectHeader from '../newComponents/ProjectPickerNew'
-import { ImageType, SectionType } from '../types'
 import Constants from '../constants'
 import DropzoneArea from '../newComponents/DropzoneArea'
 
@@ -21,28 +17,25 @@ const { MAX_ZOOM_LEVEL } = Constants
 
 class Canvas extends React.PureComponent {
   static propTypes = {
-    sections: PropTypes.arrayOf(SectionType),
-    images: PropTypes.arrayOf(ImageType),
+    activeCanvas: PropTypes.object,
     updateCanvas: PropTypes.func,
-    fetchData: PropTypes.func,
+    fetchCanvasData: PropTypes.func,
     isCanvasGridView: PropTypes.bool,
     changeCanvasMode: PropTypes.func,
-    updateWebview: PropTypes.func,
     editMode: PropTypes.string,
-    webview: PropTypes.object,
     pins: PropTypes.array,
     user: PropTypes.object,
   }
 
   constructor(props) {
     super(props)
-    const project_id = props.match.params.project_id
-    props.fetchData(project_id)
+    const canvasId = props.match.params.canvasId
+    props.fetchCanvasData(canvasId)
     props.fetchProjects()
     this.state = {
       selectedSection: null,
       zoomLevel: 0,
-      project_id: project_id,
+      canvasId,
       activeImageIndex: 0,
       activeImageIndexes: {},
       showPreview: true,
@@ -50,14 +43,14 @@ class Canvas extends React.PureComponent {
   }
 
   componentDidUpdate = prevProps => {
-    if (this.props.match.params.project_id !== prevProps.match.params.project_id) {
-      const project_id = this.props.match.params.project_id
-      this.props.fetchData(project_id)
-      this.props.fetchProjects()
+    if (this.props.match.params.canvasId !== prevProps.match.params.canvasId) {
+      const canvasId = this.props.match.params.canvasId
+      this.props.fetchCanvasData(canvasId)
+      // this.props.fetchProjects()
       this.setState({
         selectedSection: null,
         zoomLevel: 0,
-        project_id: project_id,
+        canvasId,
         activeImageIndex: 0,
       })
     }
@@ -71,7 +64,7 @@ class Canvas extends React.PureComponent {
         ? 0 //selectedSection.imageIds.length - 1
         : activeImageIndexes[selectedSection.id]
     this.setState({
-      selectedSection: this.props.sections.find(s => s.id === selectedSection.id),
+      selectedSection: this.props.activeCanvas.sections.find(s => s.id === selectedSection.id),
       activeImageIndexes: { ...activeImageIndexes, [selectedSection.id]: activeImageIndex },
       activeImageIndex: activeImageIndex,
     })
@@ -83,7 +76,7 @@ class Canvas extends React.PureComponent {
   }
 
   onAddPin = pin => {
-    this.props.addPin(pin, this.state.project_id)
+    this.props.addPin(pin, this.state.canvasId)
   }
 
   onZoomChange = zoomLevel => {
@@ -111,16 +104,13 @@ class Canvas extends React.PureComponent {
 
   render() {
     const {
-      images,
-      sections,
+      activeCanvas,
       updateCanvas,
       isCanvasGridView,
       editMode,
       changeCanvasGridMode,
-      webview,
       pins,
       projects,
-      updateWebview,
       editPin,
       deletePin,
       uploadImageToPin,
@@ -129,13 +119,16 @@ class Canvas extends React.PureComponent {
       activeImageIndex,
       deleteSection,
     } = this.props
-    const { selectedSection, zoomLevel, project_id } = this.state
+
+    if (!activeCanvas) {
+      return 'Loading canvas data...'
+    }
+    const { selectedSection, zoomLevel, canvasId } = this.state
 
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
 
-    const items = sections
-      .filter(s => s.canvas && s.imageIds.length)
-      .map(({ id, imageIds, posx, posy, width, height, images: images_section, thumb, type, mime }) => ({
+    const items = activeCanvas.sections
+    /*.map(({ id, imageIds, posx, posy, width, height, images: images_section }) => ({
         id,
         path: images.find(
           im =>
@@ -155,26 +148,16 @@ class Canvas extends React.PureComponent {
         mime: images.find(im => im.id === imageIds[imageIds.length - 1]).mime,
         mimeType: images.find(im => im.id === imageIds[imageIds.length - 1]).mime_type,
         imageIds,
-      }))
+      }))*/
 
-    const itemsUploaded = false
+    const itemsUploaded = activeCanvas.sections.length
     // NO ITEMS UPLOADED, SO SHOW THIS
 
-    // INFO: EXTRACT THE CORRECT PROJECT ID HERE (This code will not work as it's special to milos account)
-    // PROJECT ID IS LOCATED IN THE projects ARRAY in the correct projects as the ID
-    const getProjectId = () => {
-      if (projects && projects.length === 4) {
-        return projects[3].id
-      } else {
-        return null
-      }
-    }
-    // const getProjectId = () => projects[3] && projects[3].id || null
     if (!itemsUploaded) {
       return (
         <Wrapper>
-          <ProjectHeader projectId={project_id} projects={projects} />
-          <DropzoneArea projectId={getProjectId()} canvasId={project_id} userId={this.props.user.id} />
+          <ProjectHeader projectId={canvasId} projects={projects} />
+          <DropzoneArea projectId={activeCanvas.project_id} canvasId={canvasId} userId={this.props.user.id} />
         </Wrapper>
       )
     }
@@ -182,7 +165,7 @@ class Canvas extends React.PureComponent {
     return (
       <Wrapper>
         {/* Name to be changed since it's now a header */}
-        <ProjectHeader projectId={project_id} projects={projects} />
+        <ProjectHeader projectId={canvasId} projects={projects} />
 
         <Dialogue />
 
@@ -210,14 +193,12 @@ class Canvas extends React.PureComponent {
           onSelect={this.onSectionSelect}
           isCanvasGridView={isCanvasGridView}
           selectedItemId={selectedSection ? selectedSection.id : null}
-          webview={webview}
-          onUpdateWebView={updateWebview}
           pins={pins}
           onAddPin={this.onAddPin}
           onDeletePin={deletePin}
           onEditPin={editPin}
           onUploadImageToPin={uploadImageToPin}
-          project_id={project_id}
+          project_id={canvasId}
           addSection={addSection}
           uploadImages={uploadImages}
           activeImageIndex={activeImageIndex}
@@ -233,15 +214,13 @@ class Canvas extends React.PureComponent {
 }
 
 export default connect(
-  ({ images, sections, isCanvasGridView, editMode, webview, pins, projects, user }) => ({
-    images,
-    sections,
+  ({ activeCanvas, isCanvasGridView, editMode, pins, projects, user }) => ({
+    activeCanvas,
     isCanvasGridView,
     editMode,
-    webview,
     pins,
     projects,
     user,
   }),
-  dispatch => bindActionCreators({ ...actions, fetchData, fetchProjects }, dispatch),
+  dispatch => bindActionCreators({ ...actions, fetchProjects }, dispatch),
 )(Canvas)
