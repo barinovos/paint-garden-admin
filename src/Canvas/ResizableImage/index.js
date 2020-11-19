@@ -1,0 +1,102 @@
+import React, { useEffect, useState } from 'react'
+import { Rnd } from 'react-rnd'
+import PropTypes from 'prop-types'
+import { calcSizeWithZoom, reCalcSizeWithZoom } from '../../utils/calcZoom'
+import colors from '../../constants/colors'
+
+const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, onDrop }) => {
+  const [x, setX] = useState(calcSizeWithZoom(item.position.x, zoomLevel))
+  const [y, setY] = useState(calcSizeWithZoom(item.position.y, zoomLevel))
+  const [height, setHeight] = useState(calcSizeWithZoom(item.dimensions.height, zoomLevel))
+  const [width, setWidth] = useState(calcSizeWithZoom(item.dimensions.width, zoomLevel))
+
+  useEffect(() => {
+    setHeight(calcSizeWithZoom(item.dimensions.height, zoomLevel))
+    setWidth(calcSizeWithZoom(item.dimensions.width, zoomLevel))
+    setX(calcSizeWithZoom(item.position.x, zoomLevel))
+    setY(calcSizeWithZoom(item.position.y, zoomLevel))
+  }, [zoomLevel, item])
+
+  const onDragStop = (e, d) => {
+    setX(d.x)
+    setY(d.y)
+    onDrop(item.id, {
+      position: {
+        x: reCalcSizeWithZoom(d.x, zoomLevel),
+        y: reCalcSizeWithZoom(d.y, zoomLevel),
+      },
+    })
+  }
+
+  const onResizeStop = (e, direction, ref, d) => {
+    const new_height = reCalcSizeWithZoom(ref.offsetHeight, zoomLevel)
+    const new_width = reCalcSizeWithZoom(ref.offsetWidth, zoomLevel)
+    setHeight(calcSizeWithZoom(new_height, zoomLevel))
+    setWidth(calcSizeWithZoom(new_width, zoomLevel))
+
+    onResize(item.id, {
+      dimensions: {
+        width: new_width, //calcSizeWithZoom(new_width, zoomLevel),
+        height: new_height, // RalcSizeWithZoom(new_height, zoomLevel),
+      },
+    })
+  }
+
+  return (
+    <Rnd
+      style={{
+        display: 'flex',
+        margin: 0,
+        height: '100%',
+        resize: 'both',
+        border: selectedItemId === item.id ? `2px dashed ${colors.darkGrey}` : 'none',
+        position: 'absolute',
+      }}
+      size={{ width, height }}
+      position={{ x: x, y: y }}
+      onClick={() => onSelect(item)}
+      dragAxis={'both'}
+      onResizeStop={onResizeStop}
+      onDragStop={onDragStop}
+      onResize={(e, direction, ref, delta, position) => {
+        setWidth(ref.offsetWidth)
+        setHeight(ref.offsetHeight)
+        setX(position.x)
+        setY(position.y)
+      }}
+    >
+      <figure
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        {item.media.mime_type.includes('video') ? (
+          <video controls style={{ userDrag: 'none', userSelect: 'none' }}>
+            <source src={item.media.url} type={item.media.mime_type} />
+          </video>
+        ) : (
+          <img
+            alt="{item.media.url}"
+            draggable="false"
+            src={item.media.url}
+            style={{ userDrag: 'none', userSelect: 'none' }}
+            width="100%"
+            height="100%"
+          />
+        )}
+      </figure>
+    </Rnd>
+  )
+}
+
+ResizableImage.propTypes = {
+  item: PropTypes.object.isRequired,
+  onSelect: PropTypes.func,
+  selectedItemId: PropTypes.string,
+  zoomLevel: PropTypes.number,
+  onResize: PropTypes.func,
+  onDrop: PropTypes.func,
+}
+
+export default ResizableImage

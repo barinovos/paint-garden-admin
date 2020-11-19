@@ -15,17 +15,17 @@ const UploadRibbon = ({ item, uploadImages, project_id, onChangeActiveImageIndex
           src={upload}
         />
       </UploadButton>
-      {item.images_section &&
-        item.images_section.map((image, i) => (
+      {item.history &&
+        item.history.map((image, i) => (
           <ImageWrapper key={image.id}>
             <img
               alt={image.id}
               key={i}
-              src={image.url_thumb}
+              src={image.thumb}
               style={{
                 width: '35px',
                 marginLeft: '10px',
-                border: item.path === image.url ? 'solid 1px #4DA1FF' : 'none',
+                border: item.media.url === image.url ? 'solid 1px #4DA1FF' : 'none',
               }}
               onClick={() => onChangeActiveImageIndex(i)}
             />

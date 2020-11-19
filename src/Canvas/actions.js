@@ -8,7 +8,7 @@ const {
 
 export function fetchCanvasData(id) {
   return dispatch =>
-    api.get(`${CANVAS}/${id}`).then(resp =>
+    api.get(`${CANVAS}/${id}?includes[sections]=1`).then(resp =>
       dispatch({
         type: actionTypes.SET_CANVAS,
         canvas: resp.data.data,
@@ -24,9 +24,14 @@ export function changeCanvasMode(mode) {
   return { type: actionTypes.CHANGE_CANVAS_MODE, mode }
 }
 
-export function updateCanvas(sectionId, canvas) {
+export function updateSection(sectionId, data) {
   return dispatch =>
-    api.put(`${SECTION}/${sectionId}`, { ...canvas }).then(resp => dispatch(updateSection(resp.data.data)))
+    api.post(`${SECTION}/${sectionId}`, data).then(resp =>
+      dispatch({
+        type: actionTypes.UPDATE_SECTION,
+        section: resp.data.data,
+      }),
+    )
 }
 
 export function addPin(pin, project_id) {
@@ -67,7 +72,7 @@ export function addSection(data) {
         projectId: data.project_id,
       })
       .then(resp => {
-        dispatch({ type: actionTypes.CREATE_SECTION, section: { ...resp.data.data, imageIds: [] } })
+        dispatch({ type: actionTypes.CREATE_SECTION, section: resp.data.data })
         dispatch(uploadImages(data, resp.data.data.id))
       })
 }
@@ -146,8 +151,3 @@ export function uploadImageToPin(file, pinId) {
       .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pin: resp.data.data }))
   }
 }
-
-const updateSection = section => ({
-  type: actionTypes.UPDATE_SECTION,
-  section: { ...section, imageIds: section.imageIds || [] },
-})

@@ -1,13 +1,17 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { Area, InnerArea, PreviewLink, Link } from './Styled'
 import { DropTarget } from 'react-dnd'
+import PropTypes from 'prop-types'
+// const
+import Constants from '../../constants'
+// components
 import ResizableImage from '../ResizableImage'
 import CanvasImage from '../CanvasImage'
-import Pins from '../Pins'
-import { calcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../utils/calcZoom'
-import Constants from '../constants'
-import UploadArea from '../UploadArea'
+import Pins from '../../Pins'
+import UploadArea from '../../UploadArea'
+// utils
+import { calcSizeWithZoom, canvasTopOffset, canvasLeftOffset } from '../../utils/calcZoom'
+// styled
+import { Area, InnerArea, PreviewLink, Link } from './Styled'
 
 const { EDIT_MODES } = Constants
 
@@ -37,7 +41,7 @@ function collect(connect, monitor) {
 
 class DndArea extends React.PureComponent {
   static propTypes = {
-    items: PropTypes.arrayOf(PropTypes.object).isRequired,
+    sections: PropTypes.arrayOf(PropTypes.object).isRequired,
     onUpdate: PropTypes.func.isRequired,
     onSelect: PropTypes.func,
     selectedItemId: PropTypes.string,
@@ -57,7 +61,7 @@ class DndArea extends React.PureComponent {
 
   render() {
     const {
-      items,
+      sections,
       connectDropTarget,
       onSelect,
       selectedItemId,
@@ -84,7 +88,7 @@ class DndArea extends React.PureComponent {
       <Area isGrid={isCanvasGridView} ref={instance => connectDropTarget(instance)}>
         <InnerArea>
           {editMode === EDIT_MODES.resize &&
-            items.map((item, i) => (
+            sections.map((item, i) => (
               <ResizableImage
                 key={i}
                 item={item}
@@ -106,7 +110,7 @@ class DndArea extends React.PureComponent {
                 zoomLevel={zoomLevel}
                 editMode={editMode}
               />
-              {items.map((item, i) => (
+              {sections.map((item, i) => (
                 <CanvasImage
                   key={i}
                   item={item}
@@ -121,7 +125,7 @@ class DndArea extends React.PureComponent {
           {editMode === EDIT_MODES.area && (
             <Fragment>
               <UploadArea addUpload={addSection} zoomLevel={zoomLevel} project_id={project_id} />
-              {items.map((item, i) => (
+              {sections.map((item, i) => (
                 <CanvasImage
                   key={i}
                   item={item}
@@ -135,7 +139,7 @@ class DndArea extends React.PureComponent {
 
           {editMode === EDIT_MODES.upload && (
             <Fragment>
-              {items.map((item, i) => (
+              {sections.map((item, i) => (
                 <CanvasImage
                   key={i}
                   item={item}
