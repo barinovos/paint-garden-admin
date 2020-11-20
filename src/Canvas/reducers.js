@@ -30,7 +30,7 @@ export function imagesReducer(state = [], action) {
   }
 }
 
-export function editModeReducer(state = Constants.EDIT_MODES.resize, action) {
+export function editModeReducer(state = Constants.EDIT_MODES.default, action) {
   switch (action.type) {
     case actionTypes.CHANGE_CANVAS_MODE:
       return action.mode

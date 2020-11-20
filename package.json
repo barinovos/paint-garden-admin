@@ -8,8 +8,6 @@
     "prop-types": "^15.7.2",
     "re-resizable": "^5.0.0",
     "react": "^16.8.6",
-    "react-dnd": "^7.6.0",
-    "react-dnd-html5-backend": "^7.6.0",
     "react-dom": "^16.8.6",
     "react-dropzone": "^11.2.0",
     "react-redux": "^7.0.3",

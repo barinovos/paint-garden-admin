@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import flatten from 'lodash/flatten'
 import { Wrapper, CanvasName, Arrow, Link } from './Styled'

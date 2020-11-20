@@ -23,12 +23,8 @@ export default {
     USER: '/user',
   },
   EDIT_MODES: {
-    dnd: 'dnd',
-    upload: 'upload',
-    resize: 'resize',
-    webview: 'webview',
+    default: 'default',
     annotation: 'annotation',
-    area: 'area',
   },
   ZOOM_MULTIPLIER: 0.8,
   MAX_ZOOM_LEVEL: 10,

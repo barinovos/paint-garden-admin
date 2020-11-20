@@ -1,19 +1,22 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchData as fetchProjects } from '../Projects/actions'
 import * as actions from './actions'
-import { Wrapper } from './Styled'
-import DndArea from './DndArea'
+import { Wrapper, Area, InnerArea, Link, PreviewLink } from './Styled'
 import Zoom from '../newComponents/NewZoom'
 import ActionsBar from '../newComponents/ActionsBarNew'
 import Dialogue from '../newComponents/DialogueNew'
 import ProjectHeader from '../newComponents/ProjectPickerNew'
 import Constants from '../constants'
 import DropzoneArea from '../newComponents/DropzoneArea'
+import ResizableImage from './ResizableImage'
+import Pins from '../Pins'
+import CanvasImage from './CanvasImage'
+import UploadArea from '../UploadArea'
 
-const { MAX_ZOOM_LEVEL } = Constants
+const { MAX_ZOOM_LEVEL, EDIT_MODES } = Constants
 
 class Canvas extends React.PureComponent {
   static propTypes = {
@@ -38,7 +41,6 @@ class Canvas extends React.PureComponent {
       canvasId,
       activeImageIndex: 0,
       activeImageIndexes: {},
-      showPreview: true,
     }
   }
 
@@ -90,10 +92,6 @@ class Canvas extends React.PureComponent {
     })
   }
 
-  changeShowPreview = () => {
-    this.setState({ showPreview: false })
-  }
-
   deleteImage = (id, section_id) => {
     this.setState({
       activeImageIndexes: {},
@@ -123,84 +121,14 @@ class Canvas extends React.PureComponent {
     if (!activeCanvas) {
       return 'Loading canvas data...'
     }
-    const { selectedSection, zoomLevel, canvasId } = this.state
+    const { selectedSection, zoomLevel, canvasId, projectId } = this.state
 
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
-
-    const d = {
-      data: {
-        id: '92627a6a-0e3a-484a-ae18-b9df958227e1',
-        title: 'Another cool one man',
-        project_id: '0f75d975-e398-4cbb-92a8-8fa5607f5e69',
-        created_at: '2020-11-14T13:54:14.000000Z',
-        user: {
-          id: 14,
-          name: 'Oleg Barinov',
-          profile_photo_url: 'https://ui-avatars.com/api/?name=Oleg+Barinov&color=7F9CF5&background=EBF4FF',
-          avatar: 'https://paint-garden-live.s3.eu-central-1.amazonaws.com/users/default.png',
-          email: 'barinovos@gmail.com',
-        },
-        is_me: true,
-        meta_data: '[]',
-        sections: [
-          {
-            id: '2af96f29-cc1e-4427-a772-e5dea121f7fd',
-            title: null,
-            project_id: '0f75d975-e398-4cbb-92a8-8fa5607f5e69',
-            canvas_id: '92627a6a-0e3a-484a-ae18-b9df958227e1',
-            position: { x: 0, y: 0 },
-            dimensions: { width: 874, height: 1214 },
-            meta_data: [],
-            media: {
-              id: 1,
-              model_id: '2af96f29-cc1e-4427-a772-e5dea121f7fd',
-              model_type: 'App\\Models\\Section',
-              uuid: '1d2e0f00-7aae-4d08-ab4d-49b75d874e25',
-              collection_name: 'sections',
-              name: 'Screenshot 2020-11-12 at 17.07.23',
-              mime_type: 'image/png',
-              size: 184959,
-              url:
-                'https://paint-garden-live.s3.eu-central-1.amazonaws.com/media-v2/1/ebdb9d17-2bfa-46cb-bcd3-81c5f7e21537.png',
-              thumb:
-                'https://paint-garden-live.s3.eu-central-1.amazonaws.com/media-v2/1/conversions/ebdb9d17-2bfa-46cb-bcd3-81c5f7e21537-thumb.jpg',
-              custom_properties: {
-                width: 874,
-                height: 1214,
-                generated_conversions: { W_800: true, thumb: true, W_1200: true },
-              },
-              created_at: '2020-11-16T20:50:28.000000Z',
-            },
-            history: [
-              {
-                id: 1,
-                model_id: '2af96f29-cc1e-4427-a772-e5dea121f7fd',
-                model_type: 'App\\Models\\Section',
-                uuid: '1d2e0f00-7aae-4d08-ab4d-49b75d874e25',
-                collection_name: 'sections',
-                name: 'Screenshot 2020-11-12 at 17.07.23',
-                mime_type: 'image/png',
-                size: 184959,
-                url:
-                  'https://paint-garden-live.s3.eu-central-1.amazonaws.com/media-v2/1/ebdb9d17-2bfa-46cb-bcd3-81c5f7e21537.png',
-                thumb:
-                  'https://paint-garden-live.s3.eu-central-1.amazonaws.com/media-v2/1/conversions/ebdb9d17-2bfa-46cb-bcd3-81c5f7e21537-thumb.jpg',
-                custom_properties: {
-                  width: 874,
-                  height: 1214,
-                  generated_conversions: { W_800: true, thumb: true, W_1200: true },
-                },
-                created_at: '2020-11-16T20:50:28.000000Z',
-              },
-            ],
-            annotations: [],
-          },
-        ],
-      },
-    }
+    const { sections } = activeCanvas
+    const selectedItemId = selectedSection ? selectedSection.id : null
 
     // NO ITEMS UPLOADED, SO SHOW THIS
-    if (!activeCanvas.sections.length) {
+    if (!sections.length) {
       return (
         <Wrapper>
           <ProjectHeader projectId={canvasId} projects={projects} />
@@ -232,7 +160,7 @@ class Canvas extends React.PureComponent {
           zoomLevel={zoomLevel}
         />
 
-        <DndArea
+        {/*<DndArea
           zoomLevel={zoomLevel}
           sections={activeCanvas.sections}
           onUpdate={updateSection}
@@ -254,7 +182,86 @@ class Canvas extends React.PureComponent {
           showPreview={this.state.showPreview}
           deleteSection={deleteSection}
           deleteImage={this.deleteImage}
-        />
+        />*/}
+        <Area isGrid={isCanvasGridView}>
+          <InnerArea>
+            {editMode === EDIT_MODES.default &&
+              sections.map((item, i) => (
+                <ResizableImage
+                  key={i}
+                  item={item}
+                  onSelect={this.onSectionSelect}
+                  selectedItemId={selectedItemId}
+                  zoomLevel={zoomLevel}
+                  onResize={updateSection}
+                  onDrop={updateSection}
+                />
+              ))}
+            {editMode === EDIT_MODES.annotation && (
+              <Fragment>
+                <Pins
+                  pins={pins}
+                  addPin={this.onAddPin}
+                  editPin={editPin}
+                  deletePin={deletePin}
+                  uploadImage={uploadImageToPin}
+                  zoomLevel={zoomLevel}
+                  editMode={editMode}
+                />
+                {sections.map((item, i) => (
+                  <CanvasImage
+                    key={i}
+                    item={item}
+                    onSelect={this.onSectionSelect}
+                    selectedItemId={selectedItemId}
+                    zoomLevel={zoomLevel}
+                  />
+                ))}
+              </Fragment>
+            )}
+
+            {editMode === EDIT_MODES.area && (
+              <Fragment>
+                <UploadArea addUpload={addSection} zoomLevel={zoomLevel} project_id={null} />
+                {sections.map((item, i) => (
+                  <CanvasImage
+                    key={i}
+                    item={item}
+                    onSelect={this.onSectionSelect}
+                    selectedItemId={selectedItemId}
+                    zoomLevel={zoomLevel}
+                  />
+                ))}
+              </Fragment>
+            )}
+
+            {editMode === EDIT_MODES.upload && (
+              <Fragment>
+                {sections.map((item, i) => (
+                  <CanvasImage
+                    key={i}
+                    item={item}
+                    onSelect={this.onSectionSelect}
+                    selectedItemId={selectedItemId}
+                    zoomLevel={zoomLevel}
+                    showRibbon={item.id === selectedItemId}
+                    uploadImages={uploadImages}
+                    project_id={activeCanvas.project_id}
+                    onChangeActiveImageIndex={this.onChangeActiveImageIndex}
+                    deleteSection={deleteSection}
+                    deleteImage={this.deleteImage}
+                  />
+                ))}
+              </Fragment>
+            )}
+          </InnerArea>
+          <PreviewLink>
+            Your canvas is published here:
+            <Link href={'//paint.garden/#/' + canvasId} target="_blank">
+              paint.garden/{canvasId}
+            </Link>
+          </PreviewLink>
+        </Area>
       </Wrapper>
     )
   }

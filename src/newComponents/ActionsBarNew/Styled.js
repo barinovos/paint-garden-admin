@@ -31,9 +31,10 @@ export const ActionButton = styled.div`
 
   transition: background-color 0.1s ease;
 
-  & svg {
-    fill: #d8d8d8;
-    stroke: #d8d8d8;
+  & svg,
+  & path {
+    fill: ${props => (props.active ? colors.black : colors.lightGrey)};
+    stroke: ${props => (props.active ? colors.black : colors.lightGrey)};
     height: 19px;
     width: 19px;
   }
@@ -41,11 +42,18 @@ export const ActionButton = styled.div`
   &:hover {
     background-color: ${colors.hoverBlue};
 
-    & svg {
+    & svg,
+    & path {
       fill: white;
       stroke: white;
     }
   }
+`
+
+export const Separator = styled.div`
+  height: 1px;
+  border-top: 1px solid ${colors.lightGrey};
+  margin: 10px 5px;
 `
 
 export const ZoomButtons = styled.div`
