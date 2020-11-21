@@ -3,12 +3,25 @@ import { Rnd } from 'react-rnd'
 import PropTypes from 'prop-types'
 import { calcSizeWithZoom, reCalcSizeWithZoom } from '../../utils/calcZoom'
 import colors from '../../constants/colors'
+import UploadRibbon from '../../UploadRibbon'
 
-const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, onDrop }) => {
+const ResizableImage = ({
+  item,
+  onSelect,
+  selectedItemId,
+  zoomLevel,
+  onUpdate,
+  onChangeActiveImageIndex,
+  deleteSection,
+  deleteImage,
+  uploadImages,
+  projectId,
+}) => {
   const [x, setX] = useState(calcSizeWithZoom(item.position.x, zoomLevel))
   const [y, setY] = useState(calcSizeWithZoom(item.position.y, zoomLevel))
   const [height, setHeight] = useState(calcSizeWithZoom(item.dimensions.height, zoomLevel))
   const [width, setWidth] = useState(calcSizeWithZoom(item.dimensions.width, zoomLevel))
+  const isActive = selectedItemId === item.id
 
   useEffect(() => {
     setHeight(calcSizeWithZoom(item.dimensions.height, zoomLevel))
@@ -20,7 +33,7 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
   const onDragStop = (e, d) => {
     setX(d.x)
     setY(d.y)
-    onDrop(item.id, {
+    onUpdate(item.id, {
       position: {
         x: reCalcSizeWithZoom(d.x, zoomLevel),
         y: reCalcSizeWithZoom(d.y, zoomLevel),
@@ -34,7 +47,7 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
     setHeight(calcSizeWithZoom(new_height, zoomLevel))
     setWidth(calcSizeWithZoom(new_width, zoomLevel))
 
-    onResize(item.id, {
+    onUpdate(item.id, {
       dimensions: {
         width: new_width, //calcSizeWithZoom(new_width, zoomLevel),
         height: new_height, // RalcSizeWithZoom(new_height, zoomLevel),
@@ -49,7 +62,7 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
         margin: 0,
         height: '100%',
         resize: 'both',
-        border: selectedItemId === item.id ? `2px dashed ${colors.darkGrey}` : 'none',
+        border: isActive ? `2px dashed ${colors.darkGrey}` : 'none',
         position: 'absolute',
       }}
       size={{ width, height }}
@@ -65,6 +78,17 @@ const ResizableImage = ({ item, onSelect, selectedItemId, zoomLevel, onResize, o
         setY(position.y)
       }}
     >
+      {isActive && (
+        <UploadRibbon
+          item={item}
+          uploadImages={uploadImages}
+          projectId={projectId}
+          selectedItemId={selectedItemId}
+          onChangeActiveImageIndex={onChangeActiveImageIndex}
+          deleteSection={deleteSection}
+          deleteImage={deleteImage}
+        />
+      )}
       <figure
         style={{
           width: '100%',
@@ -95,8 +119,12 @@ ResizableImage.propTypes = {
   onSelect: PropTypes.func,
   selectedItemId: PropTypes.string,
   zoomLevel: PropTypes.number,
-  onResize: PropTypes.func,
-  onDrop: PropTypes.func,
+  onUpdate: PropTypes.func,
+  onChangeActiveImageIndex: PropTypes.func,
+  deleteSection: PropTypes.func,
+  deleteImage: PropTypes.func,
+  uploadImages: PropTypes.func,
+  projectId: PropTypes.string,
 }
 
 export default ResizableImage

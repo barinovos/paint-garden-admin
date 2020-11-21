@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import colors from '../../constants/colors'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -6,7 +7,9 @@ export const Wrapper = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: ${props => (props.isDragActive ? '#4DA1FF' : '#eeeeee')};
+  background-color: ${props => (props.isDragActive ? colors.blue : '#eeeeee')};
+  min-height: 600px;
+  position: relative;
 `
 
 export const InactiveWrapper = styled.div`
@@ -36,7 +39,7 @@ export const UploadButton = styled.button`
   cursor: pointer;
   margin-bottom: 10px;
   color: white;
-  background-color: #4da1ff;
+  background-color: ${colors.blue};
   border: none;
   outline: none;
   display: flex;
@@ -44,7 +47,7 @@ export const UploadButton = styled.button`
   padding: 10px 20px;
   padding-right: 40px;
   font-weight: 300;
-  transition: background-color .2s ease;
+  transition: background-color 0.2s ease;
 
   & > svg {
     margin-right: 10px;
@@ -55,6 +58,6 @@ export const UploadButton = styled.button`
   }
 
   &:hover {
-    background-color: #3d81cc;
+    background-color: ${colors.hoverBlue};
   }
 `

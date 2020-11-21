@@ -34,7 +34,8 @@ class Canvas extends React.PureComponent {
     super(props)
     const canvasId = props.match.params.canvasId
     props.fetchCanvasData(canvasId)
-    props.fetchProjects()
+    // TODO: not needed for now, but maybe useful later for ProjectPicker
+    // props.fetchProjects()
     this.state = {
       selectedSection: null,
       zoomLevel: 0,
@@ -44,7 +45,8 @@ class Canvas extends React.PureComponent {
     }
   }
 
-  componentDidUpdate = prevProps => {
+  // TODO: not needed for now, but maybe useful later for ProjectPicker change handler
+  /*componentDidUpdate = prevProps => {
     if (this.props.match.params.canvasId !== prevProps.match.params.canvasId) {
       const canvasId = this.props.match.params.canvasId
       this.props.fetchCanvasData(canvasId)
@@ -56,7 +58,7 @@ class Canvas extends React.PureComponent {
         activeImageIndex: 0,
       })
     }
-  }
+  }*/
 
   onSectionSelect = selectedSection => {
     const { activeImageIndexes } = this.state
@@ -108,82 +110,33 @@ class Canvas extends React.PureComponent {
       editMode,
       changeCanvasGridMode,
       pins,
-      projects,
       editPin,
       deletePin,
       uploadImageToPin,
       addSection,
       uploadImages,
-      activeImageIndex,
       deleteSection,
     } = this.props
 
     if (!activeCanvas) {
       return 'Loading canvas data...'
     }
-    const { selectedSection, zoomLevel, canvasId, projectId } = this.state
+    const { selectedSection, zoomLevel, canvasId } = this.state
 
     const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
-    const { sections } = activeCanvas
+    const { sections, title } = activeCanvas
     const selectedItemId = selectedSection ? selectedSection.id : null
 
-    // NO ITEMS UPLOADED, SO SHOW THIS
-    if (!sections.length) {
-      return (
-        <Wrapper>
-          <ProjectHeader projectId={canvasId} projects={projects} />
-          <DropzoneArea projectId={activeCanvas.project_id} canvasId={canvasId} userId={this.props.user.id} />
-        </Wrapper>
-      )
-    }
-    // ITEMS UPLOADED SO SHOW THIS
     return (
       <Wrapper>
-        {/* Name to be changed since it's now a header */}
-        <ProjectHeader projectId={canvasId} projects={projects} />
+        <ProjectHeader title={title} />
 
-        <Dialogue />
-
-        <ActionsBar
-          zoomLevel={zoomLevel}
-          sectionName={sectionName}
-          isCanvasGridView={isCanvasGridView}
-          editMode={editMode}
-          onChangeCanvasView={changeCanvasGridMode}
-          onChangeCanvasMode={this.onChangeCanvasMode}
-          onZoomChange={zoomLevel => this.setState({ zoomLevel })}
-        />
-
-        <Zoom
-          onClickPlus={() => zoomLevel < MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel + 1)}
-          onClickMinus={() => zoomLevel > -MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel - 1)}
-          zoomLevel={zoomLevel}
-        />
-
-        {/*<DndArea
-          zoomLevel={zoomLevel}
-          sections={activeCanvas.sections}
-          onUpdate={updateSection}
-          editMode={editMode}
-          onSelect={this.onSectionSelect}
-          isCanvasGridView={isCanvasGridView}
-          selectedItemId={selectedSection ? selectedSection.id : null}
-          pins={pins}
-          onAddPin={this.onAddPin}
-          onDeletePin={deletePin}
-          onEditPin={editPin}
-          onUploadImageToPin={uploadImageToPin}
-          project_id={canvasId}
-          addSection={addSection}
-          uploadImages={uploadImages}
-          activeImageIndex={activeImageIndex}
-          onChangeActiveImageIndex={this.onChangeActiveImageIndex}
-          hidePreview={this.changeShowPreview}
-          showPreview={this.state.showPreview}
-          deleteSection={deleteSection}
-          deleteImage={this.deleteImage}
-        />*/}
-        <Area isGrid={isCanvasGridView}>
+        <DropzoneArea
+          projectId={activeCanvas.project_id}
+          canvasId={canvasId}
+          userId={this.props.user.id}
+          hideButton={!!sections.length}
+        >
           <InnerArea>
             {editMode === EDIT_MODES.default &&
               sections.map((item, i) => (
@@ -193,8 +146,12 @@ class Canvas extends React.PureComponent {
                   onSelect={this.onSectionSelect}
                   selectedItemId={selectedItemId}
                   zoomLevel={zoomLevel}
-                  onResize={updateSection}
-                  onDrop={updateSection}
+                  onUpdate={updateSection}
+                  projectId={activeCanvas.project_id}
+                  onChangeActiveImageIndex={this.onChangeActiveImageIndex}
+                  deleteSection={deleteSection}
+                  deleteImage={this.deleteImage}
+                  uploadImages={uploadImages}
                 />
               ))}
             {editMode === EDIT_MODES.annotation && (
@@ -219,41 +176,6 @@ class Canvas extends React.PureComponent {
                 ))}
               </Fragment>
             )}
-
-            {editMode === EDIT_MODES.area && (
-              <Fragment>
-                <UploadArea addUpload={addSection} zoomLevel={zoomLevel} project_id={null} />
-                {sections.map((item, i) => (
-                  <CanvasImage
-                    key={i}
-                    item={item}
-                    onSelect={this.onSectionSelect}
-                    selectedItemId={selectedItemId}
-                    zoomLevel={zoomLevel}
-                  />
-                ))}
-              </Fragment>
-            )}
-
-            {editMode === EDIT_MODES.upload && (
-              <Fragment>
-                {sections.map((item, i) => (
-                  <CanvasImage
-                    key={i}
-                    item={item}
-                    onSelect={this.onSectionSelect}
-                    selectedItemId={selectedItemId}
-                    zoomLevel={zoomLevel}
-                    showRibbon={item.id === selectedItemId}
-                    uploadImages={uploadImages}
-                    project_id={activeCanvas.project_id}
-                    onChangeActiveImageIndex={this.onChangeActiveImageIndex}
-                    deleteSection={deleteSection}
-                    deleteImage={this.deleteImage}
-                  />
-                ))}
-              </Fragment>
-            )}
           </InnerArea>
           <PreviewLink>
             Your canvas is published here:
@@ -261,7 +183,25 @@ class Canvas extends React.PureComponent {
               paint.garden/{canvasId}
             </Link>
           </PreviewLink>
-        </Area>
+        </DropzoneArea>
+
+        <Dialogue />
+
+        <ActionsBar
+          zoomLevel={zoomLevel}
+          sectionName={sectionName}
+          isCanvasGridView={isCanvasGridView}
+          editMode={editMode}
+          onChangeCanvasView={changeCanvasGridMode}
+          onChangeCanvasMode={this.onChangeCanvasMode}
+          onZoomChange={zoomLevel => this.setState({ zoomLevel })}
+        />
+
+        <Zoom
+          onClickPlus={() => zoomLevel < MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel + 1)}
+          onClickMinus={() => zoomLevel > -MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel - 1)}
+          zoomLevel={zoomLevel}
+        />
       </Wrapper>
     )
   }

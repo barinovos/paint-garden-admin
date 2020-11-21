@@ -37,23 +37,7 @@ const BasicText = css`
   font-size: 18px;
   line-height: 22px;
   font-weight: 500;
-  color: ${colors.grey};
-`
-
-export const Text = styled.p`
-  margin: 0;
-  ${BasicText};
-`
-
-export const TextBlue = styled.p`
-  ${BasicText};
-  margin: 0;
-  cursor: pointer;
-  color: ${colors.mainGrey};
-
-  &:hover {
-    text-decoration: underline;
-  }
+  color: ${colors.darkGrey};
 `
 
 export const LinkText = styled.div`
@@ -64,25 +48,6 @@ export const LinkText = styled.div`
   ${props => props.active && `color: ${colors.mainGrey}`};
   ${props => props.bold && 'font-weight: 600'} &:hover {
     color: darkgrey;
-  }
-`
-export const LoginButton = styled.div`
-  background: #4da1ff;
-  border-radius: 6px;
-  width: 90%;
-  text-align: center;
-  font-family: Proxima Nova, sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 20px;
-  min-height: 32px;
-  /* identical to box height, or 133% */
-  padding: 0 16px;
-  color: #ffffff;
-
-  @media (min-width: 768px) {
-    width: 350px;
   }
 `
 

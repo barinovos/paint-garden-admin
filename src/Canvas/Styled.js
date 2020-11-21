@@ -7,15 +7,6 @@ export const Wrapper = styled.div`
   height: 100%;
 `
 
-export const Area = styled.div`
-  width: 100%;
-  min-height: 600px;
-  height: 100%;
-  background: #eee;
-  position: relative;
-  overflow: auto;
-`
-
 export const InnerArea = styled.div`
   min-width: 100%;
   min-height: 100%;
@@ -30,15 +21,13 @@ export const PreviewLink = styled.div`
   left: 20px;
   font-size: 10px;
   font-family: Spartan Light, sans-serif;
-  padding: 5px;
-  padding-left: 24px;
-  padding-right: 60px;
+  padding: 5px 60px 5px 24px;
   color: #ffffff;
 `
 
 export const Link = styled.a`
   display: inline-block;
-  color: #4da1ff;
+  color: ${colors.blue};
   margin-left: 5px;
   font-weight: bold;
 `

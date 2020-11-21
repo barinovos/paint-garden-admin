@@ -33,7 +33,7 @@ export const ProjectListing = styled.div`
 `
 
 export const CreateCanvas = styled.div`
-  background-color: #4da1ff;
+  background-color: ${colors.blue};
   border-radius: 3px;
   display: inline-block;
   width: 220px;
@@ -97,10 +97,10 @@ export const CanvasesWrapper = styled.div`
 `
 
 export const InviteButton = styled.div`
-  border: 1px solid #4da1ff;
+  border: 1px solid ${colors.blue};
   box-sizing: border-box;
   border-radius: 4px;
-  color: #4da1ff;
+  color: ${colors.blue};
   padding: 10px 30px;
   display: inline-block;
   cursor: pointer;

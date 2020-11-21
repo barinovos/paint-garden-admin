@@ -40,7 +40,7 @@ export const ActionButton = styled.div`
   }
 
   &:hover {
-    background-color: ${colors.hoverBlue};
+    background-color: ${colors.blue};
 
     & svg,
     & path {

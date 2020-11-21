@@ -1,18 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { HiddenInput } from './Styled';
-import { Button } from '../Common/Styled';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { HiddenInput, Button } from './Styled'
+import { ReactComponent as UploadIcon } from '../assets/upload__new.svg'
 
-const UploadButton = ({ uploadImages, sectionId, projectId }) => (
+const UploadButton = ({ onUpload }) => (
   <Button>
-    Upload image
-    <HiddenInput onChange={ev => uploadImages(ev.target.files, sectionId, projectId)}/>
+    <UploadIcon />
+    <HiddenInput onChange={ev => onUpload(ev.target.files)} />
   </Button>
-);
+)
 
 UploadButton.propTypes = {
-  uploadImages: PropTypes.func.isRequired,
-  sectionId: PropTypes.string
-};
+  onUpload: PropTypes.func.isRequired,
+}
 
-export default UploadButton;
+export default UploadButton

@@ -1,9 +1,6 @@
 export default {
-  grey: '#3A3A3A',
-  blue: '#00ABDD',
-  darkBlue: '#6D878F',
-  formBorderBlue: '#4DA1FF',
-  hoverBlue: '#4DA1FF',
+  blue: '#4DA1FF',
+  hoverBlue: '#3d81cc',
   buttonBg: '#E0F4FD',
   darkGrey: '#979797',
   rgbaGray: '0, 0, 0, 0.415565',
@@ -11,9 +8,11 @@ export default {
   dark: '#6A6A6A',
   inputBg: '#F3F4F7',
   lightGrey: '#D8D8D8',
+  lightGrey2: '#F0F3F4',
   formTitleGray: '#374F67',
   inputTextGray: '#787878',
   pink: '#d69498',
   red: '#b6373f',
   black: '#393939',
+  black2: '#202020',
 }

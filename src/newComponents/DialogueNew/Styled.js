@@ -8,6 +8,6 @@ export const Wrapper = styled.a`
   top: 10px;
   right: 30px;
   z-index: 20001;
-  padding: 10px 15px;
+  padding: 10px 15px 0;
   border-radius: 4px;
 `

@@ -1,58 +1,32 @@
 import React from 'react'
-import { Wrapper, ImageWrapper, UploadButton, HiddenInput } from './Styled'
-import upload from '../assets/upload_ribbon.svg'
+import { Wrapper, ImageWrapper, Image, UploadButtonWrapper, TrashIcon, DeleteIcon, CloseIcon } from './Styled'
 import close from '../assets/close.svg'
 import trash from '../assets/trash.svg'
-import { Icon } from '../Common/Styled'
+import UploadButton from '../UploadButton'
 
-const UploadRibbon = ({ item, uploadImages, project_id, onChangeActiveImageIndex, deleteSection, deleteImage }) => {
+const UploadRibbon = ({ item, uploadImages, projectId, onChangeActiveImageIndex, deleteSection, deleteImage }) => {
   return (
     <Wrapper>
-      <UploadButton>
-        <HiddenInput onChange={ev => uploadImages({ images: ev.target.files, project_id: project_id }, item.id)} />
-        <Icon
-          style={{ padding: '6px 7px', paddingRight: '20px', borderRight: '1px solid #F0F3F4', marginRight: '10px' }}
-          src={upload}
-        />
-      </UploadButton>
+      <UploadButtonWrapper>
+        <UploadButton onUpload={files => uploadImages(files, projectId)} />
+      </UploadButtonWrapper>
       {item.history &&
         item.history.map((image, i) => (
           <ImageWrapper key={image.id}>
-            <img
+            <Image
               alt={image.id}
               key={i}
               src={image.thumb}
-              style={{
-                width: '35px',
-                marginLeft: '10px',
-                border: item.media.url === image.url ? 'solid 1px #4DA1FF' : 'none',
-              }}
+              withBorder={item.media.url === image.url}
               onClick={() => onChangeActiveImageIndex(i)}
             />
-            <div
-              style={{
-                width: '10px',
-                height: '10px',
-                top: '-5px',
-                right: '-5px',
-                backgroundColor: '#000',
-                borderRadius: '20px',
-                position: 'absolute',
-                color: '#fff',
-                fontSize: '5px',
-              }}
-              onClick={() => deleteImage(image.id, item.id)}
-            >
-              <Icon src={close} style={{ position: 'absolute', width: '8px', right: '-6px', verticalAlign: 'top' }} />
-            </div>
+            <DeleteIcon onClick={() => deleteImage(image.id, item.id)}>
+              <CloseIcon src={close} />
+            </DeleteIcon>
           </ImageWrapper>
         ))}
 
-      <Icon
-        src={trash}
-        style={{ marginLeft: '15px', borderLeft: '1px solid rgb(240, 243, 244)', paddingLeft: '7px' }}
-        onClick={() => deleteSection(item.id)}
-      />
+      <TrashIcon src={trash} onClick={() => deleteSection(item.id)} />
     </Wrapper>
   )
 }

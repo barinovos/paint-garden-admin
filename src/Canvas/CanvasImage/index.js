@@ -12,7 +12,7 @@ const CanvasImage = ({
   zoomLevel,
   showRibbon = false,
   uploadImages = null,
-  project_id,
+  projectId,
   onChangeActiveImageIndex,
   deleteSection,
   deleteImage,
@@ -28,7 +28,7 @@ const CanvasImage = ({
         <UploadRibbon
           item={item}
           uploadImages={uploadImages}
-          project_id={project_id}
+          projectId={projectId}
           selectedItemId={selectedItemId}
           onChangeActiveImageIndex={onChangeActiveImageIndex}
           deleteSection={deleteSection}
