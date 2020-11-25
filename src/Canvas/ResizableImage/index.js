@@ -19,13 +19,17 @@ const ResizableImage = ({
 }) => {
   const [x, setX] = useState(calcSizeWithZoom(item.position.x, zoomLevel))
   const [y, setY] = useState(calcSizeWithZoom(item.position.y, zoomLevel))
-  const [height, setHeight] = useState(calcSizeWithZoom(item.dimensions.height, zoomLevel))
-  const [width, setWidth] = useState(calcSizeWithZoom(item.dimensions.width, zoomLevel))
+  const [height, setHeight] = useState(
+    calcSizeWithZoom((item.dimensions || item.media.custom_properties).height, zoomLevel),
+  )
+  const [width, setWidth] = useState(
+    calcSizeWithZoom((item.dimensions || item.media.custom_properties).width, zoomLevel),
+  )
   const isActive = selectedItemId === item.id
 
   useEffect(() => {
-    setHeight(calcSizeWithZoom(item.dimensions.height, zoomLevel))
-    setWidth(calcSizeWithZoom(item.dimensions.width, zoomLevel))
+    setHeight(calcSizeWithZoom((item.dimensions || item.media.custom_properties).height, zoomLevel))
+    setWidth(calcSizeWithZoom((item.dimensions || item.media.custom_properties).width, zoomLevel))
     setX(calcSizeWithZoom(item.position.x, zoomLevel))
     setY(calcSizeWithZoom(item.position.y, zoomLevel))
   }, [zoomLevel, item])
@@ -33,12 +37,15 @@ const ResizableImage = ({
   const onDragStop = (e, d) => {
     setX(d.x)
     setY(d.y)
-    onUpdate(item.id, {
-      position: {
-        x: reCalcSizeWithZoom(d.x, zoomLevel),
-        y: reCalcSizeWithZoom(d.y, zoomLevel),
-      },
-    })
+    const position = {
+      x: reCalcSizeWithZoom(d.x, zoomLevel),
+      y: reCalcSizeWithZoom(d.y, zoomLevel),
+    }
+    if (item.position.x !== position.x || item.position.y !== position.y) {
+      onUpdate(item.id, {
+        position,
+      })
+    }
   }
 
   const onResizeStop = (e, direction, ref, d) => {

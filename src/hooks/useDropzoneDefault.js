@@ -1,20 +1,15 @@
 import { useDropzone } from 'react-dropzone'
 import { useCallback, useState } from 'react'
-import api from '../utils/api'
+import { uploadMedia } from '../Canvas/actions'
 
 const useDropzoneDefault = (projectId, canvasId, userId) => {
   const [uploading, setUploading] = useState(false)
   const onDrop = useCallback(
-    async acceptedFiles => {
+    async ([file]) => {
       // API CALL FOR UPLOAD (start)
       try {
         setUploading(true)
-        const formData = new FormData()
-        formData.append('media', acceptedFiles[0], acceptedFiles[0].name)
-        formData.append('user_id', userId)
-        formData.append('project_id', projectId)
-        formData.append('canvas_id', canvasId)
-        const response = await api.post('/section', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        await uploadMedia(file, userId, projectId, canvasId)
       } catch (error) {
         // console.log(error)
       }

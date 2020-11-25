@@ -30,14 +30,12 @@ class Canvas extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    const canvasId = props.match.params.canvasId
-    props.fetchCanvasData(canvasId)
+    props.fetchCanvasData(props.match.params.canvasId)
     // TODO: not needed for now, but maybe useful later for ProjectPicker
     // props.fetchProjects()
     this.state = {
       selectedSection: null,
       zoomLevel: 0,
-      canvasId,
       activeImageIndex: 0,
       activeImageIndexes: {},
     }
@@ -78,7 +76,7 @@ class Canvas extends React.PureComponent {
   }
 
   onAddPin = pin => {
-    this.props.addPin(pin, this.state.canvasId)
+    this.props.addPin(pin, this.props.activeCanvas.id)
   }
 
   onZoomChange = zoomLevel => {
@@ -106,6 +104,8 @@ class Canvas extends React.PureComponent {
       updateSection,
       editMode,
       pins,
+      user,
+      sections,
       editPin,
       deletePin,
       uploadImageToPin,
@@ -117,8 +117,8 @@ class Canvas extends React.PureComponent {
     if (!activeCanvas) {
       return 'Loading canvas data...'
     }
-    const { selectedSection, zoomLevel, canvasId } = this.state
-    const { sections, title } = activeCanvas
+    const { selectedSection, zoomLevel } = this.state
+    const { title, project_id, id } = activeCanvas
     const selectedItemId = selectedSection ? selectedSection.id : null
 
     return (
@@ -127,7 +127,7 @@ class Canvas extends React.PureComponent {
 
         <DropzoneArea
           projectId={activeCanvas.project_id}
-          canvasId={canvasId}
+          canvasId={id}
           userId={this.props.user.id}
           hideButton={!!sections.length}
         >
@@ -173,15 +173,22 @@ class Canvas extends React.PureComponent {
           </InnerArea>
           <PreviewLink>
             Your canvas is published here:
-            <Link href={'//paint.garden/#/' + canvasId} target="_blank">
-              paint.garden/{canvasId}
+            <Link href={'//paint.garden/#/' + id} target="_blank">
+              paint.garden/{id}
             </Link>
           </PreviewLink>
         </DropzoneArea>
 
         <Comments />
 
-        <ActionsBar editMode={editMode} onChangeCanvasMode={this.onChangeCanvasMode} />
+        <ActionsBar
+          onUpload={addSection}
+          editMode={editMode}
+          onChangeCanvasMode={this.onChangeCanvasMode}
+          userId={user.id}
+          projectId={project_id}
+          canvasId={id}
+        />
 
         <Zoom
           onClickPlus={() => zoomLevel < MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel + 1)}
@@ -194,12 +201,13 @@ class Canvas extends React.PureComponent {
 }
 
 export default connect(
-  ({ activeCanvas, editMode, pins, projects, user }) => ({
+  ({ activeCanvas, editMode, pins, projects, user, sections }) => ({
     activeCanvas,
     editMode,
     pins,
     projects,
     user,
+    sections,
   }),
   dispatch => bindActionCreators({ ...actions, fetchProjects }, dispatch),
 )(Canvas)

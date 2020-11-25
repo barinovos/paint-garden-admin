@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
 import { projectReducer, canvasesReducer, activeProjectReducer } from '../Projects/reducers'
-import { isCanvasGridViewReducer, editModeReducer, pinsReducer, activeCanvasReducer } from '../Canvas/reducers'
+import { editModeReducer, pinsReducer, activeCanvasReducer, sectionsReducer } from '../Canvas/reducers'
 import { userReducer } from '../Main/reducer'
 
 const reducers = combineReducers({
-  isCanvasGridView: isCanvasGridViewReducer,
   editMode: editModeReducer,
   pins: pinsReducer,
   projects: projectReducer,
   canvases: canvasesReducer,
+  sections: sectionsReducer,
   activeProject: activeProjectReducer,
   activeCanvas: activeCanvasReducer,
   user: userReducer,

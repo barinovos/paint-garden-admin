@@ -2,24 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Tooltip from '../../components/Tooltip'
 import { ReactComponent as LinkIcon } from '../../assets/link__new.svg'
-import { ReactComponent as UploadIcon } from '../../assets/upload__new.svg'
 import { ReactComponent as PinIcon } from '../../assets/pin__new.svg'
 import { ReactComponent as HandIcon } from '../../assets/hand.svg'
 import { Wrapper, ActionButtonWrapper, ActionButton, Separator } from './Styled'
+import UploadButton from '../../components/UploadButton'
 import Constants from '../../constants'
 const { EDIT_MODES } = Constants
 
-const ActionsBar = ({ onChangeCanvasMode, editMode }) => (
+const ActionsBar = ({ onUpload, onChangeCanvasMode, editMode, userId, projectId, canvasId }) => (
   <Wrapper>
     <>
       <ActionButtonWrapper data-tip data-for="upload" style={{ paddingTop: '10px' }}>
-        <ActionButton
-          onClick={() => {
-            console.log('upload image')
-          }}
-        >
-          <UploadIcon />
-        </ActionButton>
+        <UploadButton onUpload={files => onUpload(files[0], userId, projectId, canvasId)} grey />
       </ActionButtonWrapper>
       <Tooltip text="Upload" id="upload" place="right" />
     </>
@@ -61,6 +55,10 @@ const ActionsBar = ({ onChangeCanvasMode, editMode }) => (
 ActionsBar.propTypes = {
   onChangeCanvasMode: PropTypes.func,
   editMode: PropTypes.string,
+  userId: PropTypes.string,
+  canvasId: PropTypes.string,
+  projectId: PropTypes.string,
+  onUpload: PropTypes.func,
 }
 
 export default ActionsBar

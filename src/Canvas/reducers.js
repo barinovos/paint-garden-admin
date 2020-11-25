@@ -10,21 +10,14 @@ export function activeCanvasReducer(state = null, action) {
   }
 }
 
-export function isCanvasGridViewReducer(state = true, action) {
+export function sectionsReducer(state = null, action) {
   switch (action.type) {
-    case actionTypes.CHANGE_CANVAS_GRID_MODE:
-      return action.isCanvasGridView
-    default:
-      return state
-  }
-}
-
-export function imagesReducer(state = [], action) {
-  switch (action.type) {
-    case actionTypes.UPDATE_DB:
-      return action.images || []
-    case actionTypes.CREATE_IMAGE:
-      return [...state, ...action.images]
+    case actionTypes.SET_CANVAS:
+      return action.canvas.sections
+    case actionTypes.CREATE_SECTION:
+      return state.concat(action.section)
+    case actionTypes.DELETE_SECTION:
+      return state.filter(s => s.id !== action.id)
     default:
       return state
   }

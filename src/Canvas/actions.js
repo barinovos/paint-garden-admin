@@ -16,6 +16,20 @@ export function fetchCanvasData(id) {
     )
 }
 
+export const uploadMedia = (file, userId, projectId, canvasId) => {
+  const formData = new FormData()
+  formData.append('media', file, file.name)
+  formData.append('user_id', userId)
+  formData.append('project_id', projectId)
+  formData.append('canvas_id', canvasId)
+  return api.post('/section', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+}
+
+export const addSection = (file, userId, projectId, canvasId) => dispatch =>
+  uploadMedia(file, userId, projectId, canvasId).then(resp =>
+    dispatch({ type: actionTypes.CREATE_SECTION, section: resp.data.data }),
+  )
+
 export function changeCanvasMode(mode) {
   return { type: actionTypes.CHANGE_CANVAS_MODE, mode }
 }
@@ -51,28 +65,6 @@ export function addPin(pin, project_id) {
       .then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data.data }))
 }
 
-export function addSection(data) {
-  return dispatch =>
-    api
-      .post(Constants.API.SECTION, {
-        title: data.title,
-        posx: data.x,
-        posy: data.y,
-        canvas: true,
-        width: data.width,
-        height: data.height,
-        depth: data.depth,
-        year: data.year,
-        synopisis: data.synopisis,
-        medium: data.medium,
-        projectId: data.project_id,
-      })
-      .then(resp => {
-        dispatch({ type: actionTypes.CREATE_SECTION, section: resp.data.data })
-        dispatch(uploadImages(data, resp.data.data.id))
-      })
-}
-
 export function uploadImages(data, sectionId) {
   return dispatch => {
     const formData = new FormData()
@@ -105,12 +97,12 @@ export function editPin(pin) {
 
 export function deletePin(pinId) {
   return dispatch =>
-    api.delete(`${Constants.API.PIN}/${pinId}`).then(resp => dispatch({ type: actionTypes.REMOVE_PIN, pinId }))
+    api.delete(`${Constants.API.PIN}/${pinId}`).then(() => dispatch({ type: actionTypes.REMOVE_PIN, pinId }))
 }
 
 export function deleteSection(id) {
   return dispatch =>
-    api.delete(`${Constants.API.SECTION}/${id}`).then(resp =>
+    api.delete(`${Constants.API.SECTION}/${id}`).then(() =>
       dispatch({
         type: actionTypes.DELETE_SECTION,
         id,
