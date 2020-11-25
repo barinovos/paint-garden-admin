@@ -1,11 +1,11 @@
 import React from 'react'
 import { ReactComponent as PinIcon } from '../../assets/dialogue.svg'
 
-import Tooltip from '../Tooltip'
+import Tooltip from '../../components/Tooltip'
 
 import { Wrapper } from './Styled'
 
-const Dialogue = () => {
+const Comments = () => {
   return (
     <>
       <Wrapper data-tip data-for="dialogue">
@@ -16,9 +16,9 @@ const Dialogue = () => {
         />
       </Wrapper>
 
-      <Tooltip id="dialogue" text="Dialogue" place="left" />
+      <Tooltip id="dialogue" text="Comments" place="left" />
     </>
   )
 }
 
-export default Dialogue
+export default Comments

@@ -3,7 +3,7 @@ import { Rnd } from 'react-rnd'
 import PropTypes from 'prop-types'
 import { calcSizeWithZoom, reCalcSizeWithZoom } from '../../utils/calcZoom'
 import colors from '../../constants/colors'
-import UploadRibbon from '../../UploadRibbon'
+import UploadRibbon from '../UploadRibbon'
 
 const ResizableImage = ({
   item,

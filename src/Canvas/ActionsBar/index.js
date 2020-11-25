@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Tooltip from '../Tooltip'
+import Tooltip from '../../components/Tooltip'
 import { ReactComponent as LinkIcon } from '../../assets/link__new.svg'
 import { ReactComponent as UploadIcon } from '../../assets/upload__new.svg'
 import { ReactComponent as PinIcon } from '../../assets/pin__new.svg'

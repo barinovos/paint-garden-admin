@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Wrapper, ContentWrapper, Header, Buttons } from './Styled'
-import { Button } from '../Common/Styled'
+import { Button } from '../../Common/Styled'
 
 const DeleteModal = ({ onClose, onConfirm }) => (
   <Wrapper onClick={onClose}>

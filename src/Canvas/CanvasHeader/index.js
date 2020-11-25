@@ -6,7 +6,7 @@ import Constants from '../../constants'
 
 const { ROUTES } = Constants
 
-const ProjectPicker = ({ title }) => {
+const CanvasHeader = ({ title }) => {
   return (
     <Wrapper>
       <Link to={ROUTES.ROOT}>
@@ -18,8 +18,8 @@ const ProjectPicker = ({ title }) => {
   )
 }
 
-ProjectPicker.propTypes = {
+CanvasHeader.propTypes = {
   title: PropTypes.string,
 }
 
-export default ProjectPicker
+export default CanvasHeader

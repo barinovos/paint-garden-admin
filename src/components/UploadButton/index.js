@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { HiddenInput, Button } from './Styled'
-import { ReactComponent as UploadIcon } from '../assets/upload__new.svg'
+import { ReactComponent as UploadIcon } from '../../assets/upload__new.svg'
 
 const UploadButton = ({ onUpload }) => (
   <Button>

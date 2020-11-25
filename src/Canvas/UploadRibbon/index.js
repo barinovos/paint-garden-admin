@@ -1,8 +1,8 @@
 import React from 'react'
 import { Wrapper, ImageWrapper, Image, UploadButtonWrapper, TrashIcon, DeleteIcon, CloseIcon } from './Styled'
-import close from '../assets/close.svg'
-import trash from '../assets/trash.svg'
-import UploadButton from '../UploadButton'
+import close from '../../assets/close.svg'
+import trash from '../../assets/trash.svg'
+import UploadButton from '../../components/UploadButton'
 
 const UploadRibbon = ({ item, uploadImages, projectId, onChangeActiveImageIndex, deleteSection, deleteImage }) => {
   return (

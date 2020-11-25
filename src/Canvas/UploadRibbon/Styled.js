@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import colors from '../constants/colors'
-import { Icon } from '../Common/Styled'
+import colors from '../../constants/colors'
+import { Icon } from '../../Common/Styled'
 
 export const Wrapper = styled.div`
   position: absolute;

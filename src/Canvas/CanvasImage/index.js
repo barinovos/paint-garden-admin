@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Image } from '../../Common/Styled'
 import { Wrapper } from './Styled'
 import { calcSizeWithZoom } from '../../utils/calcZoom'
-import UploadRibbon from '../../UploadRibbon'
+import UploadRibbon from '../UploadRibbon'
 
 const CanvasImage = ({
   item,

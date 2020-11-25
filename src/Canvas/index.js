@@ -4,17 +4,16 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchData as fetchProjects } from '../Projects/actions'
 import * as actions from './actions'
-import { Wrapper, Area, InnerArea, Link, PreviewLink } from './Styled'
-import Zoom from '../newComponents/NewZoom'
-import ActionsBar from '../newComponents/ActionsBarNew'
-import Dialogue from '../newComponents/DialogueNew'
-import ProjectHeader from '../newComponents/ProjectPickerNew'
+import { Wrapper, InnerArea, Link, PreviewLink } from './Styled'
+import Zoom from './Zoom'
+import ActionsBar from './ActionsBar'
+import Comments from './Comments'
+import CanvasHeader from './CanvasHeader'
 import Constants from '../constants'
-import DropzoneArea from '../newComponents/DropzoneArea'
+import DropzoneArea from './DropzoneArea'
 import ResizableImage from './ResizableImage'
 import Pins from '../Pins'
 import CanvasImage from './CanvasImage'
-import UploadArea from '../UploadArea'
 
 const { MAX_ZOOM_LEVEL, EDIT_MODES } = Constants
 
@@ -23,7 +22,6 @@ class Canvas extends React.PureComponent {
     activeCanvas: PropTypes.object,
     updateSection: PropTypes.func,
     fetchCanvasData: PropTypes.func,
-    isCanvasGridView: PropTypes.bool,
     changeCanvasMode: PropTypes.func,
     editMode: PropTypes.string,
     pins: PropTypes.array,
@@ -45,7 +43,7 @@ class Canvas extends React.PureComponent {
     }
   }
 
-  // TODO: not needed for now, but maybe useful later for ProjectPicker change handler
+  // TODO: not needed for now, but maybe useful later for CanvasHeader change handler
   /*componentDidUpdate = prevProps => {
     if (this.props.match.params.canvasId !== prevProps.match.params.canvasId) {
       const canvasId = this.props.match.params.canvasId
@@ -106,9 +104,7 @@ class Canvas extends React.PureComponent {
     const {
       activeCanvas,
       updateSection,
-      isCanvasGridView,
       editMode,
-      changeCanvasGridMode,
       pins,
       editPin,
       deletePin,
@@ -122,14 +118,12 @@ class Canvas extends React.PureComponent {
       return 'Loading canvas data...'
     }
     const { selectedSection, zoomLevel, canvasId } = this.state
-
-    const sectionName = selectedSection ? selectedSection.title || selectedSection.name : 'No section selected'
     const { sections, title } = activeCanvas
     const selectedItemId = selectedSection ? selectedSection.id : null
 
     return (
       <Wrapper>
-        <ProjectHeader title={title} />
+        <CanvasHeader title={title} />
 
         <DropzoneArea
           projectId={activeCanvas.project_id}
@@ -185,17 +179,9 @@ class Canvas extends React.PureComponent {
           </PreviewLink>
         </DropzoneArea>
 
-        <Dialogue />
+        <Comments />
 
-        <ActionsBar
-          zoomLevel={zoomLevel}
-          sectionName={sectionName}
-          isCanvasGridView={isCanvasGridView}
-          editMode={editMode}
-          onChangeCanvasView={changeCanvasGridMode}
-          onChangeCanvasMode={this.onChangeCanvasMode}
-          onZoomChange={zoomLevel => this.setState({ zoomLevel })}
-        />
+        <ActionsBar editMode={editMode} onChangeCanvasMode={this.onChangeCanvasMode} />
 
         <Zoom
           onClickPlus={() => zoomLevel < MAX_ZOOM_LEVEL && this.onZoomChange(zoomLevel + 1)}
@@ -208,9 +194,8 @@ class Canvas extends React.PureComponent {
 }
 
 export default connect(
-  ({ activeCanvas, isCanvasGridView, editMode, pins, projects, user }) => ({
+  ({ activeCanvas, editMode, pins, projects, user }) => ({
     activeCanvas,
-    isCanvasGridView,
     editMode,
     pins,
     projects,

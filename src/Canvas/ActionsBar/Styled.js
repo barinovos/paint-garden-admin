@@ -55,37 +55,3 @@ export const Separator = styled.div`
   border-top: 1px solid ${colors.lightGrey};
   margin: 10px 5px;
 `
-
-export const ZoomButtons = styled.div`
-  display: flex;
-  border: 1px solid ${colors.lightGrey};
-  border-radius: 2px;
-  height: 28px;
-  width: 56px;
-  background: white;
-  margin-right: 10px;
-  margin-left: 10px;
-`
-
-export const ViewImage = styled.img`
-  padding: 5px;
-  width: 27px;
-  cursor: pointer;
-  ${props => props.active && `background: ${colors.lightGrey}`}
-`
-
-export const ZoomButton = styled.div`
-  margin: 5px 0;
-  flex: 1;
-  color: ${colors.darkGrey};
-  font-size: 18px;
-  line-height: 1em;
-  cursor: pointer;
-  text-align: center;
-  user-select: none;
-  border-right: 1px solid ${colors.lightGrey};
-
-  &:last-child {
-    border-right: none;
-  }
-`

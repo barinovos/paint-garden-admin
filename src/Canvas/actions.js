@@ -16,10 +16,6 @@ export function fetchCanvasData(id) {
     )
 }
 
-export function changeCanvasGridMode(isCanvasGridView) {
-  return { type: actionTypes.CHANGE_CANVAS_GRID_MODE, isCanvasGridView }
-}
-
 export function changeCanvasMode(mode) {
   return { type: actionTypes.CHANGE_CANVAS_MODE, mode }
 }

@@ -15,10 +15,8 @@ const useDropzoneDefault = (projectId, canvasId, userId) => {
         formData.append('project_id', projectId)
         formData.append('canvas_id', canvasId)
         const response = await api.post('/section', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-
-        console.log({ response })
       } catch (error) {
-        console.log(error)
+        // console.log(error)
       }
 
       setUploading(false)
