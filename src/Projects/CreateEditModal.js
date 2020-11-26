@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { ModalWrapper, ModalContentWrapper, TitleWrapper, ErrorText } from './Styled'
-import { Button, Title, ItemInput, JustifiedRow, RightAlignedRow, Icon } from '../Common/Styled'
+import Button from '../components/Button'
+import Modal from '../components/Modal'
+import Input from '../components/Input'
+import { TitleWrapper, ErrorText } from './Styled'
+import { Title, JustifiedRow, RightAlignedRow, Icon } from '../Common/Styled'
 import { ProjectType } from '../types'
 // icons
 import trash from '../assets/trash_.svg'
@@ -39,26 +42,22 @@ const CreateEditModal = ({ onSave, onClose, onDelete, entity, isProjectEntity })
   }
 
   return (
-    <ModalWrapper onClick={onClose}>
-      <ModalContentWrapper onClick={ev => ev.stopPropagation()}>
-        <TitleWrapper>
-          <Title style={{ margin: '0' }}>{isProjectEntity ? 'Project' : 'Canvas'} detail</Title>
-          {entity && (
-            <Icon style={{ display: 'inline-block', marginLeft: '10px' }} src={trash} onClick={deleteProject} />
-          )}
-        </TitleWrapper>
-        <JustifiedRow>
-          <ItemInput value={title} onChange={handleChange} placeholder="Title" />
-        </JustifiedRow>
-        <ErrorText>{errors.title}</ErrorText>
-        <RightAlignedRow>
-          <Button onClick={onClose} secondary>
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit}>Save</Button>
-        </RightAlignedRow>
-      </ModalContentWrapper>
-    </ModalWrapper>
+    <Modal onClick={onClose}>
+      <TitleWrapper>
+        <Title style={{ margin: '0' }}>{isProjectEntity ? 'Project' : 'Canvas'} detail</Title>
+        {entity && <Icon style={{ display: 'inline-block', marginLeft: '10px' }} src={trash} onClick={deleteProject} />}
+      </TitleWrapper>
+      <JustifiedRow>
+        <Input value={title} onChange={handleChange} placeholder="Title" />
+      </JustifiedRow>
+      <ErrorText>{errors.title}</ErrorText>
+      <RightAlignedRow>
+        <Button onClick={onClose} secondary>
+          Cancel
+        </Button>
+        <Button onClick={handleSubmit}>Save</Button>
+      </RightAlignedRow>
+    </Modal>
   )
 }
 

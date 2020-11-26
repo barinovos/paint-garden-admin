@@ -1,22 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Wrapper, ContentWrapper, Header, Buttons } from './Styled'
-import { Button } from '../../Common/Styled'
+import Modal from '../Modal'
+import Button from '../Button'
+import styled from 'styled-components'
+
+const Header = styled.div`
+  font-size: 1.2em;
+  text-align: center;
+  margin-bottom: 1em;
+`
+
+const Buttons = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 const DeleteModal = ({ onClose, onConfirm }) => (
-  <Wrapper onClick={onClose}>
-    <ContentWrapper onClick={ev => ev.stopPropagation()}>
-      <Header>Are you sure?</Header>
-      <Buttons>
-        <Button onClick={onClose} secondary>
-          Cancel
-        </Button>
-        <Button onClick={onConfirm} alarm>
-          Delete
-        </Button>
-      </Buttons>
-    </ContentWrapper>
-  </Wrapper>
+  <Modal onClick={onClose}>
+    <Header>Are you sure?</Header>
+    <Buttons>
+      <Button onClick={onClose} secondary>
+        Cancel
+      </Button>
+      <Button onClick={onConfirm} alarm>
+        Delete
+      </Button>
+    </Buttons>
+  </Modal>
 )
 
 DeleteModal.propTypes = {

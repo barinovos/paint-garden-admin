@@ -55,7 +55,7 @@ const ActionsBar = ({ onUpload, onChangeCanvasMode, editMode, userId, projectId,
 ActionsBar.propTypes = {
   onChangeCanvasMode: PropTypes.func,
   editMode: PropTypes.string,
-  userId: PropTypes.string,
+  userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   canvasId: PropTypes.string,
   projectId: PropTypes.string,
   onUpload: PropTypes.func,

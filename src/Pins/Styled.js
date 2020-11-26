@@ -1,25 +1,5 @@
 import styled from 'styled-components'
-
-export const Wrapper = styled.div`
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`
-export const ContentWrapper = styled.div`
-  width: 450px;
-  background: white;
-  box-shadow: 2px 3px 22px rgba(0, 0, 0, 0.5);
-  border-radius: 2px;
-  padding: 18px 21px;
-  overflow-y: auto;
-`
+import colors from '../constants/colors'
 
 export const PinWrapper = styled.div`
   position: absolute;
@@ -38,19 +18,10 @@ export const PinViewWrapper = styled.div`
 `
 
 export const AddImage = styled.div`
-  height: 85px;
-  background: lightgray;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 26px;
+  width: 26px;
   position: relative;
-  margin-bottom: 1.2em;
-`
-
-export const Image = styled.img`
-  max-width: 100%;
-  margin-bottom: 1.2em;
+  cursor: pointer;
 `
 
 export const HiddenInput = styled.input.attrs({
@@ -61,8 +32,47 @@ export const HiddenInput = styled.input.attrs({
   position: absolute;
   left: 0;
   top: 0;
-  height: 85px;
+  height: 26px;
   opacity: 0;
   width: 100%;
   cursor: pointer;
+`
+
+// New Comment UI
+export const CommentModal = styled.div`
+  position: absolute;
+  left: ${props => props.left || '50%'};
+  top: ${props => props.top || '50%'};
+  background: white;
+  min-height: 135px;
+  min-width: 360px;
+  padding: 12px;
+  z-index: 2000;
+`
+
+export const Avatar = styled.div`
+  border-radius: 50%;
+  background: ${colors.blue};
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-right: 12px;
+`
+
+export const ActivePin = styled.div`
+  position: absolute;
+  left: -50px;
+  top: 60px;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  background: ${colors.lightGrey};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `

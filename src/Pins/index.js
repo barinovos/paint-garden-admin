@@ -3,45 +3,43 @@ import PropTypes from 'prop-types'
 import Pin from './Pin'
 import PinModal from './PinModal'
 import { PinViewWrapper } from './Styled'
-import { /*canvasTopOffset, */ canvasLeftOffset, reCalcSizeWithZoom } from '../utils/calcZoom'
-import Constants from '../constants'
+import { reCalcSizeWithZoom } from '../utils/calcZoom'
 
-const { EDIT_MODES } = Constants
-
-const Pins = ({ pins, addPin, deletePin, editPin, uploadImage, zoomLevel, editMode }) => {
-  const [modal, triggerModal] = useState({})
+const Pins = ({ pins, addPin, deletePin, editPin, zoomLevel, user }) => {
+  const [showModal, setShowModal] = useState(false)
+  const [isAdd, setIsAdd] = useState(true)
+  const [position, setPosition] = useState(null)
+  const [editedPin, setEditedPin] = useState(null)
 
   const onAddPin = ev => {
-    const x = reCalcSizeWithZoom(ev.clientX - canvasLeftOffset, zoomLevel)
+    const x = reCalcSizeWithZoom(ev.clientX, zoomLevel)
     const y = reCalcSizeWithZoom(ev.clientY, zoomLevel)
-    if (editMode === EDIT_MODES.annotation) {
-      triggerModal({
-        open: true,
-        onSave: data => addPin({ ...data, posx: x, posy: y }),
-      })
-    }
+    setPosition({
+      x,
+      y,
+    })
+    setIsAdd(true)
+    setShowModal(true)
   }
 
-  const onShowModalForEdit = pin =>
-    triggerModal({
-      open: true,
-      pin,
-      onSave: editPin,
-      onDelete: deletePin,
-    })
+  const onShowModalForEdit = pin => {
+    setEditedPin(pin)
+    setIsAdd(false)
+    setShowModal(true)
+  }
 
   return (
     <PinViewWrapper onClick={onAddPin}>
       {pins.map((pin, i) => (
         <Pin key={i} data={pin} onPinClick={onShowModalForEdit} zoomLevel={zoomLevel} />
       ))}
-      {modal.open && (
+      {showModal && (
         <PinModal
-          onSave={modal.onSave}
-          onDelete={modal.onDelete}
-          onClose={() => triggerModal({ open: false })}
-          onImageUpload={uploadImage}
-          pin={modal.pin}
+          user={user}
+          position={position}
+          onComment={isAdd ? text => addPin({ text, position }) : editPin}
+          onDelete={deletePin}
+          onClose={() => setShowModal(false)}
         />
       )}
     </PinViewWrapper>
@@ -53,8 +51,8 @@ Pins.propTypes = {
   addPin: PropTypes.func,
   deletePin: PropTypes.func,
   editPin: PropTypes.func,
-  uploadImage: PropTypes.func,
   zoomLevel: PropTypes.number,
+  user: PropTypes.object,
 }
 
 export default Pins

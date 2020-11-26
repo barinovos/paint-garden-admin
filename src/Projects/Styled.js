@@ -18,7 +18,7 @@ export const CanvasArea = styled.div`
 `
 
 export const ProjectListing = styled.div`
-  font-family: Spartan SemiBold, sans-serif;
+  font-weight: 600;
   font-size: 12px;
   line-height: 13px;
   color: #000000;
@@ -50,9 +50,8 @@ export const CreateCanvas = styled.div`
 `
 
 export const Title = styled.span`
-  font-family: Spartan SemiBold, sans-serif;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 15px;
   line-height: 17px;
   color: #202020;
@@ -72,7 +71,6 @@ export const CreateButton = styled.button`
 
 export const ProjectTitle = styled.div`
   display: inline-block;
-  font-family: Spartan, sans-serif;
   font-style: normal;
   font-weight: 800;
   font-size: 17px;
@@ -96,15 +94,6 @@ export const CanvasesWrapper = styled.div`
   flex-wrap: wrap;
 `
 
-export const InviteButton = styled.div`
-  border: 1px solid ${colors.blue};
-  box-sizing: border-box;
-  border-radius: 4px;
-  color: ${colors.blue};
-  padding: 10px 30px;
-  display: inline-block;
-  cursor: pointer;
-`
 export const ProjectSidebarControls = styled.div`
   display: flex;
   justify-content: space-between;
@@ -137,9 +126,8 @@ export const Wrapper = styled.div`
 `
 
 export const CanvasesTitle = styled.div`
-  font-family: Spartan SemiBold, sans-serif;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 600;
   display: block;
   font-size: 12px;
   line-height: 16px;
@@ -204,26 +192,6 @@ export const InfoOverlay = styled.div`
   padding: 10px 12px;
   width: 100%;
   background-color: rgba(77, 161, 255, 0.6);
-`
-
-export const ModalWrapper = styled.div`
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`
-export const ModalContentWrapper = styled.form`
-  width: 450px;
-  background: white;
-  box-shadow: 2px 3px 22px rgba(0, 0, 0, 0.5);
-  border-radius: 2px;
-  padding: 18px 21px;
 `
 
 export const TitleWrapper = styled.div`

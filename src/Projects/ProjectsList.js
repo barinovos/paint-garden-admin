@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { CreateButton, ProjectListing, ProjectSidebar, ProjectSidebarControls, Title } from './Styled'
+import Button from '../components/Button'
+import { ProjectListing, ProjectSidebar, ProjectSidebarControls, Title } from './Styled'
 import { Icon } from '../Common/Styled'
 import edit from '../assets/edit.svg'
 
@@ -8,7 +9,11 @@ const ProjectsList = ({ isModerator, onCreate, onChangeActiveProject, onEdit, ac
   <ProjectSidebar>
     <ProjectSidebarControls>
       <Title>My Projects</Title>
-      {isModerator && <CreateButton onClick={onCreate}>Add</CreateButton>}
+      {isModerator && (
+        <Button onClick={onCreate} style={{ marginRight: 10 }}>
+          Add
+        </Button>
+      )}
     </ProjectSidebarControls>
     {projects.map((p, i) => (
       <ProjectListing key={i} active={p.id === activeProjectId} onClick={() => onChangeActiveProject(p)}>

@@ -51,25 +51,9 @@ export function updateSection(sectionId, data) {
     )
 }
 
-export function addPin(pin, project_id) {
-  if (pin.medium === '') delete pin.medium
-  if (pin.description === '') delete pin.description
-  if (pin.url === '') delete pin.url
-  if (pin.link === '') delete pin.link
-  const formData = new FormData()
-  formData.append('headline', pin.headline)
-  formData.append('posx', pin.posx)
-  formData.append('posy', pin.posy)
-  if (pin.image) formData.append('image', pin.image, pin.image.name)
-  if (pin.medium) formData.append('medium', pin.medium)
-  if (pin.description) formData.append('description', pin.description)
-  if (pin.url) formData.append('url', pin.url)
-  if (pin.link) formData.append('link', pin.link)
-  formData.append('projectId', project_id)
+export function addPin(data) {
   return dispatch =>
-    api
-      .post(Constants.API.PIN, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data.data }))
+    api.post(Constants.API.PIN, data).then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data.data }))
 }
 
 export function uploadImages(data, sectionId) {

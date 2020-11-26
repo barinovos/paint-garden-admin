@@ -1,27 +1,29 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { Wrapper, LinksArea } from './Styled'
-import { LinkText } from '../Common/Styled'
-import Constants from '../constants'
+import styled from 'styled-components'
+import colors from '../constants/colors'
+import api from '../utils/api'
+import { ReactComponent as Logo } from '../assets/logo.svg'
 
-const { ROUTES } = Constants
+const Wrapper = styled.div`
+  height: 60px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 25px;
+  justify-content: space-between;
+  border-bottom: 1px solid ${colors.lightGrey2};
+`
 
-const Toolbar = ({ onLogout }) => (
+const Logout = styled.a`
+  font-size: 15px;
+  line-height: 18px;
+`
+
+const Toolbar = () => (
   <Wrapper>
-    <LinksArea>
-      <Link to={ROUTES.ROOT}>
-        <LinkText bold>Paint.garden</LinkText>
-      </Link>
-    </LinksArea>
-    <LinksArea>
-      <LinkText onClick={onLogout}>Log out</LinkText>
-    </LinksArea>
+    <Logo />
+    <Logout onClick={api.logout}>Log out</Logout>
   </Wrapper>
 )
-
-Toolbar.propTypes = {
-  onLogout: PropTypes.func,
-}
 
 export default Toolbar

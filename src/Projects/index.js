@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ProjectType } from '../types'
-import { CanvasArea, ProjectTitle, ProjectsTopBar, InviteButton, ProjectBarRight } from './Styled'
+import { CanvasArea, ProjectTitle, ProjectsTopBar, ProjectBarRight } from './Styled'
 import CreateEditModal from './CreateEditModal'
 import ProjectInviteModal from './ProjectInviteModal'
 import ProjectsList from './ProjectsList'
 import * as actions from './actions'
 import CanvasesList from './CanvasesList'
+import Button from '../components/Button'
 
 const Projects = ({
   fetchData,
@@ -66,7 +67,7 @@ const Projects = ({
             <ProjectTitle>{activeProject.title}</ProjectTitle>
             {isModerator && (
               <ProjectBarRight>
-                <InviteButton onClick={() => setShowModalInvite(true)}>Invite</InviteButton>
+                <Button onClick={() => setShowModalInvite(true)}>Invite</Button>
               </ProjectBarRight>
             )}
           </ProjectsTopBar>

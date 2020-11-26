@@ -79,28 +79,16 @@ const Canvas = ({
                 uploadImages={uploadImages}
               />
             ))}
-          {editMode === EDIT_MODES.annotation && (
-            <Fragment>
-              <Pins
-                pins={pins}
-                addPin={pin => addPin(pin, activeCanvas.id)}
-                editPin={editPin}
-                deletePin={deletePin}
-                uploadImage={uploadImageToPin}
+          {editMode === EDIT_MODES.annotation &&
+            sections.map((item, i) => (
+              <CanvasImage
+                key={i}
+                item={item}
+                onSelect={onSectionSelect}
+                selectedItemId={selectedItemId}
                 zoomLevel={zoomLevel}
-                editMode={editMode}
               />
-              {sections.map((item, i) => (
-                <CanvasImage
-                  key={i}
-                  item={item}
-                  onSelect={onSectionSelect}
-                  selectedItemId={selectedItemId}
-                  zoomLevel={zoomLevel}
-                />
-              ))}
-            </Fragment>
-          )}
+            ))}
         </InnerArea>
         <PreviewLink>
           Your canvas is published here:
@@ -109,6 +97,27 @@ const Canvas = ({
           </Link>
         </PreviewLink>
       </DropzoneArea>
+
+      {editMode === EDIT_MODES.annotation && (
+        <Pins
+          user={user}
+          pins={pins}
+          addPin={({ text, position }) =>
+            addPin({
+              text,
+              position,
+              project_id,
+              canvas_id: id,
+              user_id: user.id,
+              // TODO: we don't need it here
+              section_id: sections[0] ? sections[0].id : '',
+            })
+          }
+          editPin={editPin}
+          deletePin={deletePin}
+          zoomLevel={zoomLevel}
+        />
+      )}
 
       <Comments />
 

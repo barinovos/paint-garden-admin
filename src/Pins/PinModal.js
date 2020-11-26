@@ -1,117 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import * as Styled from './Styled'
-import { FlexLayout, Button, ItemTextArea, Icon } from '../Common/Styled'
-import attach from '../assets/attach.svg'
+import Button from '../components/Button'
+import Input from '../components/Input'
+import { CommentModal, Avatar, AddImage, HiddenInput, ActivePin } from './Styled'
+import { FlexLayout } from '../Common/Styled'
+import { ReactComponent as AttachIcon } from '../assets/attach.svg'
+import { ReactComponent as PinIcon } from '../assets/Pin_active.svg'
 
-export default class PinModal extends React.PureComponent {
-  static propTypes = {
-    onSave: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
-    onImageUpload: PropTypes.func,
-    onDelete: PropTypes.func,
-    pin: PropTypes.object,
-  }
-
-  constructor(props) {
-    super(props)
-    this.state = props.pin || {
-      temp_path: '',
-      image: '',
-      image_url: '',
-      headline: '',
-      medium: '',
-      description: '',
-      url: '',
-      link: '',
-    }
-  }
-
-  onChangeState = prop => ev => {
-    if (prop !== 'image') {
-      this.setState({ [prop]: ev.target.value })
-    } else {
-      this.setState({ [prop]: ev.target.files[0] })
-      this.setState({ temp_path: URL.createObjectURL(ev.target.files[0]) })
-    }
-  }
-
-  onSaveChanges = () => {
-    delete this.state.temp_path
-    this.props.onSave(this.state)
-    this.props.onClose()
-  }
-
-  onUpload = ev => {
-    this.props.onImageUpload(ev.target.files[0], this.state.id)
-    this.setState({ temp_path: URL.createObjectURL(ev.target.files[0]) })
-  }
-
-  render() {
-    const { onClose, onDelete } = this.props
-    const { temp_path, image_url, headline, description, id, url } = this.state
-
-    return (
-      <Styled.CommentModal>
-        <FlexLayout>
-          <Styled.Avatar>f</Styled.Avatar>
-          <h2>Fred Vincent</h2>
-          <Button secondary onClick={onClose}>
-            Cancel
-          </Button>
-          <Button onClick={this.onSaveChanges}>Post</Button>
-        </FlexLayout>
-        <Styled.CommentArea value={headline} onChange={this.onChangeState('headline')} placeholder="Comment" />
-        <FlexLayout>
-          <Styled.AddImage>
-            <Icon fullSize={true} src={attach} />
-            <Styled.HiddenInput onChange={this.onChangeState('image')} />
-          </Styled.AddImage>
-        </FlexLayout>
-      </Styled.CommentModal>
-      /*<Wrapper onClick={onClose}>
-        <ContentWrapper onClick={ev => ev.stopPropagation()}>
-          <JustifiedRow>
-            <Title>Annotation</Title>
-            {id && (
-              <Icon
-                src={trash}
-                onClick={() => {
-                  onDelete(id)
-                  onClose()
-                }}
-              />
-            )}
-          </JustifiedRow>
-          {id ? (
-            url ? (
-              <Image src={url} />
-            ) : (
-              <AddImage>
-                <img
-                  style={{ maxWidth: '100%', maxHeight: '100%' }}
-                  src={temp_path ? temp_path : image_url ? image_url : add}
-                  alt="upload"
-                />
-                <HiddenInput onChange={this.onUpload} />
-              </AddImage>
-            )
-          ) : (
-            <AddImage>
-              <img style={{ maxWidth: '100%', maxHeight: '100%' }} src={temp_path ? temp_path : add} alt="upload" />
-              <HiddenInput onChange={this.onChangeState('image')} />
-            </AddImage>
-          )}
-          <ItemInput value={headline} onChange={this.onChangeState('headline')} placeholder="Headline" />
-          <ItemTextArea value={description} onChange={this.onChangeState('description')} placeholder="Description" />
-          <RightAlignedRow>
-            <Button onClick={onClose} secondary>
-              Cancel
-            </Button>
-            <Button onClick={this.onSaveChanges}>Save</Button>
-          </RightAlignedRow>
-        </ContentWrapper>
-      </Wrapper>*/
-    )
-  }
+const PinModal = ({ user, position, onClose, onComment }) => {
+  const [commentText, setText] = useState('')
+  const [mediaFile, setMedia] = useState(null)
+  return (
+    <CommentModal
+      left={`${position.x + 30}px`}
+      top={`${position.y - 80}px`}
+      onClick={ev => {
+        ev.stopPropagation()
+      }}
+    >
+      <ActivePin>
+        <PinIcon />
+      </ActivePin>
+      <FlexLayout>
+        <Avatar>{user.name[0]}</Avatar>
+        <p style={{ fontWeight: 800 }}>{user.name}</p>
+      </FlexLayout>
+      <FlexLayout margin="15px 0">
+        <Input value={commentText} onChange={ev => setText(ev.target.value)} placeholder="Comment" />
+        {!mediaFile && (
+          <AddImage>
+            <AttachIcon />
+            <HiddenInput onChange={ev => setMedia(ev.target.files[0])} />
+          </AddImage>
+        )}
+      </FlexLayout>
+      <FlexLayout>
+        <Button onClick={() => onComment(commentText)}>Comment</Button>
+        <Button secondary onClick={onClose}>
+          Cancel
+        </Button>
+      </FlexLayout>
+      {mediaFile && <img src={URL.createObjectURL(mediaFile)} alt={mediaFile.name} />}
+    </CommentModal>
+  )
 }
+
+PinModal.propTypes = {
+  onComment: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
+  user: PropTypes.object,
+  position: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+  }),
+}
+
+export default PinModal

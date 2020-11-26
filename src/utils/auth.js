@@ -34,3 +34,5 @@ export const navigateToSSO = () => {
   deleteCookie()
   window.location.href = `https://v2-api.paint.garden/authenticate?redirect_uri=${window.location.origin}${Constants.ROUTES.LOGIN}`
 }
+
+export const getLogoutURL = () => 'https://v2-api.paint.garden/logout'

@@ -1,13 +1,56 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { HiddenInput, Button } from './Styled'
+import styled from 'styled-components'
+import colors from '../../constants/colors'
 import { ReactComponent as UploadIcon } from '../../assets/upload__new.svg'
 
+const StyledButton = styled.div`
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  ${props => !props.grey && `background-color: ${colors.blue}`};
+  border-radius: 3px;
+  padding: 6px 7px;
+  transition: background-color 0.1s ease;
+
+  & svg,
+  & path {
+    fill: ${props => (props.grey ? colors.lightGrey : '#fff')};
+  }
+
+  ${props =>
+    props.grey &&
+    `
+    &:hover {
+      background-color: ${colors.blue};
+
+      & svg, & path {
+        fill: white;
+        stroke: white;
+      }
+    }
+  `}
+`
+
+const HiddenInput = styled.input.attrs({
+  type: 'file',
+  multiple: true,
+  accept: 'image/*,video/*',
+})`
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 35px;
+  width: 35px;
+  opacity: 0;
+  cursor: pointer;
+`
+
 const UploadButton = ({ onUpload, grey = false }) => (
-  <Button grey={grey}>
+  <StyledButton grey={grey}>
     <UploadIcon />
     <HiddenInput onChange={ev => onUpload(ev.target.files)} />
-  </Button>
+  </StyledButton>
 )
 
 UploadButton.propTypes = {

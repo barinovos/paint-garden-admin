@@ -20,7 +20,6 @@ export const PreviewLink = styled.div`
   bottom: 30px;
   left: 20px;
   font-size: 10px;
-  font-family: Spartan Light, sans-serif;
   padding: 5px 60px 5px 24px;
   color: #ffffff;
 `

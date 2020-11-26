@@ -1,11 +1,10 @@
 import axios from 'axios'
 import actionTypes from '../constants/actionTypes'
-import { getAuthToken, navigateToSSO } from './auth'
+import { getAuthToken, navigateToSSO, getLogoutURL } from './auth'
 
 const apiUrl = process.env.REACT_APP_API_URL || 'https://api.paint.garden/api/v2'
 
 const getHeader = customHeaders => {
-
   if (!customHeaders) {
     return {
       headers: {
@@ -16,7 +15,7 @@ const getHeader = customHeaders => {
     return {
       headers: {
         Authorization: `Bearer ${getAuthToken()}`,
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
       },
     }
   }
@@ -56,6 +55,10 @@ const api = {
 
   all(values) {
     return axios.all(values)
+  },
+
+  logout() {
+    return axios.post(getLogoutURL(), null, getHeader()).then(navigateToSSO)
   },
 
   setProjectId(id) {

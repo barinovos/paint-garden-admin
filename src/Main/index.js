@@ -32,11 +32,7 @@ const Main = ({ user, getUserInfo, history, logout }) => {
 
   return (
     <Fragment>
-      <Route
-        exact={true}
-        path={[ROUTES.ROOT, ROUTES.PROJECTS]}
-        render={() => <Toolbar onLogout={() => logout(history)} />}
-      />
+      <Route exact={true} path={[ROUTES.ROOT, ROUTES.PROJECTS]} component={Toolbar} />
       <MainArea>
         <Switch>
           <Route path={ROUTES.ROOT} exact component={Projects} />

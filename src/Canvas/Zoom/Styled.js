@@ -8,7 +8,8 @@ export const Wrapper = styled.div`
   position: fixed;
   bottom: 30px;
   right: 30px;
-  padding: 5px;
+  padding: 10px 0;
+  height: 60px;
   z-index: 2;
 `
 
@@ -21,10 +22,10 @@ export const Button = styled.div`
   cursor: pointer;
   text-align: center;
   user-select: none;
-  font-weight: 300;
   font-size: 2em;
-  padding: 10px;
-  text-transform: uppercase;
+  width: 60px;
+  height: 100%;
+
   &:first-child {
     border-right: 1px solid #f0f3f4;
   }
@@ -32,8 +33,9 @@ export const Button = styled.div`
 export const Value = styled.div`
   display: flex;
   align-items: center;
-  /* padding: 5px; */
-  padding: 10px;
+  justify-content: center;
+  height: 100%;
+  width: 70px;
   font-size: 15px;
   line-height: 18px;
 `

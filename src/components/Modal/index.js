@@ -1,3 +1,5 @@
+import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
@@ -20,14 +22,14 @@ export const ContentWrapper = styled.div`
   padding: 18px 21px;
 `
 
-export const Header = styled.div`
-  font-size: 1.2em;
-  text-align: center;
-  margin-bottom: 1em;
-`
+const Modal = ({ children, onClose = () => null }) => (
+  <Wrapper onClick={onClose}>
+    <ContentWrapper onClick={ev => ev.stopPropagation()}>{children}</ContentWrapper>
+  </Wrapper>
+)
 
-export const Buttons = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
+Modal.propTypes = {
+  onClose: PropTypes.func,
+}
+
+export default Modal
