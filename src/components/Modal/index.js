@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  z-index: 2001;
 `
 export const ContentWrapper = styled.div`
   width: 300px;

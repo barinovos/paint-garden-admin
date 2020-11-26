@@ -13,6 +13,7 @@ import DropzoneArea from './DropzoneArea'
 import ResizableImage from './ResizableImage'
 import Pins from '../Pins'
 import CanvasImage from './CanvasImage'
+import UploadViaUrl from './UploadViaUrl'
 
 const { MAX_ZOOM_LEVEL, EDIT_MODES } = Constants
 
@@ -38,6 +39,7 @@ const Canvas = ({
 }) => {
   const [selectedSection, setSelectedSection] = useState(null)
   const [zoomLevel, setZoomLevel] = useState(0)
+  const [showUploadUrlModal, setShowUploadUrlModal] = useState(false)
 
   useEffect(() => {
     fetchCanvasData(match.params.canvasId)
@@ -125,6 +127,7 @@ const Canvas = ({
         onUpload={addSection}
         editMode={editMode}
         onChangeCanvasMode={onChangeCanvasMode}
+        onUploadViaUrl={() => setShowUploadUrlModal(true)}
         userId={user.id}
         projectId={project_id}
         canvasId={id}
@@ -135,6 +138,10 @@ const Canvas = ({
         onClickMinus={() => zoomLevel > -MAX_ZOOM_LEVEL && setZoomLevel(zoomLevel - 1)}
         zoomLevel={zoomLevel}
       />
+
+      {showUploadUrlModal && (
+        <UploadViaUrl onClose={() => setShowUploadUrlModal(false)} onUpload={() => setShowUploadUrlModal(false)} />
+      )}
     </Wrapper>
   )
 }

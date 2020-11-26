@@ -5,7 +5,7 @@ import Button from '../Button'
 import styled from 'styled-components'
 
 const Header = styled.div`
-  font-size: 1.2em;
+  font-weight: 800;
   text-align: center;
   margin-bottom: 1em;
 `
@@ -31,7 +31,7 @@ const DeleteModal = ({ onClose, onConfirm }) => (
 )
 
 DeleteModal.propTypes = {
-  onCloser: PropTypes.func,
+  onClose: PropTypes.func,
   onConfirm: PropTypes.func,
 }
 

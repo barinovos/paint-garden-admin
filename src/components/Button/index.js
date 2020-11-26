@@ -18,6 +18,7 @@ const Primary = css`
 const Secondary = css`
   background: transparent;
   color: #000;
+  margin-left: 7px;
 
   &:hover {
     background: ${colors.lightGrey2};

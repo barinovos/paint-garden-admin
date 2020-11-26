@@ -9,7 +9,7 @@ import UploadButton from '../../components/UploadButton'
 import Constants from '../../constants'
 const { EDIT_MODES } = Constants
 
-const ActionsBar = ({ onUpload, onChangeCanvasMode, editMode, userId, projectId, canvasId }) => (
+const ActionsBar = ({ onUpload, onChangeCanvasMode, editMode, userId, projectId, canvasId, onUploadViaUrl }) => (
   <Wrapper>
     <>
       <ActionButtonWrapper data-tip data-for="upload" style={{ paddingTop: '10px' }}>
@@ -19,11 +19,7 @@ const ActionsBar = ({ onUpload, onChangeCanvasMode, editMode, userId, projectId,
     </>
     <>
       <ActionButtonWrapper data-tip data-for="uploadUrl">
-        <ActionButton
-          onClick={() => {
-            console.log('upload via link')
-          }}
-        >
+        <ActionButton onClick={onUploadViaUrl}>
           <LinkIcon />
         </ActionButton>
       </ActionButtonWrapper>
@@ -59,6 +55,7 @@ ActionsBar.propTypes = {
   canvasId: PropTypes.string,
   projectId: PropTypes.string,
   onUpload: PropTypes.func,
+  onUploadViaUrl: PropTypes.func,
 }
 
 export default ActionsBar
