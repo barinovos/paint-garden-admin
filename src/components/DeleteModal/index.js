@@ -4,12 +4,6 @@ import Modal from '../Modal'
 import Button from '../Button'
 import styled from 'styled-components'
 
-const Header = styled.div`
-  font-weight: 800;
-  text-align: center;
-  margin-bottom: 1em;
-`
-
 const Buttons = styled.div`
   display: flex;
   align-items: center;
@@ -18,7 +12,7 @@ const Buttons = styled.div`
 
 const DeleteModal = ({ onClose, onConfirm }) => (
   <Modal onClick={onClose}>
-    <Header>Are you sure?</Header>
+    <h2 style={{ textAlign: 'center', marginBottom: '1em' }}>Are you sure?</h2>
     <Buttons>
       <Button onClick={onClose} secondary>
         Cancel

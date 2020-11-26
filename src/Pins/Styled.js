@@ -47,7 +47,7 @@ export const CommentModal = styled.div`
   min-height: 135px;
   min-width: 360px;
   padding: 12px;
-  z-index: 2000;
+  z-index: 1001;
 `
 
 export const Avatar = styled.div`

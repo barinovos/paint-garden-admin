@@ -23,7 +23,7 @@ const PinModal = ({ user, position, onClose, onComment }) => {
       </ActivePin>
       <FlexLayout>
         <Avatar>{user.name[0]}</Avatar>
-        <p style={{ fontWeight: 800 }}>{user.name}</p>
+        <h2>{user.name}</h2>
       </FlexLayout>
       <FlexLayout margin="15px 0">
         <Input value={commentText} onChange={ev => setText(ev.target.value)} placeholder="Comment" />

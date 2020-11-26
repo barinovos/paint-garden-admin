@@ -5,11 +5,6 @@ import Button from '../../components/Button'
 import Input from '../../components/Input'
 import styled from 'styled-components'
 
-const Header = styled.div`
-  font-weight: 800;
-  margin-bottom: 10px;
-`
-
 const Buttons = styled.div`
   margin-top: 18px;
   display: flex;
@@ -19,7 +14,7 @@ const UploadViaUrl = ({ onClose, onUpload }) => {
   const [url, setUrl] = useState('')
   return (
     <Modal onClick={onClose}>
-      <Header>Upload via URL</Header>
+      <h2 style={{ marginBottom: 10 }}>Upload via URL</h2>
       <Input value={url} onChange={ev => setUrl(ev.target.value)} />
       <Buttons>
         <Button onClick={() => onUpload(url)}>Okay</Button>

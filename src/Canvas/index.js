@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -44,7 +44,7 @@ const Canvas = ({
   useEffect(() => {
     fetchCanvasData(match.params.canvasId)
     return resetCanvasData
-  }, [match])
+  }, [match, fetchCanvasData, resetCanvasData])
 
   if (!activeCanvas) {
     return 'Loading canvas data...'

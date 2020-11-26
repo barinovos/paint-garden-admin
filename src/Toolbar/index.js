@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import colors from '../constants/colors'
-import api from '../utils/api'
+import { getLogoutURL } from '../utils/auth'
 import { ReactComponent as Logo } from '../assets/logo.svg'
 
 const Wrapper = styled.div`
@@ -22,7 +22,7 @@ const Logout = styled.a`
 const Toolbar = () => (
   <Wrapper>
     <Logo />
-    <Logout onClick={api.logout}>Log out</Logout>
+    <Logout href={getLogoutURL()}>Log out</Logout>
   </Wrapper>
 )
 

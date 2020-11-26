@@ -1,6 +1,6 @@
 import axios from 'axios'
 import actionTypes from '../constants/actionTypes'
-import { getAuthToken, navigateToSSO, getLogoutURL } from './auth'
+import { getAuthToken, navigateToSSO } from './auth'
 
 const apiUrl = process.env.REACT_APP_API_URL || 'https://api.paint.garden/api/v2'
 
@@ -55,10 +55,6 @@ const api = {
 
   all(values) {
     return axios.all(values)
-  },
-
-  logout() {
-    return axios.post(getLogoutURL(), null, getHeader()).then(navigateToSSO)
   },
 
   setProjectId(id) {
