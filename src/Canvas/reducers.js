@@ -13,7 +13,7 @@ export function activeCanvasReducer(state = null, action) {
 export function sectionsReducer(state = null, action) {
   switch (action.type) {
     case actionTypes.SET_CANVAS:
-      return action.canvas.sections
+      return action.canvas ? action.canvas.sections : null
     case actionTypes.CREATE_SECTION:
       return state.concat(action.section)
     case actionTypes.DELETE_SECTION:

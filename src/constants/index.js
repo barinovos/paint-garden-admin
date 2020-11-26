@@ -20,6 +20,6 @@ export default {
     default: 'default',
     annotation: 'annotation',
   },
-  ZOOM_MULTIPLIER: 0.8,
-  MAX_ZOOM_LEVEL: 10,
+  ZOOM_MULTIPLIER: 0.1,
+  MAX_ZOOM_LEVEL: 20,
 }

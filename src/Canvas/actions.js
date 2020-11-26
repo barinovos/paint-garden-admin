@@ -16,6 +16,13 @@ export function fetchCanvasData(id) {
     )
 }
 
+export function resetCanvasData() {
+  return {
+    type: actionTypes.SET_CANVAS,
+    canvas: null,
+  }
+}
+
 export const uploadMedia = (file, userId, projectId, canvasId) => {
   const formData = new FormData()
   formData.append('media', file, file.name)
