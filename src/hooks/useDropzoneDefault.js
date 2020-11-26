@@ -15,6 +15,7 @@ const useDropzoneDefault = (projectId, canvasId, userId) => {
       }
 
       setUploading(false)
+      window.location.reload()
     },
     // API CALL FOR UPLOAD (end)
 

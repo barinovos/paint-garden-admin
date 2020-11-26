@@ -1,12 +1,15 @@
 import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import { ReactComponent as PinIcon } from '../../assets/dialogue.svg'
 import { ReactComponent as CloseIcon } from '../../assets/close.svg'
 import Tooltip from '../../components/Tooltip'
-import { ClosedWrapper, ListHeader, ListWrapper, ListItem } from './Styled'
+import { ClosedWrapper, ListHeader, ListWrapper, ListItem, Date } from './Styled'
+import { FlexLayout } from '../../Common/Styled'
 
-const Comments = ({ items = [] }) => {
+const Comments = ({ items = [], selectPin, activePin }) => {
   const [isOpened, setIsOpened] = useState(false)
+  const activeId = activePin ? activePin.id : null
 
   return !isOpened ? (
     <Fragment>
@@ -20,10 +23,16 @@ const Comments = ({ items = [] }) => {
     <ListWrapper>
       <ListHeader>
         <h1>Annotations list</h1>
-        <CloseIcon onClick={() => setIsOpened(false)} />
+        <CloseIcon style={{ cursor: 'pointer' }} onClick={() => setIsOpened(false)} />
       </ListHeader>
       {items.map(item => (
-        <ListItem key={item.id}>{item.text}</ListItem>
+        <ListItem key={item.id} active={item.id === activeId} onClick={() => item.id !== activeId && selectPin(item)}>
+          <FlexLayout justifyContent="space-between" style={{ marginBottom: 10 }}>
+            {item.user.name}
+            <Date>{moment(item.created_at).fromNow()}</Date>
+          </FlexLayout>
+          <FlexLayout style={{ fontWeight: 400 }}>{item.text}</FlexLayout>
+        </ListItem>
       ))}
     </ListWrapper>
   )
@@ -31,6 +40,8 @@ const Comments = ({ items = [] }) => {
 
 Comments.propTypes = {
   items: PropTypes.array,
+  selectPin: PropTypes.func,
+  activePin: PropTypes.object,
 }
 
 export default Comments

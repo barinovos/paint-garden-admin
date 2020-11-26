@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { projectReducer, canvasesReducer, activeProjectReducer } from '../Projects/reducers'
-import { editModeReducer, pinsReducer, activeCanvasReducer, sectionsReducer } from '../Canvas/reducers'
+import { editModeReducer, pinsReducer, activeCanvasReducer, sectionsReducer, activePin } from '../Canvas/reducers'
 import { userReducer } from '../Main/reducer'
 
 const reducers = combineReducers({
@@ -12,6 +12,7 @@ const reducers = combineReducers({
   activeProject: activeProjectReducer,
   activeCanvas: activeCanvasReducer,
   user: userReducer,
+  activePin,
 })
 
 export default reducers

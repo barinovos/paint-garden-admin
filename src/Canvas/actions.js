@@ -16,6 +16,16 @@ export function fetchCanvasData(id) {
     )
 }
 
+export function fetchAnnotations(canvasId) {
+  return dispatch =>
+    api.get(`${CANVAS}/${canvasId}/annotations`).then(resp =>
+      dispatch({
+        type: actionTypes.SET_PINS,
+        pins: resp.data.data,
+      }),
+    )
+}
+
 export function resetCanvasData() {
   return {
     type: actionTypes.SET_CANVAS,
@@ -76,6 +86,13 @@ export function uploadImages(data, sectionId) {
     return api
       .post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       .then(resp => dispatch(fetchCanvasData(data.project_id)))
+  }
+}
+
+export function selectPin(pin) {
+  return {
+    type: actionTypes.SELECT_PIN,
+    pin,
   }
 }
 

@@ -6,6 +6,7 @@ export const PinWrapper = styled.div`
   top: ${props => props.y}px;
   left: ${props => props.x}px;
   cursor: pointer;
+  z-index: 100;
 `
 
 export const PinViewWrapper = styled.div`
@@ -14,7 +15,6 @@ export const PinViewWrapper = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 1000;
 `
 
 export const AddImage = styled.div`
@@ -66,7 +66,7 @@ export const Avatar = styled.div`
 
 export const ActivePin = styled.div`
   position: absolute;
-  left: -50px;
+  left: -52px;
   top: 60px;
   height: 45px;
   width: 45px;

@@ -19,6 +19,8 @@ export default {
   CREATE_IMAGE: 'app.images.CREATE',
   DELETE_IMAGE: 'app.images.DELETE',
   UPDATE_WEBVIEW: 'app.canvas.UPDATE_WEBVIEW',
+  SET_PINS: 'app.canvas.SET_PINS',
+  SELECT_PIN: 'app.canvas.SELECT_PIN',
   ADD_PIN: 'app.canvas.ADD_PIN',
   REMOVE_PIN: 'app.canvas.REMOVE_PIN',
   EDIT_PIN: 'app.canvas.EDIT_PIN',

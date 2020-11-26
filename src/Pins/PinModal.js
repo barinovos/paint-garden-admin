@@ -7,13 +7,13 @@ import { FlexLayout } from '../Common/Styled'
 import { ReactComponent as AttachIcon } from '../assets/attach.svg'
 import { ReactComponent as PinIcon } from '../assets/Pin_active.svg'
 
-const PinModal = ({ user, position, onClose, onComment }) => {
-  const [commentText, setText] = useState('')
+const PinModal = ({ data, user, position, onClose, onComment }) => {
+  const [commentText, setText] = useState(data ? data.text : '')
   const [mediaFile, setMedia] = useState(null)
   return (
     <CommentModal
-      left={`${position.x + 30}px`}
-      top={`${position.y - 80}px`}
+      left={`${position.x + 40}px`}
+      top={`${position.y - 72}px`}
       onClick={ev => {
         ev.stopPropagation()
       }}
@@ -35,7 +35,16 @@ const PinModal = ({ user, position, onClose, onComment }) => {
         )}
       </FlexLayout>
       <FlexLayout>
-        <Button onClick={() => onComment(commentText)}>Comment</Button>
+        <Button
+          onClick={() =>
+            onComment({
+              ...data,
+              text: commentText,
+            })
+          }
+        >
+          {data ? 'Update' : 'Comment'}
+        </Button>
         <Button secondary onClick={onClose}>
           Cancel
         </Button>
@@ -54,6 +63,7 @@ PinModal.propTypes = {
     x: PropTypes.number,
     y: PropTypes.number,
   }),
+  data: PropTypes.object,
 }
 
 export default PinModal

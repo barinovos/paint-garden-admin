@@ -5,11 +5,10 @@ import PinModal from './PinModal'
 import { PinViewWrapper } from './Styled'
 import { reCalcSizeWithZoom } from '../utils/calcZoom'
 
-const Pins = ({ pins, addPin, deletePin, editPin, zoomLevel, user }) => {
+const Pins = ({ pins, addPin, deletePin, editPin, zoomLevel, user, activePin, selectPin }) => {
   const [showModal, setShowModal] = useState(false)
   const [isAdd, setIsAdd] = useState(true)
   const [position, setPosition] = useState(null)
-  const [editedPin, setEditedPin] = useState(null)
 
   const onAddPin = ev => {
     const x = reCalcSizeWithZoom(ev.clientX, zoomLevel)
@@ -23,23 +22,47 @@ const Pins = ({ pins, addPin, deletePin, editPin, zoomLevel, user }) => {
   }
 
   const onShowModalForEdit = pin => {
-    setEditedPin(pin)
+    setPosition({
+      x: pin.position.x,
+      y: pin.position.y,
+    })
+    selectPin(pin)
     setIsAdd(false)
     setShowModal(true)
   }
+
+  const onComment = isAdd
+    ? data => {
+        selectPin(null)
+        setShowModal(false)
+        addPin({ ...data, position })
+      }
+    : data => {
+        delete data.media
+        selectPin(null)
+        setShowModal(false)
+        editPin(data)
+      }
 
   return (
     <PinViewWrapper onClick={onAddPin}>
       {pins.map((pin, i) => (
         <Pin key={i} data={pin} onPinClick={onShowModalForEdit} zoomLevel={zoomLevel} />
       ))}
-      {showModal && (
+      {(showModal || activePin) && (
         <PinModal
+          data={activePin}
           user={user}
-          position={position}
-          onComment={isAdd ? text => addPin({ text, position }) : editPin}
-          onDelete={deletePin}
-          onClose={() => setShowModal(false)}
+          position={(activePin && activePin.position) || position}
+          onComment={onComment}
+          onDelete={() => {
+            deletePin(activePin)
+            selectPin(null)
+          }}
+          onClose={() => {
+            setShowModal(false)
+            selectPin(null)
+          }}
         />
       )}
     </PinViewWrapper>
@@ -53,6 +76,8 @@ Pins.propTypes = {
   editPin: PropTypes.func,
   zoomLevel: PropTypes.number,
   user: PropTypes.object,
+  selectPin: PropTypes.func,
+  activePin: PropTypes.object,
 }
 
 export default Pins

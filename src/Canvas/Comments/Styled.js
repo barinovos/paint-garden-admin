@@ -40,4 +40,13 @@ export const ListHeader = styled.div`
 
 export const ListItem = styled.div`
   padding: 20px 30px;
+  border-bottom: 1px solid ${colors.lightGrey2};
+
+  ${props => props.active && `background-color: ${colors.lightGrey2}`}
+`
+
+export const Date = styled.div`
+  color: ${colors.darkGrey};
+  font-size: 11px;
+  font-weight: 400;
 `
