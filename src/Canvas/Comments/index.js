@@ -7,7 +7,7 @@ import Tooltip from '../../components/Tooltip'
 import { ClosedWrapper, ListHeader, ListWrapper, ListItem, Date } from './Styled'
 import { FlexLayout } from '../../Common/Styled'
 
-const Comments = ({ items = [], selectPin, activePin }) => {
+const Comments = ({ items = [], selectAnnotation, activePin }) => {
   const [isOpened, setIsOpened] = useState(false)
   const activeId = activePin ? activePin.id : null
 
@@ -26,7 +26,11 @@ const Comments = ({ items = [], selectPin, activePin }) => {
         <CloseIcon style={{ cursor: 'pointer' }} onClick={() => setIsOpened(false)} />
       </ListHeader>
       {items.map(item => (
-        <ListItem key={item.id} active={item.id === activeId} onClick={() => item.id !== activeId && selectPin(item)}>
+        <ListItem
+          key={item.id}
+          active={item.id === activeId}
+          onClick={() => item.id !== activeId && selectAnnotation(item)}
+        >
           <FlexLayout justifyContent="space-between" style={{ marginBottom: 10 }}>
             {item.user.name}
             <Date>{moment(item.created_at).fromNow()}</Date>
@@ -40,7 +44,7 @@ const Comments = ({ items = [], selectPin, activePin }) => {
 
 Comments.propTypes = {
   items: PropTypes.array,
-  selectPin: PropTypes.func,
+  selectAnnotation: PropTypes.func,
   activePin: PropTypes.object,
 }
 

@@ -4,11 +4,11 @@ import close from '../../assets/close.svg'
 import trash from '../../assets/trash.svg'
 import UploadButton from '../../components/UploadButton'
 
-const UploadRibbon = ({ item, uploadImages, projectId, onChangeActiveImageIndex, deleteSection, deleteImage }) => {
+const UploadRibbon = ({ item, uploadMedia, projectId, onChangeActiveImageIndex, deleteSection, deleteImage }) => {
   return (
     <Wrapper>
       <UploadButtonWrapper>
-        <UploadButton onUpload={files => uploadImages(files, projectId)} />
+        <UploadButton onUpload={files => uploadMedia(files, projectId)} />
       </UploadButtonWrapper>
       {item.history &&
         item.history.map((image, i) => (

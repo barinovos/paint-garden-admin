@@ -4,7 +4,7 @@ import { PinWrapper } from './Styled'
 import { calcSizeWithZoom } from '../utils/calcZoom'
 import PinIcon from '../assets/Pin_active.svg'
 
-const Pin = ({ data, onPinClick, zoomLevel }) => (
+const AnnotationIcon = ({ data, onPinClick, zoomLevel }) => (
   <PinWrapper x={calcSizeWithZoom(data.position.x, zoomLevel)} y={calcSizeWithZoom(data.position.y, zoomLevel)}>
     <img
       src={PinIcon}
@@ -17,10 +17,10 @@ const Pin = ({ data, onPinClick, zoomLevel }) => (
   </PinWrapper>
 )
 
-Pin.propTypes = {
+AnnotationIcon.propTypes = {
   data: PropTypes.object,
   onPinClick: PropTypes.func,
   zoomLevel: PropTypes.number,
 }
 
-export default Pin
+export default AnnotationIcon

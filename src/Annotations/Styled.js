@@ -46,7 +46,7 @@ export const CommentModal = styled.div`
   background: white;
   min-height: 135px;
   min-width: 360px;
-  padding: 12px;
+  padding: 0 15px;
   z-index: 1001;
 `
 
@@ -75,4 +75,28 @@ export const ActivePin = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`
+
+export const MediaThumb = styled.img`
+  max-height: 60px;
+  margin: 6px 10px 6px 0;
+`
+
+export const Date = styled.div`
+  font-size: 10px;
+  color: ${colors.darkGrey};
+`
+
+export const IconWrapper = styled.div`
+  margin-left: 7px;
+  cursor: pointer;
+`
+
+export const ReplyText = styled.div`
+  margin: 7px 0 14px;
+`
+
+export const ReplyWrapper = styled.div`
+  border-bottom: 1px solid ${colors.lightGrey2};
+  padding-top: 11px;
 `

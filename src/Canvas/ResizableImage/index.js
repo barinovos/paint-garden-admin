@@ -14,7 +14,7 @@ const ResizableImage = ({
   onChangeActiveImageIndex,
   deleteSection,
   deleteImage,
-  uploadImages,
+  uploadMedia,
   projectId,
 }) => {
   const [x, setX] = useState(calcSizeWithZoom(item.position.x, zoomLevel))
@@ -88,7 +88,7 @@ const ResizableImage = ({
       {isActive && (
         <UploadRibbon
           item={item}
-          uploadImages={uploadImages}
+          uploadMedia={uploadMedia}
           projectId={projectId}
           selectedItemId={selectedItemId}
           onChangeActiveImageIndex={onChangeActiveImageIndex}
@@ -130,7 +130,7 @@ ResizableImage.propTypes = {
   onChangeActiveImageIndex: PropTypes.func,
   deleteSection: PropTypes.func,
   deleteImage: PropTypes.func,
-  uploadImages: PropTypes.func,
+  uploadMedia: PropTypes.func,
   projectId: PropTypes.string,
 }
 

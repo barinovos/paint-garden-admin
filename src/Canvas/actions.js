@@ -16,16 +16,6 @@ export function fetchCanvasData(id) {
     )
 }
 
-export function fetchAnnotations(canvasId) {
-  return dispatch =>
-    api.get(`${CANVAS}/${canvasId}/annotations`).then(resp =>
-      dispatch({
-        type: actionTypes.SET_PINS,
-        pins: resp.data.data,
-      }),
-    )
-}
-
 export function resetCanvasData() {
   return {
     type: actionTypes.SET_CANVAS,
@@ -61,53 +51,6 @@ export function updateSection(sectionId, data) {
     )
 }
 
-export function addPin(data) {
-  return dispatch =>
-    api.post(Constants.API.PIN, data).then(resp => dispatch({ type: actionTypes.ADD_PIN, pin: resp.data.data }))
-}
-
-export function uploadImages(data, sectionId) {
-  return dispatch => {
-    const formData = new FormData()
-    var images = data.images
-    for (var i = 0; i < images.length; i++) {
-      const file = images[i]
-      // Check the file type.
-      if (!file.type.includes('image') && !file.type.includes('video')) {
-        // skip the API call for non-image or non-video file types
-        // TODO: implement an error notification for a user for this case
-        return
-      }
-      // Add the file to the request.
-      formData.append('images[]', file, file.name)
-    }
-    formData.append('sectionId', sectionId)
-    formData.append('projectId', data.project_id)
-    return api
-      .post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(resp => dispatch(fetchCanvasData(data.project_id)))
-  }
-}
-
-export function selectPin(pin) {
-  return {
-    type: actionTypes.SELECT_PIN,
-    pin,
-  }
-}
-
-export function editPin(pin) {
-  return dispatch =>
-    api
-      .put(`${Constants.API.PIN}/${pin.id}`, pin)
-      .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pin: resp.data.data }))
-}
-
-export function deletePin(pinId) {
-  return dispatch =>
-    api.delete(`${Constants.API.PIN}/${pinId}`).then(() => dispatch({ type: actionTypes.REMOVE_PIN, pinId }))
-}
-
 export function deleteSection(id) {
   return dispatch =>
     api.delete(`${Constants.API.SECTION}/${id}`).then(() =>
@@ -133,17 +76,4 @@ export function deleteImage(id, section_id) {
         section_id,
       }),
     )
-}
-
-export function uploadImageToPin(file, pinId) {
-  return dispatch => {
-    const formData = new FormData()
-
-    // Add the file to the request.
-    formData.append('image', file, file.name)
-    formData.append('pinId', pinId)
-    return api
-      .post(`${Constants.API.PIN}/${pinId}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(resp => dispatch({ type: actionTypes.EDIT_PIN, pin: resp.data.data }))
-  }
 }

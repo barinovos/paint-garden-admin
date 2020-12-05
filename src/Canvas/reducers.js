@@ -31,31 +31,3 @@ export function editModeReducer(state = Constants.EDIT_MODES.default, action) {
       return state
   }
 }
-
-export function pinsReducer(state = [], action) {
-  switch (action.type) {
-    case actionTypes.SET_PINS:
-      return action.pins || state
-    case actionTypes.ADD_PIN:
-      return state.concat(action.pin)
-    case actionTypes.REMOVE_PIN:
-      return state.filter(pin => pin.id !== action.pinId)
-    case actionTypes.EDIT_PIN:
-      return state.map(pin => (pin.id === action.pin.id ? action.pin : pin))
-    default:
-      return state
-  }
-}
-
-export function activePin(state = null, action) {
-  switch (action.type) {
-    case actionTypes.SELECT_PIN:
-      return action.pin
-    case actionTypes.SET_PINS:
-    case actionTypes.REMOVE_PIN:
-    case actionTypes.EDIT_PIN:
-      return null
-    default:
-      return state
-  }
-}

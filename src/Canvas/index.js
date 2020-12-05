@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from './actions'
+import { fetchAnnotations, selectAnnotation } from '../Annotations/actions'
 import { Wrapper, InnerArea, Link, PreviewLink } from './Styled'
 import Zoom from './Zoom'
 import ActionsBar from './ActionsBar'
@@ -11,7 +12,7 @@ import CanvasHeader from './CanvasHeader'
 import Constants from '../constants'
 import DropzoneArea from './DropzoneArea'
 import ResizableImage from './ResizableImage'
-import Pins from '../Pins'
+import Annotations from '../Annotations'
 import CanvasImage from './CanvasImage'
 import UploadViaUrl from './UploadViaUrl'
 import PageLoader from '../components/PageLoader'
@@ -22,14 +23,14 @@ const Canvas = ({
   activeCanvas,
   updateSection,
   editMode,
-  pins,
+  annotations,
   user,
   sections,
   editPin,
   addPin,
   deletePin,
   addSection,
-  uploadImages,
+  uploadMedia,
   deleteSection,
   deleteImage,
   changeCanvasMode,
@@ -37,7 +38,7 @@ const Canvas = ({
   fetchCanvasData,
   fetchAnnotations,
   resetCanvasData,
-  selectPin,
+  selectAnnotation,
   activePin,
 }) => {
   const [selectedSection, setSelectedSection] = useState(null)
@@ -82,31 +83,10 @@ const Canvas = ({
                 onChangeActiveImageIndex={() => null}
                 deleteSection={deleteSection}
                 deleteImage={deleteImage}
-                uploadImages={uploadImages}
+                uploadMedia={uploadMedia}
               />
             ))}
-          {editMode === EDIT_MODES.annotation && (
-            <Pins
-              user={user}
-              pins={pins}
-              addPin={({ text, position }) =>
-                addPin({
-                  text,
-                  position,
-                  project_id,
-                  canvas_id: id,
-                  user_id: user.id,
-                  // TODO: we don't need it here
-                  section_id: sections[0] ? sections[0].id : '',
-                })
-              }
-              selectPin={selectPin}
-              activePin={activePin}
-              editPin={editPin}
-              deletePin={deletePin}
-              zoomLevel={zoomLevel}
-            />
-          )}
+          {editMode === EDIT_MODES.annotation && <Annotations zoomLevel={zoomLevel} />}
           {editMode === EDIT_MODES.annotation &&
             sections.map((item, i) => (
               <CanvasImage
@@ -126,7 +106,9 @@ const Canvas = ({
         </PreviewLink>
       </DropzoneArea>
 
-      {editMode === EDIT_MODES.annotation && <Comments items={pins} activePin={activePin} selectPin={selectPin} />}
+      {editMode === EDIT_MODES.annotation && (
+        <Comments items={annotations} activePin={activePin} selectAnnotation={selectAnnotation} />
+      )}
 
       <ActionsBar
         onUpload={addSection}
@@ -157,24 +139,24 @@ Canvas.propTypes = {
   fetchCanvasData: PropTypes.func,
   fetchAnnotations: PropTypes.func,
   resetCanvasData: PropTypes.func,
-  selectPin: PropTypes.func,
+  selectAnnotation: PropTypes.func,
   changeCanvasMode: PropTypes.func,
   editMode: PropTypes.string,
-  pins: PropTypes.array,
+  annotations: PropTypes.array,
   user: PropTypes.object,
   match: PropTypes.object,
   activePin: PropTypes.object,
 }
 
 export default connect(
-  ({ activeCanvas, editMode, pins, projects, user, sections, activePin }) => ({
+  ({ activeCanvas, editMode, annotations, projects, user, sections, activePin }) => ({
     activeCanvas,
     editMode,
-    pins,
+    annotations,
     projects,
     user,
     sections,
     activePin,
   }),
-  dispatch => bindActionCreators(actions, dispatch),
+  dispatch => bindActionCreators({ ...actions, fetchAnnotations, selectAnnotation }, dispatch),
 )(Canvas)

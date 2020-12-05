@@ -15,6 +15,7 @@ export default {
     CANVAS: '/canvas',
     LOGOUT: '/logout',
     USER: '/user',
+    ANNOTATION: '/annotation',
   },
   EDIT_MODES: {
     default: 'default',
