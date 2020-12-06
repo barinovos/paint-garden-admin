@@ -1,5 +1,6 @@
 import actionTypes from '../constants/actionTypes'
 import api from '../utils/api'
+import { reCalcSizeWithZoom } from '../utils/calcZoom'
 import Constants from '../constants'
 
 const {
@@ -23,18 +24,33 @@ export function resetCanvasData() {
   }
 }
 
-export const uploadMedia = (file, userId, projectId, canvasId) => {
-  const formData = new FormData()
-  formData.append('media', file, file.name)
-  formData.append('user_id', userId)
-  formData.append('project_id', projectId)
-  formData.append('canvas_id', canvasId)
-  return api.post('/section', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+export const setZoom = zoom => ({
+  type: actionTypes.SET_ZOOM,
+  zoom,
+})
+
+export const uploadMedia = (files, userId, projectId, canvasId, zoom = 0) => {
+  return api.all(
+    Array.from(files).map(file => {
+      debugger
+      const { height, width } = window.screen
+      const x = reCalcSizeWithZoom(Math.random() * width, zoom)
+      const y = reCalcSizeWithZoom(Math.random() * height, zoom)
+      const formData = new FormData()
+      formData.append('media', file, file.name)
+      formData.append('user_id', userId)
+      formData.append('project_id', projectId)
+      formData.append('canvas_id', canvasId)
+      formData.append('position.x', '' + x)
+      formData.append('position.y', '' + y)
+      return api.post('/section', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+    }),
+  )
 }
 
-export const addSection = (file, userId, projectId, canvasId) => dispatch =>
-  uploadMedia(file, userId, projectId, canvasId).then(resp =>
-    dispatch({ type: actionTypes.CREATE_SECTION, section: resp.data.data }),
+export const addSection = (files, userId, projectId, canvasId) => (dispatch, getState) =>
+  uploadMedia(files, userId, projectId, canvasId, getState().zoom).then(resp =>
+    dispatch({ type: actionTypes.CREATE_SECTIONS, sections: resp.map(r => r.data.data) }),
   )
 
 export function changeCanvasMode(mode) {

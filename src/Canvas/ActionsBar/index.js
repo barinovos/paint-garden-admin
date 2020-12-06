@@ -13,7 +13,7 @@ const ActionsBar = ({ onUpload, onChangeCanvasMode, editMode, userId, projectId,
   <Wrapper>
     <>
       <ActionButtonWrapper data-tip data-for="upload" style={{ paddingTop: '10px' }}>
-        <UploadButton onUpload={files => onUpload(files[0], userId, projectId, canvasId)} grey />
+        <UploadButton onUpload={files => onUpload(files, userId, projectId, canvasId)} grey />
       </ActionButtonWrapper>
       <Tooltip text="Upload" id="upload" place="right" />
     </>

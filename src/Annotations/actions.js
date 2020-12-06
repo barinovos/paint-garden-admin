@@ -16,8 +16,21 @@ export function fetchAnnotations(canvasId) {
     )
 }
 
-export function addAnnotation(data) {
-  return dispatch => api.post(ANNOTATION, data).then(() => fetchAnnotations(data.canvas_id)(dispatch))
+export function addAnnotation(data, mediaFiles) {
+  return dispatch => {
+    const promise =
+      mediaFiles && mediaFiles.length
+        ? api.all(
+            mediaFiles.map(media =>
+              api.post(ANNOTATION, {
+                ...data,
+                media,
+              }),
+            ),
+          )
+        : api.post(ANNOTATION, data)
+    return promise.then(() => fetchAnnotations(data.canvas_id)(dispatch))
+  }
 }
 
 export function selectAnnotation(pin) {
@@ -27,11 +40,23 @@ export function selectAnnotation(pin) {
   }
 }
 
-export function editAnnotation(a) {
-  return dispatch =>
-    api.put(`${ANNOTATION}/${a.id}`, a).then(resp => dispatch({ type: actionTypes.EDIT_PIN, pin: resp.data.data }))
+export function editAnnotation(data, mediaFiles) {
+  return dispatch => {
+    const promise =
+      mediaFiles && mediaFiles.length
+        ? api.all(
+            mediaFiles.map(media =>
+              api.put(`${ANNOTATION}/${data.id}`, {
+                ...data,
+                media,
+              }),
+            ),
+          )
+        : api.put(`${ANNOTATION}/${data.id}`, data)
+    return promise.then(resp => fetchAnnotations(data.canvas_id)(dispatch))
+  }
 }
 
-export function deleteAnnotation(id) {
-  return dispatch => api.delete(`${ANNOTATION}/${id}`).then(() => dispatch({ type: actionTypes.REMOVE_PIN, pinId: id }))
+export function deleteAnnotation(data) {
+  return dispatch => api.delete(`${ANNOTATION}/${data.id}`).then(() => fetchAnnotations(data.canvas_id)(dispatch))
 }

@@ -40,9 +40,10 @@ const Canvas = ({
   resetCanvasData,
   selectAnnotation,
   activePin,
+  zoom,
+  setZoom,
 }) => {
   const [selectedSection, setSelectedSection] = useState(null)
-  const [zoomLevel, setZoomLevel] = useState(0)
   const [showUploadUrlModal, setShowUploadUrlModal] = useState(false)
 
   useEffect(() => {
@@ -77,7 +78,7 @@ const Canvas = ({
                 item={item}
                 onSelect={onSectionSelect}
                 selectedItemId={selectedItemId}
-                zoomLevel={zoomLevel}
+                zoom={zoom}
                 onUpdate={updateSection}
                 projectId={project_id}
                 onChangeActiveImageIndex={() => null}
@@ -86,16 +87,10 @@ const Canvas = ({
                 uploadMedia={uploadMedia}
               />
             ))}
-          {editMode === EDIT_MODES.annotation && <Annotations zoomLevel={zoomLevel} />}
+          {editMode === EDIT_MODES.annotation && <Annotations zoom={zoom} />}
           {editMode === EDIT_MODES.annotation &&
             sections.map((item, i) => (
-              <CanvasImage
-                key={i}
-                item={item}
-                onSelect={onSectionSelect}
-                selectedItemId={selectedItemId}
-                zoomLevel={zoomLevel}
-              />
+              <CanvasImage key={i} item={item} onSelect={onSectionSelect} selectedItemId={selectedItemId} zoom={zoom} />
             ))}
         </InnerArea>
         <PreviewLink>
@@ -107,7 +102,11 @@ const Canvas = ({
       </DropzoneArea>
 
       {editMode === EDIT_MODES.annotation && (
-        <Comments items={annotations} activePin={activePin} selectAnnotation={selectAnnotation} />
+        <Comments
+          items={annotations.filter(a => !a.parent_id)}
+          activePin={activePin}
+          selectAnnotation={selectAnnotation}
+        />
       )}
 
       <ActionsBar
@@ -121,9 +120,9 @@ const Canvas = ({
       />
 
       <Zoom
-        onClickPlus={() => zoomLevel < MAX_ZOOM_LEVEL && setZoomLevel(zoomLevel + 1)}
-        onClickMinus={() => zoomLevel > -MAX_ZOOM_LEVEL && setZoomLevel(zoomLevel - 1)}
-        zoomLevel={zoomLevel}
+        onClickPlus={() => zoom < MAX_ZOOM_LEVEL && setZoom(zoom + 1)}
+        onClickMinus={() => zoom > -MAX_ZOOM_LEVEL && setZoom(zoom - 1)}
+        zoomLevel={zoom}
       />
 
       {showUploadUrlModal && (
@@ -149,7 +148,7 @@ Canvas.propTypes = {
 }
 
 export default connect(
-  ({ activeCanvas, editMode, annotations, projects, user, sections, activePin }) => ({
+  ({ activeCanvas, editMode, annotations, projects, user, sections, activePin, zoom }) => ({
     activeCanvas,
     editMode,
     annotations,
@@ -157,6 +156,7 @@ export default connect(
     user,
     sections,
     activePin,
+    zoom,
   }),
   dispatch => bindActionCreators({ ...actions, fetchAnnotations, selectAnnotation }, dispatch),
 )(Canvas)

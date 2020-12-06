@@ -1,4 +1,4 @@
-export default {
+const actionTypes = {
   API_BEGIN: 'API_BEGIN',
   API_ERROR: 'API_ERROR',
   AUTH_ERROR: 'AUTH_ERROR',
@@ -13,7 +13,7 @@ export default {
   CREATE_CANVAS: 'app.canvases.CREATE',
   DELETE_CANVAS: 'app.canvases.DELETE',
   UPDATE_SECTION: 'app.sections.UPDATE',
-  CREATE_SECTION: 'app.sections.CREATE',
+  CREATE_SECTIONS: 'app.sections.CREATE',
   DELETE_SECTION: 'app.sections.DELETE',
   DELETE_IMAGE_SECTION: 'app.sections.DELETE_IMAGE_SECTION',
   CREATE_IMAGE: 'app.images.CREATE',
@@ -33,7 +33,11 @@ export default {
 
   CHANGE_PROJECT: 'app.CHANGE_PROJECT',
 
+  SET_ZOOM: 'app.SET_ZOOM',
+
   CHECK_AUTH: 'app.auth.CHECK_AUTH',
   AUTHORISE: 'app.auth.AUTHORISE',
   LOGOUT: 'app.auth.LOGOUT',
 }
+
+export default actionTypes

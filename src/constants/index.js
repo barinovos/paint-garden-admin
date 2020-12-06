@@ -1,4 +1,4 @@
-export default {
+const Constants = {
   ROUTES: {
     ROOT: '/',
     CANVAS: '/canvas',
@@ -24,3 +24,5 @@ export default {
   ZOOM_MULTIPLIER: 0.1,
   MAX_ZOOM_LEVEL: 20,
 }
+
+export default Constants

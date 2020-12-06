@@ -20,9 +20,7 @@ export function activePin(state = null, action) {
     case actionTypes.SELECT_PIN:
       return action.pin
     case actionTypes.SET_PINS:
-    case actionTypes.REMOVE_PIN:
-    case actionTypes.EDIT_PIN:
-      return null
+      return state && action.pins && action.pins.length ? action.pins.find(pin => pin.id === state.id) || null : null
     default:
       return state
   }

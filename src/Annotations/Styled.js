@@ -26,7 +26,7 @@ export const AddImage = styled.div`
 
 export const HiddenInput = styled.input.attrs({
   type: 'file',
-  multiple: false,
+  multiple: true,
   accept: 'image/*',
 })`
   position: absolute;
@@ -88,7 +88,7 @@ export const Date = styled.div`
 `
 
 export const IconWrapper = styled.div`
-  margin-left: 7px;
+  margin-left: 12px;
   cursor: pointer;
 `
 
@@ -96,7 +96,32 @@ export const ReplyText = styled.div`
   margin: 7px 0 14px;
 `
 
+export const RepliesContainer = styled.div`
+  max-height: 300px;
+  overflow: auto;
+`
+
 export const ReplyWrapper = styled.div`
   border-bottom: 1px solid ${colors.lightGrey2};
   padding-top: 11px;
+  position: relative;
+`
+
+export const OptionsPanel = styled.div`
+  position: absolute;
+  right: -5px;
+  top: 5px;
+  background: ${colors.lightGrey2};
+  text-align: right;
+  font-size: 12px;
+
+  & > p {
+    padding: 10px;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  & > p:hover {
+    background: ${colors.blue};
+  }
 `

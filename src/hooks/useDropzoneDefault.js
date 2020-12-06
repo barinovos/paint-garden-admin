@@ -5,11 +5,11 @@ import { uploadMedia } from '../Canvas/actions'
 const useDropzoneDefault = (projectId, canvasId, userId) => {
   const [uploading, setUploading] = useState(false)
   const onDrop = useCallback(
-    async ([file]) => {
+    async files => {
       // API CALL FOR UPLOAD (start)
       try {
         setUploading(true)
-        await uploadMedia(file, userId, projectId, canvasId)
+        await uploadMedia(files, userId, projectId, canvasId)
       } catch (error) {
         // console.log(error)
       }

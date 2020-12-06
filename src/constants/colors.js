@@ -1,4 +1,4 @@
-export default {
+const colors = {
   blue: '#4DA1FF',
   hoverBlue: '#3d81cc',
   buttonBg: '#E0F4FD',
@@ -16,3 +16,5 @@ export default {
   black: '#393939',
   black2: '#202020',
 }
+
+export default colors

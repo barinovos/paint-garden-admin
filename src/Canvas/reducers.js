@@ -14,8 +14,8 @@ export function sectionsReducer(state = null, action) {
   switch (action.type) {
     case actionTypes.SET_CANVAS:
       return action.canvas ? action.canvas.sections : null
-    case actionTypes.CREATE_SECTION:
-      return state.concat(action.section)
+    case actionTypes.CREATE_SECTIONS:
+      return state.concat(action.sections)
     case actionTypes.DELETE_SECTION:
       return state.filter(s => s.id !== action.id)
     default:
@@ -27,6 +27,15 @@ export function editModeReducer(state = Constants.EDIT_MODES.default, action) {
   switch (action.type) {
     case actionTypes.CHANGE_CANVAS_MODE:
       return action.mode
+    default:
+      return state
+  }
+}
+
+export function zoom(state = 0, action) {
+  switch (action.type) {
+    case actionTypes.SET_ZOOM:
+      return zoom
     default:
       return state
   }

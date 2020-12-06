@@ -42,16 +42,18 @@ const Annotations = ({
     selectAnnotation(pin)
   }
 
-  const onComment = data => {
-    selectAnnotation(null)
-    addAnnotation({
-      ...data,
-      project_id: activeCanvas.project_id,
-      canvas_id: activeCanvas.id,
-      user_id: user.id,
-      // TODO: we don't need it here
-      section_id: sections[0] ? sections[0].id : '',
-    })
+  const onComment = (data, mediaFiles) => {
+    addAnnotation(
+      {
+        ...data,
+        project_id: activeCanvas.project_id,
+        canvas_id: activeCanvas.id,
+        user_id: user.id,
+        // TODO: we don't need it here
+        section_id: sections[0] ? sections[0].id : '',
+      },
+      mediaFiles,
+    )
   }
 
   return (
@@ -65,10 +67,7 @@ const Annotations = ({
           user={user}
           position={(activePin && activePin.position) || position}
           onComment={onComment}
-          onDelete={() => {
-            deleteAnnotation(activePin.id)
-            selectAnnotation(null)
-          }}
+          onDelete={deleteAnnotation}
           onClose={() => selectAnnotation(null)}
           onEdit={editAnnotation}
         />
