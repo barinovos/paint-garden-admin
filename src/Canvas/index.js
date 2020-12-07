@@ -78,7 +78,7 @@ const Canvas = ({
                 item={item}
                 onSelect={onSectionSelect}
                 selectedItemId={selectedItemId}
-                zoom={zoom}
+                zoomLevel={zoom}
                 onUpdate={updateSection}
                 projectId={project_id}
                 onChangeActiveImageIndex={() => null}
@@ -90,7 +90,13 @@ const Canvas = ({
           {editMode === EDIT_MODES.annotation && <Annotations zoom={zoom} />}
           {editMode === EDIT_MODES.annotation &&
             sections.map((item, i) => (
-              <CanvasImage key={i} item={item} onSelect={onSectionSelect} selectedItemId={selectedItemId} zoom={zoom} />
+              <CanvasImage
+                key={i}
+                item={item}
+                onSelect={onSectionSelect}
+                selectedItemId={selectedItemId}
+                zoomLevel={zoom}
+              />
             ))}
         </InnerArea>
         <PreviewLink>

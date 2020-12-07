@@ -35,7 +35,7 @@ export function editModeReducer(state = Constants.EDIT_MODES.default, action) {
 export function zoom(state = 0, action) {
   switch (action.type) {
     case actionTypes.SET_ZOOM:
-      return zoom
+      return action.zoom
     default:
       return state
   }

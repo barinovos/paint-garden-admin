@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import Button from '../components/Button'
-import Input from '../components/Input'
+import TextArea from '../components/TextArea'
 import {
   CommentModal,
   Avatar,
@@ -19,14 +19,14 @@ import {
 } from './Styled'
 import { FlexLayout } from '../Common/Styled'
 import { ReactComponent as AttachIcon } from '../assets/attach.svg'
-import { ReactComponent as AudioIcon } from '../assets/audio.svg'
+// import { ReactComponent as AudioIcon } from '../assets/audio.svg'
 import { ReactComponent as OptionsIcon } from '../assets/options.svg'
 import { ReactComponent as PinIcon } from '../assets/Pin_active.svg'
 
 const InputForm = ({ commentText, mediaFiles, onSetText, onSetMedia, onCancel, onComment }) => (
   <Fragment>
     <FlexLayout margin="15px 0">
-      <Input value={commentText} onChange={ev => onSetText(ev.target.value)} placeholder="Comment" />
+      <TextArea value={commentText} onChange={ev => onSetText(ev.target.value)} placeholder="Comment" />
       <AddImage>
         <AttachIcon />
         {/* Multiple files possible */}
@@ -69,14 +69,12 @@ const Reply = ({
           </div>
         </FlexLayout>
         <FlexLayout>
-          <IconWrapper>
+          {/*<IconWrapper>
             <AudioIcon />
           </IconWrapper>
-          {!isActiveEdit && (
-            <IconWrapper>
-              <AttachIcon />
-            </IconWrapper>
-          )}
+          <IconWrapper>
+            <AttachIcon />
+          </IconWrapper>*/}
           <IconWrapper
             onClick={ev => {
               ev.stopPropagation()
@@ -121,6 +119,13 @@ const Annotation = ({ data, user, position, onClose, onComment, onEdit, onDelete
 
   const setMedia = files => setMediaArray(Array.from(files))
 
+  const reset = () => {
+    setText('')
+    setMediaArray([])
+    setActiveEdit(null)
+    setShowOptions(null)
+  }
+
   const onCommentClick = () => {
     const pin = {
       text: commentText,
@@ -130,6 +135,7 @@ const Annotation = ({ data, user, position, onClose, onComment, onEdit, onDelete
       pin.parent_id = data.id
     }
     onComment(pin, mediaFiles)
+    reset()
   }
 
   const onEditClick = pin => {
@@ -138,6 +144,7 @@ const Annotation = ({ data, user, position, onClose, onComment, onEdit, onDelete
       text: commentText || pin.text,
     }
     onEdit(data, mediaFiles)
+    reset()
   }
 
   const onSelectForEdit = pin => {
@@ -148,8 +155,8 @@ const Annotation = ({ data, user, position, onClose, onComment, onEdit, onDelete
 
   return (
     <CommentModal
-      left={`${position.x + 40}px`}
-      top={`${position.y - 72}px`}
+      left={`${+position.x + 40}px`}
+      top={`${+position.y - 72}px`}
       onClick={ev => {
         setShowOptions(null)
         ev.stopPropagation()
@@ -205,8 +212,8 @@ Annotation.propTypes = {
   onDelete: PropTypes.func,
   user: PropTypes.object,
   position: PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number,
+    x: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    y: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   }),
   data: PropTypes.object,
 }

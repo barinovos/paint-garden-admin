@@ -3,12 +3,16 @@ import styled from 'styled-components'
 import colors from '../../constants/colors'
 
 const TextAreaStyled = styled.textarea`
-  border: 1px solid ${colors.lightGrey2};
+  border: 1px solid ${props => (props.secondary ? colors.lightGrey2 : colors.blue)};
   box-sizing: border-box;
   border-radius: 4px;
   width: 100%;
-  min-height: ${props => props.height || 150}px;
-  padding: 14px;
+  min-height: ${props => props.height || 35}px;
+  padding: 9px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #000;
 
   ${props => props.error && `border: 1px solid ${colors.red};`}
 `

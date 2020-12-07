@@ -45,7 +45,7 @@ export const CommentModal = styled.div`
   top: ${props => props.top || '50%'};
   background: white;
   min-height: 135px;
-  min-width: 360px;
+  width: 400px;
   padding: 0 15px;
   z-index: 1001;
 `
@@ -93,12 +93,12 @@ export const IconWrapper = styled.div`
 `
 
 export const ReplyText = styled.div`
-  margin: 7px 0 14px;
+  margin: 12px 0 14px;
 `
 
 export const RepliesContainer = styled.div`
   max-height: 300px;
-  overflow: auto;
+  overflow-y: auto;
 `
 
 export const ReplyWrapper = styled.div`
@@ -111,7 +111,7 @@ export const OptionsPanel = styled.div`
   position: absolute;
   right: -5px;
   top: 5px;
-  background: ${colors.lightGrey2};
+  background: #fff;
   text-align: right;
   font-size: 12px;
 
@@ -122,6 +122,6 @@ export const OptionsPanel = styled.div`
   }
 
   & > p:hover {
-    background: ${colors.blue};
+    background: ${colors.lightGrey2};
   }
 `

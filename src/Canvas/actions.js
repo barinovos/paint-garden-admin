@@ -32,17 +32,16 @@ export const setZoom = zoom => ({
 export const uploadMedia = (files, userId, projectId, canvasId, zoom = 0) => {
   return api.all(
     Array.from(files).map(file => {
-      debugger
       const { height, width } = window.screen
-      const x = reCalcSizeWithZoom(Math.random() * width, zoom)
-      const y = reCalcSizeWithZoom(Math.random() * height, zoom)
+      const x = Math.floor(reCalcSizeWithZoom(Math.random() * width, zoom))
+      const y = Math.floor(reCalcSizeWithZoom(Math.random() * height, zoom))
       const formData = new FormData()
       formData.append('media', file, file.name)
       formData.append('user_id', userId)
       formData.append('project_id', projectId)
       formData.append('canvas_id', canvasId)
-      formData.append('position.x', '' + x)
-      formData.append('position.y', '' + y)
+      formData.append('position[x]', '' + x)
+      formData.append('position[y]', '' + y)
       return api.post('/section', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
     }),
   )

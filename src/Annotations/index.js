@@ -36,8 +36,8 @@ const Annotations = ({
 
   const onShowModalForEdit = pin => {
     setPosition({
-      x: pin.position.x,
-      y: pin.position.y,
+      x: +pin.position.x,
+      y: +pin.position.y,
     })
     selectAnnotation(pin)
   }

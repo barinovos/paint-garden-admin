@@ -29,6 +29,7 @@ const ProjectInviteModal = ({ onSave, onClose, projectId = null }) => {
       <Title>Invite</Title>
       <JustifiedRow direction="column">
         <TextArea
+          height={150}
           error={error}
           value={invite}
           onChange={ev => {

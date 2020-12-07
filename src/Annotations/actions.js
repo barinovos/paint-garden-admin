@@ -16,16 +16,40 @@ export function fetchAnnotations(canvasId) {
     )
 }
 
+const convertJsonToFormData = ({ user_id, project_id, canvas_id, section_id, text, parent_id, position, media }) => {
+  const formData = new FormData()
+  formData.append('user_id', user_id)
+  formData.append('project_id', project_id)
+  formData.append('canvas_id', canvas_id)
+  formData.append('section_id', section_id)
+  formData.append('text', text)
+  if (position) {
+    formData.append('position[x]', '' + position.x)
+    formData.append('position[y]', '' + position.y)
+  }
+  if (media) {
+    formData.append('media', media, media.name)
+  }
+  if (parent_id) {
+    formData.append('parent_id', parent_id)
+  }
+  return formData
+}
+
 export function addAnnotation(data, mediaFiles) {
   return dispatch => {
     const promise =
       mediaFiles && mediaFiles.length
         ? api.all(
             mediaFiles.map(media =>
-              api.post(ANNOTATION, {
-                ...data,
-                media,
-              }),
+              api.post(
+                ANNOTATION,
+                convertJsonToFormData({
+                  ...data,
+                  media,
+                }),
+                { headers: { 'Content-Type': 'multipart/form-data' } },
+              ),
             ),
           )
         : api.post(ANNOTATION, data)
@@ -46,10 +70,14 @@ export function editAnnotation(data, mediaFiles) {
       mediaFiles && mediaFiles.length
         ? api.all(
             mediaFiles.map(media =>
-              api.put(`${ANNOTATION}/${data.id}`, {
-                ...data,
-                media,
-              }),
+              api.put(
+                `${ANNOTATION}/${data.id}`,
+                convertJsonToFormData({
+                  ...data,
+                  media,
+                }),
+                { headers: { 'Content-Type': 'multipart/form-data' } },
+              ),
             ),
           )
         : api.put(`${ANNOTATION}/${data.id}`, data)
