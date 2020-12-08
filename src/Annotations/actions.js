@@ -40,20 +40,21 @@ export function addAnnotation(data, mediaFiles) {
   return dispatch => {
     const promise =
       mediaFiles && mediaFiles.length
-        ? api.all(
-            mediaFiles.map(media =>
-              api.post(
-                ANNOTATION,
-                convertJsonToFormData({
-                  ...data,
-                  media,
-                }),
-                { headers: { 'Content-Type': 'multipart/form-data' } },
-              ),
-            ),
+        ? api.post(
+            ANNOTATION,
+            convertJsonToFormData({
+              ...data,
+              media: mediaFiles[0],
+            }),
+            { headers: { 'Content-Type': 'multipart/form-data' } },
           )
         : api.post(ANNOTATION, data)
-    return promise.then(() => fetchAnnotations(data.canvas_id)(dispatch))
+    return promise.then(pin => {
+      if (!data.parent_id) {
+        dispatch(selectAnnotation(pin.data.data))
+      }
+      return fetchAnnotations(data.canvas_id)(dispatch)
+    })
   }
 }
 
@@ -68,20 +69,16 @@ export function editAnnotation(data, mediaFiles) {
   return dispatch => {
     const promise =
       mediaFiles && mediaFiles.length
-        ? api.all(
-            mediaFiles.map(media =>
-              api.put(
-                `${ANNOTATION}/${data.id}`,
-                convertJsonToFormData({
-                  ...data,
-                  media,
-                }),
-                { headers: { 'Content-Type': 'multipart/form-data' } },
-              ),
-            ),
+        ? api.post(
+            ANNOTATION,
+            convertJsonToFormData({
+              ...data,
+              media: mediaFiles[0],
+            }),
+            { headers: { 'Content-Type': 'multipart/form-data' } },
           )
         : api.put(`${ANNOTATION}/${data.id}`, data)
-    return promise.then(resp => fetchAnnotations(data.canvas_id)(dispatch))
+    return promise.then(() => fetchAnnotations(data.canvas_id)(dispatch))
   }
 }
 

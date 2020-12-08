@@ -45,7 +45,7 @@ export const CommentModal = styled.div`
   top: ${props => props.top || '50%'};
   background: white;
   min-height: 135px;
-  width: 400px;
+  width: 410px;
   padding: 0 15px;
   z-index: 1001;
 `
@@ -92,13 +92,15 @@ export const IconWrapper = styled.div`
   cursor: pointer;
 `
 
-export const ReplyText = styled.div`
+export const ReplyText = styled.p`
   margin: 12px 0 14px;
+  overflow: hidden;
 `
 
 export const RepliesContainer = styled.div`
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
+  overflow-x: hidden;
 `
 
 export const ReplyWrapper = styled.div`

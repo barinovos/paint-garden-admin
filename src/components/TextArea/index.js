@@ -9,9 +9,6 @@ const TextAreaStyled = styled.textarea`
   width: 100%;
   min-height: ${props => props.height || 35}px;
   padding: 9px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   color: #000;
 
   ${props => props.error && `border: 1px solid ${colors.red};`}

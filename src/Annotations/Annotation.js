@@ -68,7 +68,7 @@ const Reply = ({
             <Date>{moment(reply.created_at).fromNow()}</Date>
           </div>
         </FlexLayout>
-        <FlexLayout>
+        <FlexLayout style={{ paddingRight: 15 }}>
           {/*<IconWrapper>
             <AudioIcon />
           </IconWrapper>
