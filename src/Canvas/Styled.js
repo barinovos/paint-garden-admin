@@ -2,9 +2,10 @@ import styled from 'styled-components'
 import colors from '../constants/colors'
 
 export const Wrapper = styled.div`
-  background: whitesmoke;
-  width: 100%;
-  height: 100%;
+  background: ${colors.lightGreyBg};
+  min-width: 100%;
+  min-height: 100%;
+  overflow-y: auto;
 `
 
 export const InnerArea = styled.div`

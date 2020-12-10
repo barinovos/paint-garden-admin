@@ -18,6 +18,8 @@ export function sectionsReducer(state = null, action) {
       return state.concat(action.sections)
     case actionTypes.DELETE_SECTION:
       return state.filter(s => s.id !== action.id)
+    case actionTypes.UPDATE_SECTION:
+      return state.map(s => (s.id === action.section.id ? action.section : s))
     default:
       return state
   }

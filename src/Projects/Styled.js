@@ -3,18 +3,18 @@ import colors from '../constants/colors'
 
 export const ProjectSidebar = styled.div`
   width: 20vw;
-  height: 100vh;
+  height: 100%;
   border-right: 1px solid #eaeaea;
-  display: inline-block;
   padding-left: 20px;
   padding-top: 20px;
+  overflow-y: auto;
 `
 
 export const CanvasArea = styled.div`
   width: 80vw;
-  display: inline-block;
-  vertical-align: top;
+  height: 100%;
   padding-bottom: 36px;
+  overflow-y: auto;
 `
 
 export const ProjectListing = styled.div`

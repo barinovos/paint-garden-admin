@@ -26,9 +26,6 @@ const Canvas = ({
   annotations,
   user,
   sections,
-  editPin,
-  addPin,
-  deletePin,
   addSection,
   uploadMedia,
   deleteSection,
@@ -69,7 +66,13 @@ const Canvas = ({
     <Wrapper>
       <CanvasHeader title={title} />
 
-      <DropzoneArea projectId={project_id} canvasId={id} userId={user.id} hideButton={!!sections.length}>
+      <DropzoneArea
+        projectId={project_id}
+        canvasId={id}
+        userId={user.id}
+        hideButton={!!sections.length}
+        onUpload={addSection}
+      >
         <InnerArea>
           {editMode === EDIT_MODES.default &&
             sections.map((item, i) => (

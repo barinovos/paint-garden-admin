@@ -1,9 +1,10 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ProjectType } from '../types'
 import { CanvasArea, ProjectTitle, ProjectsTopBar, ProjectBarRight } from './Styled'
+import { FlexLayout } from '../Common/Styled'
 import CreateEditModal from './CreateEditModal'
 import ProjectInviteModal from './ProjectInviteModal'
 import ProjectsList from './ProjectsList'
@@ -52,7 +53,7 @@ const Projects = ({
   }
 
   return (
-    <Fragment>
+    <FlexLayout style={{ height: 'calc(100% - 60px)' }}>
       <ProjectsList
         isModerator={isModerator}
         activeProjectId={activeProject.id}
@@ -89,7 +90,7 @@ const Projects = ({
           projectId={activeProject.id}
         />
       )}
-    </Fragment>
+    </FlexLayout>
   )
 }
 

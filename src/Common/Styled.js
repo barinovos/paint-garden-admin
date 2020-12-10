@@ -20,7 +20,6 @@ export const LinkText = styled.div`
 `
 
 export const MainArea = styled.div`
-  overflow-y: auto;
   height: 100%;
 `
 

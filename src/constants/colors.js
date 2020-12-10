@@ -9,6 +9,7 @@ const colors = {
   inputBg: '#F3F4F7',
   lightGrey: '#D8D8D8',
   lightGrey2: '#F0F3F4',
+  lightGreyBg: '#EEEEEE',
   formTitleGray: '#374F67',
   inputTextGray: '#787878',
   pink: '#d69498',
