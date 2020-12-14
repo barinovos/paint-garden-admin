@@ -10,25 +10,18 @@ export const Wrapper = styled.div`
   max-height: 50px;
   z-index: 2000;
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  padding: 7px;
+  width: calc(100% + 86px);
 `
 
 export const ImagesWrapper = styled.div`
-  min-width: 150px;
-  max-width: 150px;
-`
-
-export const Image = styled.img`
-  width: 35px;
-  margin-left: 10px;
-  border: ${props => (props.withBorder ? `1px solid ${colors.blue}` : 'none')};
-`
-
-export const ImageWrapper = styled.div`
-  position: relative;
+  max-width: 100%;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  padding-left: 7px;
 `
 
 export const UploadButtonWrapper = styled.div`
@@ -36,27 +29,35 @@ export const UploadButtonWrapper = styled.div`
   margin-right: 10px;
 `
 
-export const TrashIcon = styled(Icon)`
-  margin-left: 15px;
+export const Image = styled.img`
+  width: 35px;
+  margin-right: 10px;
+  border: ${props => (props.withBorder ? `2px solid ${colors.blue}` : 'none')};
+  ${props => props.withBorder && `box-shadow: 0 0 3px 2px ${colors.blue}`};
+`
+
+export const ImageWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+export const ActionIcon = styled(Icon)`
+  margin-right: 0;
   border-left: 1px solid ${colors.lightGrey2};
-  padding-left: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
 `
 
-export const CloseIcon = styled(Icon)`
+export const DeleteImageIcon = styled(Icon)`
   position: absolute;
-  width: 8px;
-  right: -6px;
-  vertical-align: top;
-`
+  width: 18px;
+  top: 1px;
+  right: 3px;
+  display: none;
 
-export const DeleteIcon = styled.div`
-  width: 10px;
-  height: 10px;
-  top: -5px;
-  right: -5px;
-  background-color: #000;
-  border-radius: 20px;
-  position: absolute;
-  color: #fff;
-  font-size: 5px;
+  ${ImageWrapper}:hover & {
+    display: block;
+  }
 `

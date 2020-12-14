@@ -3,15 +3,19 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import colors from '../../constants/colors'
 import { ReactComponent as UploadIcon } from '../../assets/upload__new.svg'
+import { ReactComponent as PlusIcon } from '../../assets/add.svg'
 
 const StyledButton = styled.div`
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 35px;
   height: 35px;
   ${props => !props.grey && `background-color: ${colors.blue}`};
   border-radius: 3px;
   padding: 6px 7px;
   transition: background-color 0.1s ease;
+  position: relative;
 
   & svg,
   & path {
@@ -46,9 +50,9 @@ const HiddenInput = styled.input.attrs({
   cursor: pointer;
 `
 
-const UploadButton = ({ onUpload, grey = false }) => (
+const UploadButton = ({ onUpload, grey = false, isPlus = false }) => (
   <StyledButton grey={grey}>
-    <UploadIcon />
+    {isPlus ? <PlusIcon /> : <UploadIcon />}
     <HiddenInput onChange={ev => onUpload(ev.target.files)} />
   </StyledButton>
 )
@@ -56,6 +60,7 @@ const UploadButton = ({ onUpload, grey = false }) => (
 UploadButton.propTypes = {
   onUpload: PropTypes.func.isRequired,
   grey: PropTypes.bool,
+  isPlus: PropTypes.bool,
 }
 
 export default UploadButton

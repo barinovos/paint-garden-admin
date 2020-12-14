@@ -1,6 +1,7 @@
 import actionTypes from '../constants/actionTypes'
 import api from '../utils/api'
 import { reCalcSizeWithZoom } from '../utils/calcZoom'
+import { showDeleteModal } from '../Modal/actions'
 import Constants from '../constants'
 
 const {
@@ -47,6 +48,23 @@ export const uploadMedia = (files, userId, projectId, canvasId, zoom = 0) => {
   )
 }
 
+export function uploadMediaToSection(sectionId, files) {
+  return dispatch => {
+    Array.from(files).forEach(file => {
+      const formData = new FormData()
+      formData.append('media', file, file.name)
+      return api
+        .post(`${SECTION}/${sectionId}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        .then(resp =>
+          dispatch({
+            type: actionTypes.UPDATE_SECTION,
+            section: resp.data.data,
+          }),
+        )
+    })
+  }
+}
+
 export const addSection = (files, userId, projectId, canvasId) => (dispatch, getState) =>
   uploadMedia(files, userId, projectId, canvasId, getState().zoom).then(resp =>
     dispatch({ type: actionTypes.CREATE_SECTIONS, sections: resp.map(r => r.data.data) }),
@@ -67,28 +85,25 @@ export function updateSection(sectionId, data) {
 }
 
 export function deleteSection(id) {
-  return dispatch =>
-    api.delete(`${Constants.API.SECTION}/${id}`).then(() =>
-      dispatch({
-        type: actionTypes.DELETE_SECTION,
-        id,
-      }),
+  return dispatch => {
+    dispatch(
+      showDeleteModal(() => {
+        api.delete(`${Constants.API.SECTION}/${id}`).then(() =>
+          dispatch({
+            type: actionTypes.DELETE_SECTION,
+            id,
+          }),
+        )
+      }, 'Deleting this section will remove all layers, are you sure?'),
     )
+  }
 }
 
-export function deleteImage(id, section_id) {
+export function deleteImage(imageId, sectionId) {
   return dispatch =>
-    api.delete(`${Constants.API.IMAGE}/${id}`).then(
-      resp =>
-        dispatch({
-          type: actionTypes.DELETE_IMAGE,
-          id,
-        }),
-
-      dispatch({
-        type: actionTypes.DELETE_IMAGE_SECTION,
-        id,
-        section_id,
-      }),
+    dispatch(
+      showDeleteModal(() => {
+        // TODO: do API call once Mubi will implement history update possible
+      }, 'Do you really want to delete this fancy layer?'),
     )
 }

@@ -27,7 +27,7 @@ const Canvas = ({
   user,
   sections,
   addSection,
-  uploadMedia,
+  uploadMediaToSection,
   deleteSection,
   deleteImage,
   changeCanvasMode,
@@ -53,9 +53,17 @@ const Canvas = ({
     return <PageLoader />
   }
   const { title, project_id, id } = activeCanvas
-  const selectedItemId = selectedSection ? selectedSection.id : null
 
   const onSectionSelect = section => setSelectedSection(sections.find(s => s.id === section.id))
+
+  const onChangeActiveImageIndex = i => {
+    setSelectedSection({
+      ...selectedSection,
+      media: {
+        ...selectedSection.history[i],
+      },
+    })
+  }
 
   const onChangeCanvasMode = mode => {
     setSelectedSection(null)
@@ -80,27 +88,19 @@ const Canvas = ({
                 key={i}
                 item={item}
                 onSelect={onSectionSelect}
-                selectedItemId={selectedItemId}
+                selectedSection={selectedSection}
                 zoomLevel={zoom}
                 onUpdate={updateSection}
                 projectId={project_id}
-                onChangeActiveImageIndex={() => null}
+                onChangeActiveImageIndex={onChangeActiveImageIndex}
                 deleteSection={deleteSection}
                 deleteImage={deleteImage}
-                uploadMedia={uploadMedia}
+                uploadMedia={uploadMediaToSection}
               />
             ))}
           {editMode === EDIT_MODES.annotation && <Annotations zoom={zoom} />}
           {editMode === EDIT_MODES.annotation &&
-            sections.map((item, i) => (
-              <CanvasImage
-                key={i}
-                item={item}
-                onSelect={onSectionSelect}
-                selectedItemId={selectedItemId}
-                zoomLevel={zoom}
-              />
-            ))}
+            sections.map((item, i) => <CanvasImage key={i} item={item} zoomLevel={zoom} />)}
         </InnerArea>
         <PreviewLink>
           Your canvas is published here:
@@ -154,6 +154,7 @@ Canvas.propTypes = {
   user: PropTypes.object,
   match: PropTypes.object,
   activePin: PropTypes.object,
+  uploadMediaToSection: PropTypes.func,
 }
 
 export default connect(

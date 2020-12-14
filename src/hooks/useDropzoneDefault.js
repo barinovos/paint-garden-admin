@@ -17,7 +17,7 @@ const useDropzoneDefault = (projectId, canvasId, userId, onUpload) => {
     },
     // API CALL FOR UPLOAD (end)
 
-    [canvasId, projectId, userId],
+    [canvasId, projectId, userId, onUpload],
   )
 
   const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ onDrop, noClick: true })

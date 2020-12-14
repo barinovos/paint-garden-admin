@@ -16,11 +16,11 @@ export const Wrapper = styled.div`
   z-index: 2001;
 `
 export const ContentWrapper = styled.div`
-  width: 300px;
+  max-width: 400px;
   background: white;
   box-shadow: 2px 3px 22px rgba(0, 0, 0, 0.5);
   border-radius: 2px;
-  padding: 18px 21px;
+  padding: 22px;
 `
 
 const Modal = ({ children, onClose = () => null }) => (

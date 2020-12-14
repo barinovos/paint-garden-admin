@@ -3,6 +3,7 @@ import { projectReducer, canvasesReducer, activeProjectReducer } from '../Projec
 import { editModeReducer, activeCanvasReducer, sectionsReducer, zoom } from '../Canvas/reducers'
 import { annotations, activePin } from '../Annotations/reducers'
 import { userReducer } from '../Main/reducer'
+import { modalReducer } from '../Modal/reducer'
 
 const reducers = combineReducers({
   editMode: editModeReducer,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   user: userReducer,
   activePin,
   zoom,
+  modal: modalReducer,
 })
 
 export default reducers

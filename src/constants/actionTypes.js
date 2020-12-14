@@ -34,6 +34,8 @@ const actionTypes = {
   CHANGE_PROJECT: 'app.CHANGE_PROJECT',
 
   SET_ZOOM: 'app.SET_ZOOM',
+  SHOW_CONFIRM: 'app.SHOW_CONFIRM',
+  HIDE_CONFIRM: 'app.HIDE_CONFIRM',
 
   CHECK_AUTH: 'app.auth.CHECK_AUTH',
   AUTHORISE: 'app.auth.AUTHORISE',

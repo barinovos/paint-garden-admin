@@ -4,35 +4,31 @@ import PropTypes from 'prop-types'
 import { calcSizeWithZoom, reCalcSizeWithZoom } from '../../utils/calcZoom'
 import colors from '../../constants/colors'
 import UploadRibbon from '../UploadRibbon'
+import { getWidth, getHeight, getX, getY } from '../utils'
 
 const ResizableImage = ({
   item,
   onSelect,
-  selectedItemId,
+  selectedSection,
   zoomLevel,
   onUpdate,
   onChangeActiveImageIndex,
   deleteSection,
   deleteImage,
   uploadMedia,
-  projectId,
 }) => {
-  const [x, setX] = useState(calcSizeWithZoom(item.position.x, zoomLevel))
-  const [y, setY] = useState(calcSizeWithZoom(item.position.y, zoomLevel))
-  const [height, setHeight] = useState(
-    calcSizeWithZoom((item.dimensions || item.media.custom_properties).height, zoomLevel),
-  )
-  const [width, setWidth] = useState(
-    calcSizeWithZoom((item.dimensions || item.media.custom_properties).width, zoomLevel),
-  )
-  const isActive = selectedItemId === item.id
+  const [x, setX] = useState(calcSizeWithZoom(getX(item), zoomLevel))
+  const [y, setY] = useState(calcSizeWithZoom(getY(item), zoomLevel))
+  const [height, setHeight] = useState(calcSizeWithZoom(getHeight(item), zoomLevel))
+  const [width, setWidth] = useState(calcSizeWithZoom(getWidth(item), zoomLevel))
+  const isActive = selectedSection && selectedSection.id === item.id
 
   useEffect(() => {
-    setHeight(calcSizeWithZoom((item.dimensions || item.media.custom_properties).height, zoomLevel))
-    setWidth(calcSizeWithZoom((item.dimensions || item.media.custom_properties).width, zoomLevel))
-    setX(calcSizeWithZoom(item.position.x, zoomLevel))
-    setY(calcSizeWithZoom(item.position.y, zoomLevel))
-  }, [zoomLevel, item])
+    setHeight(calcSizeWithZoom(getHeight(isActive ? selectedSection : item), zoomLevel))
+    setWidth(calcSizeWithZoom(getWidth(isActive ? selectedSection : item), zoomLevel))
+    setX(calcSizeWithZoom(getX(item), zoomLevel))
+    setY(calcSizeWithZoom(getY(item), zoomLevel))
+  }, [zoomLevel, item, selectedSection])
 
   const onDragStop = (e, d) => {
     setX(d.x)
@@ -41,7 +37,7 @@ const ResizableImage = ({
       x: reCalcSizeWithZoom(d.x, zoomLevel),
       y: reCalcSizeWithZoom(d.y, zoomLevel),
     }
-    if (item.position.x !== position.x || item.position.y !== position.y) {
+    if (getX(item) !== position.x || getY(item) !== position.y) {
       onUpdate(item.id, {
         position,
       })
@@ -87,10 +83,8 @@ const ResizableImage = ({
     >
       {isActive && (
         <UploadRibbon
-          item={item}
+          item={selectedSection}
           uploadMedia={uploadMedia}
-          projectId={projectId}
-          selectedItemId={selectedItemId}
           onChangeActiveImageIndex={onChangeActiveImageIndex}
           deleteSection={deleteSection}
           deleteImage={deleteImage}
@@ -108,7 +102,7 @@ const ResizableImage = ({
           </video>
         ) : (
           <img
-            alt="{item.media.url}"
+            alt={item.media.url}
             draggable="false"
             src={item.media.url}
             style={{ userDrag: 'none', userSelect: 'none' }}
@@ -124,7 +118,7 @@ const ResizableImage = ({
 ResizableImage.propTypes = {
   item: PropTypes.object.isRequired,
   onSelect: PropTypes.func,
-  selectedItemId: PropTypes.string,
+  selectedSection: PropTypes.object,
   zoomLevel: PropTypes.number,
   onUpdate: PropTypes.func,
   onChangeActiveImageIndex: PropTypes.func,

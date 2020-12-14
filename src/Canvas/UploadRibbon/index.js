@@ -1,32 +1,37 @@
 import React from 'react'
-import { Wrapper, ImageWrapper, Image, UploadButtonWrapper, TrashIcon, DeleteIcon, CloseIcon } from './Styled'
-import close from '../../assets/close.svg'
+import { Wrapper, ImageWrapper, Image, UploadButtonWrapper, ActionIcon, DeleteImageIcon, ImagesWrapper } from './Styled'
+import { FlexLayout } from '../../Common/Styled'
 import trash from '../../assets/trash.svg'
+import edit from '../../assets/edit.svg'
 import UploadButton from '../../components/UploadButton'
 
-const UploadRibbon = ({ item, uploadMedia, projectId, onChangeActiveImageIndex, deleteSection, deleteImage }) => {
+const UploadRibbon = ({ item, uploadMedia, onChangeActiveImageIndex, deleteSection, deleteImage }) => {
+  console.log(item)
   return (
     <Wrapper>
-      <UploadButtonWrapper>
-        <UploadButton onUpload={files => uploadMedia(files, projectId)} />
-      </UploadButtonWrapper>
-      {item.history &&
-        item.history.map((image, i) => (
-          <ImageWrapper key={image.id}>
-            <Image
-              alt={image.id}
-              key={i}
-              src={image.thumb}
-              withBorder={item.media.url === image.url}
-              onClick={() => onChangeActiveImageIndex(i)}
-            />
-            <DeleteIcon onClick={() => deleteImage(image.id, item.id)}>
-              <CloseIcon src={close} />
-            </DeleteIcon>
-          </ImageWrapper>
-        ))}
+      <ImagesWrapper>
+        <UploadButtonWrapper>
+          <UploadButton onUpload={files => uploadMedia(item.id, files)} isPlus={true} />
+        </UploadButtonWrapper>
+        {item.history &&
+          item.history.map((image, i) => (
+            <ImageWrapper key={image.id}>
+              <Image
+                alt={image.id}
+                key={i}
+                src={image.thumb}
+                withBorder={item.media.id === image.id}
+                onClick={() => onChangeActiveImageIndex(i)}
+              />
+              <DeleteImageIcon src={edit} onClick={() => deleteImage(image.id, item.id)} />
+            </ImageWrapper>
+          ))}
+      </ImagesWrapper>
 
-      <TrashIcon src={trash} onClick={() => deleteSection(item.id)} />
+      <FlexLayout justifyContent="end">
+        <ActionIcon src={edit} />
+        <ActionIcon src={trash} onClick={() => deleteSection(item.id)} />
+      </FlexLayout>
     </Wrapper>
   )
 }

@@ -8,6 +8,7 @@ import Toolbar from '../Toolbar'
 import Canvas from '../Canvas'
 import Projects from '../Projects'
 import LoginPage from '../LoginPage'
+import Modal from '../Modal'
 import { getUserInfo, logout } from './actions'
 import { MainArea } from '../Common/Styled'
 import { Logo, LoaderView } from './Styled'
@@ -42,6 +43,7 @@ const Main = ({ user, getUserInfo, history, logout }) => {
           <Route render={() => <div>Not found</div>} />
         </Switch>
       </MainArea>
+      <Modal />
     </Fragment>
   )
 }

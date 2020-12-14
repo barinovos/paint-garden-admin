@@ -14,6 +14,7 @@ const colors = {
   inputTextGray: '#787878',
   pink: '#d69498',
   red: '#b6373f',
+  red2: '#E74242',
   black: '#393939',
   black2: '#202020',
 }
