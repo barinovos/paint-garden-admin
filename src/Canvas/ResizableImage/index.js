@@ -6,29 +6,21 @@ import colors from '../../constants/colors'
 import UploadRibbon from '../UploadRibbon'
 import { getWidth, getHeight, getX, getY } from '../utils'
 
-const ResizableImage = ({
-  item,
-  onSelect,
-  selectedSection,
-  zoomLevel,
-  onUpdate,
-  onChangeActiveImageIndex,
-  deleteSection,
-  deleteImage,
-  uploadMedia,
-}) => {
+const ResizableImage = ({ item, onSelect, isActive, zoomLevel, onUpdate, deleteSection, deleteImage, uploadMedia }) => {
   const [x, setX] = useState(calcSizeWithZoom(getX(item), zoomLevel))
   const [y, setY] = useState(calcSizeWithZoom(getY(item), zoomLevel))
   const [height, setHeight] = useState(calcSizeWithZoom(getHeight(item), zoomLevel))
   const [width, setWidth] = useState(calcSizeWithZoom(getWidth(item), zoomLevel))
-  const isActive = selectedSection && selectedSection.id === item.id
+  const [media, setMedia] = useState(item.media)
 
   useEffect(() => {
-    setHeight(calcSizeWithZoom(getHeight(isActive ? selectedSection : item), zoomLevel))
-    setWidth(calcSizeWithZoom(getWidth(isActive ? selectedSection : item), zoomLevel))
+    setHeight(calcSizeWithZoom(getHeight(item), zoomLevel))
+    setWidth(calcSizeWithZoom(getWidth(item), zoomLevel))
     setX(calcSizeWithZoom(getX(item), zoomLevel))
     setY(calcSizeWithZoom(getY(item), zoomLevel))
-  }, [zoomLevel, item, selectedSection])
+  }, [zoomLevel, item])
+
+  const onHistoryClick = i => setMedia(item.history[i])
 
   const onDragStop = (e, d) => {
     setX(d.x)
@@ -83,9 +75,10 @@ const ResizableImage = ({
     >
       {isActive && (
         <UploadRibbon
-          item={selectedSection}
+          item={item}
+          activeMediaId={media.id}
           uploadMedia={uploadMedia}
-          onChangeActiveImageIndex={onChangeActiveImageIndex}
+          onHistoryIndexChange={onHistoryClick}
           deleteSection={deleteSection}
           deleteImage={deleteImage}
         />
@@ -96,15 +89,15 @@ const ResizableImage = ({
           height: '100%',
         }}
       >
-        {item.media.mime_type.includes('video') ? (
+        {media.mime_type && media.mime_type.includes('video') ? (
           <video controls style={{ userDrag: 'none', userSelect: 'none' }}>
-            <source src={item.media.url} type={item.media.mime_type} />
+            <source src={media.url} type={media.mime_type} />
           </video>
         ) : (
           <img
-            alt={item.media.url}
+            alt={media.url}
             draggable="false"
-            src={item.media.url}
+            src={media.url}
             style={{ userDrag: 'none', userSelect: 'none' }}
             width="100%"
             height="100%"
@@ -118,7 +111,7 @@ const ResizableImage = ({
 ResizableImage.propTypes = {
   item: PropTypes.object.isRequired,
   onSelect: PropTypes.func,
-  selectedSection: PropTypes.object,
+  isActive: PropTypes.bool,
   zoomLevel: PropTypes.number,
   onUpdate: PropTypes.func,
   onChangeActiveImageIndex: PropTypes.func,

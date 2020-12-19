@@ -1,9 +1,9 @@
 export const getItemSize = (item, prop) => {
-  if (item.media && item.media.custom_properties && item.media.custom_properties[prop]) {
-    return item.media.custom_properties[prop]
-  }
   if (item.dimensions && item.dimensions[prop]) {
     return item.dimensions[prop]
+  }
+  if (item.media && item.media.custom_properties && item.media.custom_properties[prop]) {
+    return item.media.custom_properties[prop]
   }
   // just some random value to set up anything
   return 500

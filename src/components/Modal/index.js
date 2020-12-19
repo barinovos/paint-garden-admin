@@ -21,11 +21,15 @@ export const ContentWrapper = styled.div`
   box-shadow: 2px 3px 22px rgba(0, 0, 0, 0.5);
   border-radius: 2px;
   padding: 22px;
+
+  ${props => props.minWidth && `min-width: ${props.minWidth}`};
 `
 
-const Modal = ({ children, onClose = () => null }) => (
+const Modal = ({ children, minWidth, onClose = () => null }) => (
   <Wrapper onClick={onClose}>
-    <ContentWrapper onClick={ev => ev.stopPropagation()}>{children}</ContentWrapper>
+    <ContentWrapper minWidth={minWidth} onClick={ev => ev.stopPropagation()}>
+      {children}
+    </ContentWrapper>
   </Wrapper>
 )
 

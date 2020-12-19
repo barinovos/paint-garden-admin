@@ -5,7 +5,7 @@ import trash from '../../assets/trash.svg'
 import edit from '../../assets/edit.svg'
 import UploadButton from '../../components/UploadButton'
 
-const UploadRibbon = ({ item, uploadMedia, onChangeActiveImageIndex, deleteSection, deleteImage }) => {
+const UploadRibbon = ({ item, uploadMedia, onHistoryIndexChange, deleteSection, deleteImage, activeMediaId }) => {
   console.log(item)
   return (
     <Wrapper>
@@ -20,8 +20,8 @@ const UploadRibbon = ({ item, uploadMedia, onChangeActiveImageIndex, deleteSecti
                 alt={image.id}
                 key={i}
                 src={image.thumb}
-                withBorder={item.media.id === image.id}
-                onClick={() => onChangeActiveImageIndex(i)}
+                withBorder={activeMediaId === image.id}
+                onClick={() => onHistoryIndexChange(i)}
               />
               <DeleteImageIcon src={edit} onClick={() => deleteImage(image.id, item.id)} />
             </ImageWrapper>

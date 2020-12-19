@@ -25,7 +25,7 @@ const ProjectInviteModal = ({ onSave, onClose, projectId = null }) => {
   }
 
   return (
-    <Modal onClick={onClose}>
+    <Modal minWidth="400px" onClick={onClose}>
       <Title>Invite</Title>
       <JustifiedRow direction="column">
         <TextArea

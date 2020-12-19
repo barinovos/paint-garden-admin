@@ -56,15 +56,6 @@ const Canvas = ({
 
   const onSectionSelect = section => setSelectedSection(sections.find(s => s.id === section.id))
 
-  const onChangeActiveImageIndex = i => {
-    setSelectedSection({
-      ...selectedSection,
-      media: {
-        ...selectedSection.history[i],
-      },
-    })
-  }
-
   const onChangeCanvasMode = mode => {
     setSelectedSection(null)
     changeCanvasMode(mode)
@@ -85,14 +76,13 @@ const Canvas = ({
           {editMode === EDIT_MODES.default &&
             sections.map((item, i) => (
               <ResizableImage
-                key={i}
+                key={item.id + item.media.id}
                 item={item}
                 onSelect={onSectionSelect}
-                selectedSection={selectedSection}
+                isActive={selectedSection && selectedSection.id === item.id}
                 zoomLevel={zoom}
                 onUpdate={updateSection}
                 projectId={project_id}
-                onChangeActiveImageIndex={onChangeActiveImageIndex}
                 deleteSection={deleteSection}
                 deleteImage={deleteImage}
                 uploadMedia={uploadMediaToSection}
