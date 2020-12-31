@@ -26,9 +26,9 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "export REACT_APP_API_URL=https://api.paint.garden/api/v1; react-scripts start",
+    "start": "export REACT_APP_API_URL=https://sso.paint.garden/api/v2; react-scripts start",
+    "build": "export REACT_APP_API_URL=https://sso.paint.garden/api/v2; react-scripts build",
     "start:staging": "export REACT_APP_API_URL=https://v2-api.paint.garden/api/v2; react-scripts start",
-    "build": "export REACT_APP_API_URL=https://api.paint.garden/api/v1; react-scripts build",
     "build:staging": "export REACT_APP_API_URL=https://v2-api.paint.garden/api/v2; react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
