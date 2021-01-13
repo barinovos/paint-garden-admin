@@ -21,11 +21,11 @@ export function projectReducer(state = [], action) {
 export function activeProjectReducer(state = {}, action) {
   switch (action.type) {
     case actionTypes.UPDATE_PROJECTS:
-      return action.projects.length ? action.projects[0] : null
+      return action.projects.length ? action.projects[0] : {}
     case actionTypes.SET_ACTIVE_PROJECT:
       return action.project
     case actionTypes.DELETE_PROJECT:
-      return state.id === action.id ? null : state
+      return state.id === action.id ? {} : state
     case actionTypes.CHANGE_PROJECT:
       return state.id === action.project.id ? action.project : state
     default:
