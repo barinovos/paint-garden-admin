@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import { messageToLink } from './messageText'
 import Button from '../components/Button'
 import TextArea from '../components/TextArea'
 import {
@@ -96,7 +97,7 @@ const Reply = ({
         />
       ) : (
         <Fragment>
-          <ReplyText>{reply.text}</ReplyText>
+          <ReplyText> {messageToLink(reply.text)} </ReplyText>
           {reply.media && <MediaThumb src={reply.media.url} alt={reply.media.name} />}
         </Fragment>
       )}
