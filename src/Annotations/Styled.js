@@ -128,3 +128,8 @@ export const OptionsPanel = styled.div`
     background: ${colors.lightGrey2};
   }
 `
+export const MessageLink = styled.a`
+  color: #4da1ff;
+  border-bottom: 1px solid #4da1ff;
+  margin: 0px 2px;
+`

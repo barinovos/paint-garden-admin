@@ -31,9 +31,9 @@ export function createProject(project) {
   //   formData.append('parent_id', project.parentId)
   // }
 
-  if (project.shared_with.length > 0) {
+  /*if (project.shared_with.length > 0) {
     formData.append('shared_with', JSON.stringify(project.shared_with))
-  }
+  }*/
   return dispatch =>
     api
       .post(`${PROJECT}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })

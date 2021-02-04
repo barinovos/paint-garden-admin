@@ -21,11 +21,17 @@ export function projectReducer(state = [], action) {
 export function activeProjectReducer(state = {}, action) {
   switch (action.type) {
     case actionTypes.UPDATE_PROJECTS:
-      return action.projects.length ? action.projects[0] : null
+      const PreviousProjectID = sessionStorage.getItem('activeProject')
+      const PreviousProjectIndex =
+        action.projects.findIndex(proj => proj.id === PreviousProjectID) > 0
+          ? action.projects.findIndex(proj => proj.id === PreviousProjectID)
+          : 0
+      // return PreviousProjectID > 0 ? action.projects[PreviousProjectIndex] : action.projects[0]
+      return action.projects.length ? action.projects[PreviousProjectIndex] : {}
     case actionTypes.SET_ACTIVE_PROJECT:
       return action.project
     case actionTypes.DELETE_PROJECT:
-      return state.id === action.id ? null : state
+      return state.id === action.id ? {} : state
     case actionTypes.CHANGE_PROJECT:
       return state.id === action.project.id ? action.project : state
     default:
@@ -36,7 +42,12 @@ export function activeProjectReducer(state = {}, action) {
 export function canvasesReducer(state = [], action) {
   switch (action.type) {
     case actionTypes.UPDATE_PROJECTS:
-      return action.projects.length ? action.projects[0].canvas : state
+      const PreviousProjectID = sessionStorage.getItem('activeProject')
+      const PreviousProjectIndex =
+        action.projects.findIndex(proj => proj.id === PreviousProjectID) > 0
+          ? action.projects.findIndex(proj => proj.id === PreviousProjectID)
+          : 0
+      return action.projects.length ? action.projects[PreviousProjectIndex].canvas : state
     case actionTypes.UPDATE_CANVASES:
       return action.canvases || []
     case actionTypes.SET_ACTIVE_PROJECT:

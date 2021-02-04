@@ -75,20 +75,23 @@ const Canvas = ({
         <InnerArea>
           {editMode === EDIT_MODES.default &&
             sections.map((item, i) => (
-              <ResizableImage
-                key={item.id + item.media.id}
-                item={item}
-                onSelect={onSectionSelect}
-                isActive={selectedSection && selectedSection.id === item.id}
-                zoomLevel={zoom}
-                onUpdate={updateSection}
-                projectId={project_id}
-                deleteSection={deleteSection}
-                deleteImage={deleteImage}
-                uploadMedia={uploadMediaToSection}
-              />
+              <>
+                <ResizableImage
+                  key={item.id + item.media.id}
+                  item={item}
+                  onSelect={onSectionSelect}
+                  isActive={selectedSection && selectedSection.id === item.id}
+                  zoomLevel={zoom}
+                  onUpdate={updateSection}
+                  projectId={project_id}
+                  deleteSection={deleteSection}
+                  deleteImage={deleteImage}
+                  uploadMedia={uploadMediaToSection}
+                />
+                <Annotations zoom={zoom} editMode={editMode} onChangeCanvasMode={onChangeCanvasMode} />
+              </>
             ))}
-          {editMode === EDIT_MODES.annotation && <Annotations zoom={zoom} />}
+          {editMode === EDIT_MODES.annotation && <Annotations zoom={zoom} onChangeCanvasMode={onChangeCanvasMode} />}
           {editMode === EDIT_MODES.annotation &&
             sections.map((item, i) => <CanvasImage key={i} item={item} zoomLevel={zoom} />)}
         </InnerArea>
@@ -104,6 +107,7 @@ const Canvas = ({
         <Comments
           items={annotations.filter(a => !a.parent_id)}
           activePin={activePin}
+          editMode={editMode}
           selectAnnotation={selectAnnotation}
         />
       )}
