@@ -50,15 +50,21 @@ const HiddenInput = styled.input.attrs({
   cursor: pointer;
 `
 
-const UploadButton = ({ onUpload, grey = false, isPlus = false }) => (
+const UploadButton = ({ onUpload, grey = false, isPlus = false, onChangeCanvasMode }) => (
   <StyledButton grey={grey}>
     {isPlus ? <PlusIcon /> : <UploadIcon />}
-    <HiddenInput onChange={ev => onUpload(ev.target.files)} />
+    <HiddenInput
+      onChange={ev => {
+        onChangeCanvasMode()
+        onUpload(ev.target.files)
+      }}
+    />
   </StyledButton>
 )
 
 UploadButton.propTypes = {
   onUpload: PropTypes.func.isRequired,
+  onChangeCanvasMode: PropTypes.func.isRequired,
   grey: PropTypes.bool,
   isPlus: PropTypes.bool,
 }

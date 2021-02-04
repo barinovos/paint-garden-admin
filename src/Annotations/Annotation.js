@@ -155,8 +155,8 @@ const Annotation = ({ data, user, position, onClose, onComment, onEdit, onDelete
 
   return (
     <CommentModal
-      left={`${+position.x + 40}px`}
-      top={`${+position.y - 72}px`}
+      left={`${+position?.x + 40}px`}
+      top={`${+position?.y - 72}px`}
       onClick={ev => {
         setShowOptions(null)
         ev.stopPropagation()

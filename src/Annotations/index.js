@@ -7,6 +7,8 @@ import Annotation from './Annotation'
 import { PinViewWrapper } from './Styled'
 import { reCalcSizeWithZoom } from '../utils/calcZoom'
 import * as actions from './actions'
+import Constants from '../constants'
+const { EDIT_MODES } = Constants
 
 const getTopLevelPins = annotations => annotations.filter(a => !a.parent_id)
 
@@ -21,6 +23,8 @@ const Annotations = ({
   selectAnnotation,
   activeCanvas,
   sections,
+  editMode,
+  onChangeCanvasMode,
 }) => {
   const [position, setPosition] = useState(null)
 
@@ -56,10 +60,26 @@ const Annotations = ({
     )
   }
 
-  return (
+  return editMode === EDIT_MODES.default ? (
+    getTopLevelPins(annotations).map((pin, i) => (
+      <AnnotationIcon
+        key={i}
+        data={pin}
+        onPinClick={onShowModalForEdit}
+        onChangeCanvasMode={onChangeCanvasMode}
+        zoomLevel={zoomLevel}
+      />
+    ))
+  ) : (
     <PinViewWrapper onClick={onAddPin}>
       {getTopLevelPins(annotations).map((pin, i) => (
-        <AnnotationIcon key={i} data={pin} onPinClick={onShowModalForEdit} zoomLevel={zoomLevel} />
+        <AnnotationIcon
+          key={i}
+          data={pin}
+          onPinClick={onShowModalForEdit}
+          onChangeCanvasMode={onChangeCanvasMode}
+          zoomLevel={zoomLevel}
+        />
       ))}
       {activePin && (
         <Annotation
@@ -87,6 +107,8 @@ Annotations.propTypes = {
   activePin: PropTypes.object,
   sections: PropTypes.array,
   activeCanvas: PropTypes.object,
+  editMode: PropTypes.string,
+  onChangeCanvasMode: PropTypes.func,
 }
 
 export default connect(
