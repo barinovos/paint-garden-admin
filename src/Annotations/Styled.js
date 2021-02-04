@@ -15,6 +15,7 @@ export const PinViewWrapper = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
+  z-index:100;
 `
 
 export const AddImage = styled.div`
@@ -126,4 +127,9 @@ export const OptionsPanel = styled.div`
   & > p:hover {
     background: ${colors.lightGrey2};
   }
+`
+export const MessageLink = styled.a`
+  color: #4da1ff;
+  border-bottom: 1px solid #4da1ff;
+  margin: 0px 2px;
 `

@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   right: 30px;
   padding: 10px 0;
   height: 60px;
-  z-index: 2;
+  z-index: 200;
 `
 
 export const Button = styled.div`

@@ -8,7 +8,7 @@ import { ClosedWrapper, ListHeader, ListWrapper, ListItem, Date } from './Styled
 import { FlexLayout } from '../../Common/Styled'
 
 const Comments = ({ items = [], selectAnnotation, activePin }) => {
-  const [isOpened, setIsOpened] = useState(false)
+  const [isOpened, setIsOpened] = useState(true)
   const activeId = activePin ? activePin.id : null
 
   return !isOpened ? (
