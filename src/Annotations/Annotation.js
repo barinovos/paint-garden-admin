@@ -27,7 +27,13 @@ import { ReactComponent as PinIcon } from '../assets/Pin_active.svg'
 const InputForm = ({ commentText, mediaFiles, onSetText, onSetMedia, onCancel, onComment }) => (
   <Fragment>
     <FlexLayout margin="15px 0">
-      <TextArea value={commentText} onChange={ev => onSetText(ev.target.value)} placeholder="Comment" />
+      <TextArea
+        value={commentText}
+        onChange={ev => {
+          onSetText(ev.target.value)
+        }}
+        placeholder="Comment"
+      />
       <AddImage>
         <AttachIcon />
         {/* Multiple files possible */}
