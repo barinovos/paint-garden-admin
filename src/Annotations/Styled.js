@@ -44,6 +44,7 @@ export const CommentModal = styled.div`
   position: absolute;
   left: ${props => props.left || '50%'};
   top: ${props => props.top || '50%'};
+  transform: translate(${props => props.x}, ${props => props.y});
   background: white;
   min-height: 135px;
   width: 410px;
