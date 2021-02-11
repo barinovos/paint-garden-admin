@@ -6,6 +6,15 @@ const {
   API: { PROJECT, CANVAS },
 } = Constants
 
+const canvasColor = () => {
+  var letters = '123456789ABCDE'
+  var color = '#'
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
+}
+
 export function fetchData(project_id) {
   let url = PROJECT
   if (project_id !== undefined) {
@@ -46,6 +55,7 @@ export function createCanvas(canvas, project_id) {
       .post(`${CANVAS}`, {
         project_id,
         ...canvas,
+        bg_color: canvasColor(),
       })
       .then(resp =>
         dispatch({

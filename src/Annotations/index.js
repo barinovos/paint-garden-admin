@@ -102,7 +102,7 @@ Annotations.propTypes = {
   addAnnotation: PropTypes.func,
   deleteAnnotation: PropTypes.func,
   editAnnotation: PropTypes.func,
-  zoomLevel: PropTypes.number,
+  zoom: PropTypes.number,
   user: PropTypes.object,
   selectAnnotation: PropTypes.func,
   activePin: PropTypes.object,

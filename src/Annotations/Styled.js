@@ -97,6 +97,7 @@ export const IconWrapper = styled.div`
 export const ReplyText = styled.p`
   margin: 12px 0 14px;
   overflow: hidden;
+  white-space: pre-wrap;
 `
 
 export const RepliesContainer = styled.div`
@@ -133,4 +134,9 @@ export const MessageLink = styled.a`
   color: #4da1ff;
   border-bottom: 1px solid #4da1ff;
   margin: 0px 2px;
+`
+
+export const LineBreak = styled.span`
+  display: block;
+  line-height: 5;
 `
