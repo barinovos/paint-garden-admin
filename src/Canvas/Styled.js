@@ -11,6 +11,10 @@ export const Wrapper = styled.div`
 export const InnerArea = styled.div`
   min-width: 100%;
   min-height: 100%;
+  position: absolute;
+  top: ${props => props.position?.top}px;
+  left: ${props => props.position?.left}px;
+  transition: 0.5s;
 `
 
 export const PreviewLink = styled.div`

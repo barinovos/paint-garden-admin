@@ -41,6 +41,11 @@ export const ListHeader = styled.div`
 export const ListItem = styled.div`
   padding: 20px 30px;
   border-bottom: 1px solid ${colors.lightGrey2};
+  cursor: pointer;
+  transition: 0.5s;
+  &:hover {
+    background-color: ${colors.lightGrey2};
+  }
 
   ${props => props.active && `background-color: ${colors.lightGrey2}`}
 `

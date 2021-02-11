@@ -17,7 +17,7 @@ const Annotations = ({
   addAnnotation,
   editAnnotation,
   deleteAnnotation,
-  zoomLevel,
+  zoom,
   user,
   activePin,
   selectAnnotation,
@@ -29,8 +29,8 @@ const Annotations = ({
   const [position, setPosition] = useState(null)
 
   const onAddPin = ev => {
-    const x = reCalcSizeWithZoom(ev.clientX, zoomLevel)
-    const y = reCalcSizeWithZoom(ev.clientY, zoomLevel)
+    const x = reCalcSizeWithZoom(ev.clientX, zoom)
+    const y = reCalcSizeWithZoom(ev.clientY, zoom)
     setPosition({
       x,
       y,
@@ -67,7 +67,7 @@ const Annotations = ({
         data={pin}
         onPinClick={onShowModalForEdit}
         onChangeCanvasMode={onChangeCanvasMode}
-        zoomLevel={zoomLevel}
+        zoomLevel={zoom}
       />
     ))
   ) : (
@@ -78,7 +78,7 @@ const Annotations = ({
           data={pin}
           onPinClick={onShowModalForEdit}
           onChangeCanvasMode={onChangeCanvasMode}
-          zoomLevel={zoomLevel}
+          zoomLevel={zoom}
         />
       ))}
       {activePin && (
@@ -90,6 +90,7 @@ const Annotations = ({
           onDelete={deleteAnnotation}
           onClose={() => selectAnnotation(null)}
           onEdit={editAnnotation}
+          zoomLevel={zoom}
         />
       )}
     </PinViewWrapper>

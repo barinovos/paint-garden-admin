@@ -16,6 +16,7 @@ import Annotations from '../Annotations'
 import CanvasImage from './CanvasImage'
 import UploadViaUrl from './UploadViaUrl'
 import PageLoader from '../components/PageLoader'
+import { getPosition } from '../utils/calcZoom'
 
 const { MAX_ZOOM_LEVEL, EDIT_MODES } = Constants
 
@@ -42,6 +43,7 @@ const Canvas = ({
 }) => {
   const [selectedSection, setSelectedSection] = useState(null)
   const [showUploadUrlModal, setShowUploadUrlModal] = useState(false)
+  const [autoAdjust, setAutoAdjust] = useState(false)
 
   useEffect(() => {
     fetchCanvasData(match.params.canvasId)
@@ -61,6 +63,10 @@ const Canvas = ({
     changeCanvasMode(mode)
   }
 
+  const handleAutoAdjust = val => {
+    setAutoAdjust(val)
+  }
+
   return (
     <Wrapper>
       <CanvasHeader title={title} />
@@ -72,7 +78,13 @@ const Canvas = ({
         hideButton={!!sections.length}
         onUpload={addSection}
       >
-        <InnerArea>
+        <InnerArea
+          position={
+            autoAdjust // Check if the AutoAdjust is turned on
+              ? getPosition(activePin?.position?.y, activePin?.position?.x, zoom)
+              : 0 // else normal
+          }
+        >
           {editMode === EDIT_MODES.default &&
             sections.map((item, i) => (
               <>
@@ -109,6 +121,7 @@ const Canvas = ({
           activePin={activePin}
           editMode={editMode}
           selectAnnotation={selectAnnotation}
+          handleAnnotation={handleAutoAdjust}
         />
       )}
 
