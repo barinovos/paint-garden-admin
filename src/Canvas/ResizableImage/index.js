@@ -9,13 +9,16 @@ import { getWidth, getHeight, getX, getY } from '../utils'
 const ResizableImage = ({ item, onSelect, isActive, zoomLevel, onUpdate, deleteSection, deleteImage, uploadMedia }) => {
   const [x, setX] = useState(calcSizeWithZoom(getX(item), zoomLevel))
   const [y, setY] = useState(calcSizeWithZoom(getY(item), zoomLevel))
+  const [aspectRatio, setAspectRatio] = useState(false)
   const [height, setHeight] = useState(calcSizeWithZoom(getHeight(item), zoomLevel))
   const [width, setWidth] = useState(calcSizeWithZoom(getWidth(item), zoomLevel))
   const [media, setMedia] = useState(item.media)
 
   useEffect(() => {
-    setHeight(calcSizeWithZoom(getHeight(item), zoomLevel))
-    setWidth(calcSizeWithZoom(getWidth(item), zoomLevel))
+    const height = calcSizeWithZoom(getHeight(item), zoomLevel)
+    const width = calcSizeWithZoom(getWidth(item), zoomLevel)
+    setHeight(height)
+    setWidth(width)
     setX(calcSizeWithZoom(getX(item), zoomLevel))
     setY(calcSizeWithZoom(getY(item), zoomLevel))
   }, [zoomLevel, item])
@@ -41,13 +44,24 @@ const ResizableImage = ({ item, onSelect, isActive, zoomLevel, onUpdate, deleteS
     const new_width = reCalcSizeWithZoom(ref.offsetWidth, zoomLevel)
     setHeight(calcSizeWithZoom(new_height, zoomLevel))
     setWidth(calcSizeWithZoom(new_width, zoomLevel))
-
     onUpdate(item.id, {
       dimensions: {
         width: new_width, //calcSizeWithZoom(new_width, zoomLevel),
         height: new_height, // RalcSizeWithZoom(new_height, zoomLevel),
       },
     })
+  }
+
+  const onResize = (e, direction, ref, delta, position) => {
+    if (event?.shiftKey) {
+      setAspectRatio(true)
+    } else {
+      setAspectRatio(false)
+      setWidth(ref.offsetWidth)
+      setHeight(ref.offsetHeight)
+      setX(position.x)
+      setY(position.y)
+    }
   }
 
   return (
@@ -67,11 +81,9 @@ const ResizableImage = ({ item, onSelect, isActive, zoomLevel, onUpdate, deleteS
       onResizeStop={onResizeStop}
       onDragStop={onDragStop}
       onResize={(e, direction, ref, delta, position) => {
-        setWidth(ref.offsetWidth)
-        setHeight(ref.offsetHeight)
-        setX(position.x)
-        setY(position.y)
+        onResize(e, direction, ref, delta, position)
       }}
+      lockAspectRatio={aspectRatio}
     >
       {isActive && (
         <UploadRibbon

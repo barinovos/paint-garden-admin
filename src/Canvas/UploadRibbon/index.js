@@ -6,7 +6,6 @@ import edit from '../../assets/edit.svg'
 import UploadButton from '../../components/UploadButton'
 
 const UploadRibbon = ({ item, uploadMedia, onHistoryIndexChange, deleteSection, deleteImage, activeMediaId }) => {
-  console.log(item)
   return (
     <Wrapper>
       <ImagesWrapper>
