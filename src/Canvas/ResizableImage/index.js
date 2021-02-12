@@ -53,7 +53,7 @@ const ResizableImage = ({ item, onSelect, isActive, zoomLevel, onUpdate, deleteS
   }
 
   const onResize = (e, direction, ref, delta, position) => {
-    if (event?.shiftKey) {
+    if (e?.shiftKey) {
       setAspectRatio(true)
     } else {
       setAspectRatio(false)
