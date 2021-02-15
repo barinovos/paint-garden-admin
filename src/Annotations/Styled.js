@@ -15,7 +15,7 @@ export const PinViewWrapper = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  z-index:100;
+  z-index: 100;
 `
 
 export const AddImage = styled.div`
@@ -80,7 +80,7 @@ export const ActivePin = styled.div`
 `
 
 export const MediaThumb = styled.img`
-  max-height: 60px;
+  max-height: 120px;
   margin: 6px 10px 6px 0;
 `
 
