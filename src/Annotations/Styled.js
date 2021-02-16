@@ -15,6 +15,7 @@ export const PinViewWrapper = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
+  z-index: 100;
 `
 
 export const AddImage = styled.div`
@@ -43,6 +44,7 @@ export const CommentModal = styled.div`
   position: absolute;
   left: ${props => props.left || '50%'};
   top: ${props => props.top || '50%'};
+  transform: translate(${props => props.x}, ${props => props.y});
   background: white;
   min-height: 135px;
   width: 410px;
@@ -78,7 +80,7 @@ export const ActivePin = styled.div`
 `
 
 export const MediaThumb = styled.img`
-  max-height: 60px;
+  max-height: 120px;
   margin: 6px 10px 6px 0;
 `
 
@@ -95,6 +97,7 @@ export const IconWrapper = styled.div`
 export const ReplyText = styled.p`
   margin: 12px 0 14px;
   overflow: hidden;
+  white-space: pre-wrap;
 `
 
 export const RepliesContainer = styled.div`
@@ -126,4 +129,14 @@ export const OptionsPanel = styled.div`
   & > p:hover {
     background: ${colors.lightGrey2};
   }
+`
+export const MessageLink = styled.a`
+  color: #4da1ff;
+  border-bottom: 1px solid #4da1ff;
+  margin: 0px 2px;
+`
+
+export const LineBreak = styled.span`
+  display: block;
+  line-height: 5;
 `

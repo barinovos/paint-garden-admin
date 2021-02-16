@@ -8,12 +8,16 @@ const {
 
 export function fetchAnnotations(canvasId) {
   return dispatch =>
-    api.get(`${CANVAS}/${canvasId}${ANNOTATION}s`).then(resp =>
-      dispatch({
+    api.get(`${CANVAS}/${canvasId}${ANNOTATION}s`).then(resp => {
+      const updatedData = resp?.data?.data?.map(item => {
+        const replies = item?.replies?.reverse()
+        return { ...item, replies }
+      })
+      return dispatch({
         type: actionTypes.SET_PINS,
-        pins: resp.data.data,
-      }),
-    )
+        pins: updatedData,
+      })
+    })
 }
 
 const convertJsonToFormData = ({ user_id, project_id, canvas_id, section_id, text, parent_id, position, media }) => {

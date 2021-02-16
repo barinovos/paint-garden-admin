@@ -7,14 +7,25 @@ import Tooltip from '../../components/Tooltip'
 import { ClosedWrapper, ListHeader, ListWrapper, ListItem, Date } from './Styled'
 import { FlexLayout } from '../../Common/Styled'
 
-const Comments = ({ items = [], selectAnnotation, activePin }) => {
+const Comments = ({ items = [], selectAnnotation, activePin, handleAnnotation }) => {
   const [isOpened, setIsOpened] = useState(false)
   const activeId = activePin ? activePin.id : null
+
+  React.useEffect(() => {
+    handleAnnotation(true)
+    console.log('handleAnotation to true')
+    // eslint-disable-next-line
+  }, [])
 
   return !isOpened ? (
     <Fragment>
       <ClosedWrapper data-tip data-for="dialogue">
-        <PinIcon onClick={() => setIsOpened(true)} />
+        <PinIcon
+          onClick={() => {
+            setIsOpened(true)
+            handleAnnotation(true)
+          }}
+        />
       </ClosedWrapper>
 
       <Tooltip id="dialogue" text="Comments" place="left" />
@@ -23,7 +34,12 @@ const Comments = ({ items = [], selectAnnotation, activePin }) => {
     <ListWrapper>
       <ListHeader>
         <h1>Annotations list</h1>
-        <CloseIcon style={{ cursor: 'pointer' }} onClick={() => setIsOpened(false)} />
+        <CloseIcon
+          style={{ cursor: 'pointer' }}
+          onClick={() => {
+            setIsOpened(false)
+          }}
+        />
       </ListHeader>
       {items.map(item => (
         <ListItem

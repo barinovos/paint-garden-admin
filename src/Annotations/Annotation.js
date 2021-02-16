@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import { messageToLink } from './messageText'
 import Button from '../components/Button'
 import TextArea from '../components/TextArea'
+import { calcSizeWithZoom } from '../utils/calcZoom'
 import {
   CommentModal,
   Avatar,
@@ -26,7 +28,13 @@ import { ReactComponent as PinIcon } from '../assets/Pin_active.svg'
 const InputForm = ({ commentText, mediaFiles, onSetText, onSetMedia, onCancel, onComment }) => (
   <Fragment>
     <FlexLayout margin="15px 0">
-      <TextArea value={commentText} onChange={ev => onSetText(ev.target.value)} placeholder="Comment" />
+      <TextArea
+        value={commentText}
+        onChange={ev => {
+          onSetText(ev.target.value)
+        }}
+        placeholder="Comment"
+      />
       <AddImage>
         <AttachIcon />
         {/* Multiple files possible */}
@@ -96,7 +104,7 @@ const Reply = ({
         />
       ) : (
         <Fragment>
-          <ReplyText>{reply.text}</ReplyText>
+          <ReplyText> {messageToLink(reply.text)} </ReplyText>
           {reply.media && <MediaThumb src={reply.media.url} alt={reply.media.name} />}
         </Fragment>
       )}
@@ -110,7 +118,7 @@ const Reply = ({
   )
 }
 
-const Annotation = ({ data, user, position, onClose, onComment, onEdit, onDelete }) => {
+const Annotation = ({ data, user, position, onClose, onComment, onEdit, onDelete, zoomLevel }) => {
   const [commentText, setText] = useState('')
   const [mediaFiles, setMediaArray] = useState([])
   const [activeEditReply, setActiveEdit] = useState(null)
@@ -155,8 +163,10 @@ const Annotation = ({ data, user, position, onClose, onComment, onEdit, onDelete
 
   return (
     <CommentModal
-      left={`${+position.x + 40}px`}
-      top={`${+position.y - 72}px`}
+      left={`${calcSizeWithZoom(position?.x, zoomLevel)}px`}
+      top={`${calcSizeWithZoom(position?.y, zoomLevel)}px`}
+      x={`${40}px`}
+      y={`${-72}px`}
       onClick={ev => {
         setShowOptions(null)
         ev.stopPropagation()

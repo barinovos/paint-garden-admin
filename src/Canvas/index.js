@@ -16,6 +16,7 @@ import Annotations from '../Annotations'
 import CanvasImage from './CanvasImage'
 import UploadViaUrl from './UploadViaUrl'
 import PageLoader from '../components/PageLoader'
+import { getPosition } from '../utils/calcZoom'
 
 const { MAX_ZOOM_LEVEL, EDIT_MODES } = Constants
 
@@ -42,6 +43,7 @@ const Canvas = ({
 }) => {
   const [selectedSection, setSelectedSection] = useState(null)
   const [showUploadUrlModal, setShowUploadUrlModal] = useState(false)
+  const [autoAdjust, setAutoAdjust] = useState(false)
 
   useEffect(() => {
     fetchCanvasData(match.params.canvasId)
@@ -61,6 +63,10 @@ const Canvas = ({
     changeCanvasMode(mode)
   }
 
+  const handleAutoAdjust = val => {
+    setAutoAdjust(val)
+  }
+
   return (
     <Wrapper>
       <CanvasHeader title={title} />
@@ -72,23 +78,32 @@ const Canvas = ({
         hideButton={!!sections.length}
         onUpload={addSection}
       >
-        <InnerArea>
+        <InnerArea
+          position={
+            autoAdjust // Check if the AutoAdjust is turned on
+              ? getPosition(activePin?.position?.y, activePin?.position?.x, zoom)
+              : 0 // else normal
+          }
+        >
           {editMode === EDIT_MODES.default &&
             sections.map((item, i) => (
-              <ResizableImage
-                key={item.id + item.media.id}
-                item={item}
-                onSelect={onSectionSelect}
-                isActive={selectedSection && selectedSection.id === item.id}
-                zoomLevel={zoom}
-                onUpdate={updateSection}
-                projectId={project_id}
-                deleteSection={deleteSection}
-                deleteImage={deleteImage}
-                uploadMedia={uploadMediaToSection}
-              />
+              <>
+                <ResizableImage
+                  key={item.id + item.media.id}
+                  item={item}
+                  onSelect={onSectionSelect}
+                  isActive={selectedSection && selectedSection.id === item.id}
+                  zoomLevel={zoom}
+                  onUpdate={updateSection}
+                  projectId={project_id}
+                  deleteSection={deleteSection}
+                  deleteImage={deleteImage}
+                  uploadMedia={uploadMediaToSection}
+                />
+                <Annotations zoom={zoom} editMode={editMode} onChangeCanvasMode={onChangeCanvasMode} />
+              </>
             ))}
-          {editMode === EDIT_MODES.annotation && <Annotations zoom={zoom} />}
+          {editMode === EDIT_MODES.annotation && <Annotations zoom={zoom} onChangeCanvasMode={onChangeCanvasMode} />}
           {editMode === EDIT_MODES.annotation &&
             sections.map((item, i) => <CanvasImage key={i} item={item} zoomLevel={zoom} />)}
         </InnerArea>
@@ -104,7 +119,9 @@ const Canvas = ({
         <Comments
           items={annotations.filter(a => !a.parent_id)}
           activePin={activePin}
+          editMode={editMode}
           selectAnnotation={selectAnnotation}
+          handleAnnotation={handleAutoAdjust}
         />
       )}
 

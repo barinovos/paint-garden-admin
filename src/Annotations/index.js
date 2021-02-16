@@ -7,6 +7,8 @@ import Annotation from './Annotation'
 import { PinViewWrapper } from './Styled'
 import { reCalcSizeWithZoom } from '../utils/calcZoom'
 import * as actions from './actions'
+import Constants from '../constants'
+const { EDIT_MODES } = Constants
 
 const getTopLevelPins = annotations => annotations.filter(a => !a.parent_id)
 
@@ -15,18 +17,20 @@ const Annotations = ({
   addAnnotation,
   editAnnotation,
   deleteAnnotation,
-  zoomLevel,
+  zoom,
   user,
   activePin,
   selectAnnotation,
   activeCanvas,
   sections,
+  editMode,
+  onChangeCanvasMode,
 }) => {
   const [position, setPosition] = useState(null)
 
   const onAddPin = ev => {
-    const x = reCalcSizeWithZoom(ev.clientX, zoomLevel)
-    const y = reCalcSizeWithZoom(ev.clientY, zoomLevel)
+    const x = reCalcSizeWithZoom(ev.clientX, zoom)
+    const y = reCalcSizeWithZoom(ev.clientY, zoom)
     setPosition({
       x,
       y,
@@ -56,10 +60,26 @@ const Annotations = ({
     )
   }
 
-  return (
+  return editMode === EDIT_MODES.default ? (
+    getTopLevelPins(annotations).map((pin, i) => (
+      <AnnotationIcon
+        key={i}
+        data={pin}
+        onPinClick={onShowModalForEdit}
+        onChangeCanvasMode={onChangeCanvasMode}
+        zoomLevel={zoom}
+      />
+    ))
+  ) : (
     <PinViewWrapper onClick={onAddPin}>
       {getTopLevelPins(annotations).map((pin, i) => (
-        <AnnotationIcon key={i} data={pin} onPinClick={onShowModalForEdit} zoomLevel={zoomLevel} />
+        <AnnotationIcon
+          key={i}
+          data={pin}
+          onPinClick={onShowModalForEdit}
+          onChangeCanvasMode={onChangeCanvasMode}
+          zoomLevel={zoom}
+        />
       ))}
       {activePin && (
         <Annotation
@@ -70,6 +90,7 @@ const Annotations = ({
           onDelete={deleteAnnotation}
           onClose={() => selectAnnotation(null)}
           onEdit={editAnnotation}
+          zoomLevel={zoom}
         />
       )}
     </PinViewWrapper>
@@ -81,12 +102,14 @@ Annotations.propTypes = {
   addAnnotation: PropTypes.func,
   deleteAnnotation: PropTypes.func,
   editAnnotation: PropTypes.func,
-  zoomLevel: PropTypes.number,
+  zoom: PropTypes.number,
   user: PropTypes.object,
   selectAnnotation: PropTypes.func,
   activePin: PropTypes.object,
   sections: PropTypes.array,
   activeCanvas: PropTypes.object,
+  editMode: PropTypes.string,
+  onChangeCanvasMode: PropTypes.func,
 }
 
 export default connect(

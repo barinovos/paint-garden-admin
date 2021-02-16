@@ -7,13 +7,23 @@ const TextAreaStyled = styled.textarea`
   box-sizing: border-box;
   border-radius: 4px;
   width: 100%;
-  min-height: ${props => props.height || 35}px;
+  height: ${props => props.height || 45}px;
   padding: 9px;
   color: #000;
 
   ${props => props.error && `border: 1px solid ${colors.red};`}
 `
+const handleKeyDown = e => {
+  e.target.style.height = 'inherit'
+  //e.target.style.height = `${e.target.scrollHeight}px`
+  // In case you have a limitation
+  e.target.style.height = `${Math.min(e.target.scrollHeight, 105)}px`
+}
 
-const TextArea = ({ children, ...props }) => <TextAreaStyled {...props}>{children}</TextAreaStyled>
+const TextArea = ({ children, ...props }) => (
+  <TextAreaStyled {...props} onKeyDown={handleKeyDown}>
+    {children}
+  </TextAreaStyled>
+)
 
 export default TextArea

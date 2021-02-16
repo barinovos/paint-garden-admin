@@ -10,7 +10,7 @@ import Constants from '../constants'
 
 const CanvasListItem = ({ canvas, onEdit, onDelete, viewMode }) => {
   return (
-    <Wrapper>
+    <Wrapper bgColor={canvas?.bg_color}>
       <Link
         to={`${Constants.ROUTES.CANVAS}/${canvas.id}`}
         style={{
@@ -19,7 +19,9 @@ const CanvasListItem = ({ canvas, onEdit, onDelete, viewMode }) => {
         }}
       >
         <ImageWrapper>
-          <img alt="default_image" src={canvas.image ? canvas.image : 'default.png'} width="100%" height="100%" />
+          {!canvas?.bg_color && (
+            <img alt="default_image" src={canvas.image ? canvas.image : 'default.png'} width="100%" height="100%" />
+          )}
           <Overlay />
           {!viewMode && (
             <Icons>
@@ -34,17 +36,17 @@ const CanvasListItem = ({ canvas, onEdit, onDelete, viewMode }) => {
               <Icon
                 src={trash}
                 onClick={ev => {
-                  onDelete(canvas.id)
-                  ev.stopPropagation()
-                  ev.preventDefault()
+                  onDelete(canvas?.id)
+                  ev?.stopPropagation()
+                  ev?.preventDefault()
                 }}
               />
             </Icons>
           )}
         </ImageWrapper>
-        <InfoOverlay>
-          <CanvasesTitle>{canvas.title}</CanvasesTitle>
-          <UserName>By: {canvas.user.name}</UserName>
+        <InfoOverlay bgColor={canvas?.bg_color}>
+          <CanvasesTitle>{canvas?.title}</CanvasesTitle>
+          <UserName>By: {canvas?.user.name}</UserName>
         </InfoOverlay>
       </Link>
     </Wrapper>
