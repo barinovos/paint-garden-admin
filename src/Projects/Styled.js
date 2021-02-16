@@ -123,6 +123,7 @@ export const Wrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
   position: relative;
+  background-color: ${props => props.bgColor};
 `
 
 export const CanvasesTitle = styled.div`
@@ -131,7 +132,6 @@ export const CanvasesTitle = styled.div`
   display: block;
   font-size: 12px;
   line-height: 16px;
-  color: #000000;
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
@@ -191,7 +191,8 @@ export const InfoOverlay = styled.div`
   bottom: 0;
   padding: 10px 12px;
   width: 100%;
-  background-color: rgba(77, 161, 255, 0.6);
+  color: ${props => (props.bgColor ? '#ffffff' : '#000000')};
+  background-color: ${props => (props.bgColor ? 'rgba(0, 0, 0, 0.6)' : 'rgba(77, 161, 255, 0.6)')};
 `
 
 export const TitleWrapper = styled.div`
