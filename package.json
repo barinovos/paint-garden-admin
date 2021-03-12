@@ -30,6 +30,10 @@
         "build": "export REACT_APP_API_URL=https://sso.paint.garden/api/v2; react-scripts build",
         "start:staging": "export REACT_APP_API_URL=https://sso.paint.garden/api/v2; react-scripts start",
         "build:staging": "export REACT_APP_API_URL=https://sso.paint.garden/api/v2; react-scripts build",
+        "start:mg-prod": "export REACT_APP_API_URL=https://sso.make.garden/api/v2; react-scripts start",
+        "build:mg-prod": "export REACT_APP_API_URL=https://sso.make.garden/api/v2; react-scripts build",
+        "start:mg-staging": "export REACT_APP_API_URL=https://sso.make.garden/api/v2; react-scripts start",
+        "build:mg-staging": "export REACT_APP_API_URL=https://sso.make.garden/api/v2; react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
